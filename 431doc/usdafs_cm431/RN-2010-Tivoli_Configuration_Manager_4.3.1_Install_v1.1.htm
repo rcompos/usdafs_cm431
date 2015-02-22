@@ -1,0 +1,2494 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 11 (filtered)">
+<title>Tivoli Configuration Manager v4.3.1 Install</title>
+
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;}
+@font-face
+	{font-family:Times;
+	panose-1:2 2 6 3 5 4 5 2 3 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";}
+h1
+	{margin-top:24.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	text-indent:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:Cambria;
+	color:#365F91;}
+h3
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.5in;
+	text-indent:-.3in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:Arial;}
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";}
+span.MsoCommentReference
+	{font-family:"Times New Roman";}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:15.0pt;
+	margin-left:0in;
+	border:none;
+	padding:0in;
+	font-size:26.0pt;
+	font-family:Cambria;
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.MsoTitleCxSpFirst, li.MsoTitleCxSpFirst, div.MsoTitleCxSpFirst
+	{margin:0in;
+	margin-bottom:.0001pt;
+	border:none;
+	padding:0in;
+	font-size:26.0pt;
+	font-family:Cambria;
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.MsoTitleCxSpMiddle, li.MsoTitleCxSpMiddle, div.MsoTitleCxSpMiddle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	border:none;
+	padding:0in;
+	font-size:26.0pt;
+	font-family:Cambria;
+	color:#17365D;
+	letter-spacing:.25pt;}
+p.MsoTitleCxSpLast, li.MsoTitleCxSpLast, div.MsoTitleCxSpLast
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:15.0pt;
+	margin-left:0in;
+	border:none;
+	padding:0in;
+	font-size:26.0pt;
+	font-family:Cambria;
+	color:#17365D;
+	letter-spacing:.25pt;}
+a:link, span.MsoHyperlink
+	{font-family:"Times New Roman";
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{font-family:"Times New Roman";
+	color:purple;
+	text-decoration:underline;}
+em
+	{font-family:"Times New Roman";}
+tt
+	{font-family:"Courier New";}
+p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:bold;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:8.0pt;
+	font-family:Tahoma;}
+span.Heading1Char
+	{font-family:Cambria;
+	color:#365F91;
+	font-weight:bold;}
+span.Heading3Char
+	{font-family:Arial;
+	font-weight:bold;}
+span.PlaceholderText
+	{font-family:"Times New Roman";
+	color:gray;}
+span.BalloonTextChar
+	{font-family:Tahoma;}
+p.ListParagraph, li.ListParagraph, div.ListParagraph
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:.5in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";}
+p.ListParagraphCxSpFirst, li.ListParagraphCxSpFirst, div.ListParagraphCxSpFirst
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";}
+p.ListParagraphCxSpMiddle, li.ListParagraphCxSpMiddle, div.ListParagraphCxSpMiddle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";}
+p.ListParagraphCxSpLast, li.ListParagraphCxSpLast, div.ListParagraphCxSpLast
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:.5in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";}
+p.axNormal, li.axNormal, div.axNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:Times;
+	color:black;}
+span.HeaderChar
+	{font-family:"Times New Roman";}
+span.FooterChar
+	{font-family:"Times New Roman";}
+span.CommentTextChar
+	{font-family:"Times New Roman";}
+span.CommentSubjectChar
+	{font-family:"Times New Roman";
+	font-weight:bold;}
+p.H1, li.H1, div.H1
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:bold;}
+p.H1b, li.H1b, div.H1b
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:bold;}
+span.H1Char
+	{font-family:"Trebuchet MS";
+	font-weight:bold;}
+p.T1, li.T1, div.T1
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:bold;}
+span.H1bChar
+	{font-family:"Trebuchet MS";
+	font-weight:bold;}
+p.T1b, li.T1b, div.T1b
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:bold;}
+span.TitleChar
+	{font-family:Cambria;
+	color:#17365D;
+	letter-spacing:.25pt;}
+span.T1Char
+	{font-family:"Trebuchet MS";
+	font-weight:bold;}
+span.T1bChar
+	{font-family:"Trebuchet MS";
+	font-weight:bold;}
+ /* Page Definitions */
+ @page Section1
+	{size:8.5in 11.0in;
+	margin:.75in .75in .75in .75in;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink=purple>
+
+<div class=Section1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="100%"
+ style='width:100.0%;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=206 valign=top style='width:154.25pt;border:solid black 1.0pt;
+  border-right:none;padding:.1in 5.75pt .1in 5.75pt'><a name="_top"></a>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  </td>
+  <td width=288 colspan=2 valign=top style='width:3.0in;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal'><b><span style='font-size:9.0pt;
+  font-family:Verdana'>&nbsp;</span></b></p>
+  <p class=T1><span style='font-size:9.0pt;font-family:Verdana'>FS – CIO</span></p>
+  <p class=T1><span style='font-size:9.0pt;font-family:Verdana'> <a
+  name="NOTICE_TYPE">RELEASE NOTICE</a></span></p>
+  <p class=T1><span style='font-size:9.0pt;font-family:Verdana'> (6610-7)</span></p>
+  <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal'><span style='font-size:9.0pt;
+  font-family:Verdana'>&nbsp;</span></p>
+  </td>
+  <td width=194 valign=top style='width:145.25pt;border:solid black 1.0pt;
+  border-left:none;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=206 style='width:154.25pt;border:solid black 1.0pt;border-top:none;
+  background:#E6DDC8;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana'>Month XX, XXXX</span></span></p>
+  </td>
+  <td width=288 colspan=2 style='width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #E6DDC8;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal'><b><span style='font-size:9.0pt;
+  font-family:Verdana'>CIO – ISO</span></b></p>
+  </td>
+  <td width=194 style='width:145.25pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #E6DDC8;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal align=right style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:right;line-height:normal'><span style='font-size:9.0pt;font-family:
+  Verdana;color:black'>RN-XXXX-</span><span class=PlaceholderText><span
+  style='font-size:9.0pt;font-family:Verdana'>XX</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><a name="RELEASE_INFORMATION"></a><b><span style='font-size:9.0pt;
+  font-family:Verdana'>Subject:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>IBM Tivoli Configuration Manager v4.3.1 Install</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Purpose:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Create new USDA
+  Forest Service Tivoli Management Region (TMR) server running IBM Tivoli Configuration
+  Manager v4.3.1.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Support Contact:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>Customer Help Desk (1-866-945-1354)</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Application
+  Sponsor:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>OS Level:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>AIX v5.3</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Mandatory:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>No</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Required System
+  Reboot:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>No</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Service
+  Interruption:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>No</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Affected Server
+  Types:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>Tivoli Management Region servers</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Server Team
+  Implementing Update:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>ESM</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Expected
+  Completion Date:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>2010-12-31</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Environment:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>This release will be installed in Prod.</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>SR #:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border:none;
+  border-left:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>CR #:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border:none;
+  border-right:solid black 1.0pt;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=260 colspan=2 valign=top style='width:194.75pt;border-top:none;
+  border-left:solid black 1.0pt;border-bottom:solid black 1.0pt;border-right:
+  none;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>If there are any
+  problems installing this release, please contact the following people:</span></b></p>
+  </td>
+  <td width=428 colspan=2 valign=top style='width:320.75pt;border-top:none;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>Developer’s name: Ron Compos (<span
+   style='font-size:10.0pt;font-family:"Trebuchet MS"'><a
+   href="mailto:rcompos@us.ibm.com"><span style='font-size:9.0pt;font-family:
+   Verdana'>rcompos@us.ibm.com</span></a></span>)<br>
+   303-748-4873</span></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span class=PlaceholderText><span style='font-size:9.0pt;font-family:
+  Verdana;color:windowtext'>Installation tester’s name: </span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=687 colspan=4 style='width:515.5pt;border:solid black 1.0pt;
+  border-top:none;background:#E6DDC8;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=H1><a name="GENERAL_OVERVIEW"></a><span style='font-size:9.0pt;
+  font-family:Verdana'>General Overview</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=687 colspan=4 style='width:515.5pt;border:solid black 1.0pt;
+  border-top:none;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Abstract</span></b></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>USDA Forest Service
+  CM431 TMR Install is a process to create a USDA Forest Service (FS)
+  Configuration Manager v4.3.1 Tivoli Management Region (TMR).</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>This process may be
+  used to create a hub or spoke TMR server, Gateway managed nodes and
+  endpoints. If a hub (Enterprise) TMR is being built and no managed nodes or
+  endpoints are desired, follow instructions specific to hub servers.</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>USDA Forest Service
+  CM431 TMR Install requires a TMR server running AIX v5.3 a collection of
+  Gateway Managed Node servers running AIX v5, Red Hat Enterprise Linux v5
+  (RHEL5) or SUSE Linux Enterprise Server (SLES 10) operating system and
+  endpoint clients running Windows, AIX or Linux. root access is required on
+  all servers. The creation of managed nodes now supports SSH and no longer
+  requires the exec service to be enabled on the target server. Endpoints are
+  installed via SSH as well.</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>The Tivoli
+  Inventory data will be stored on a Oracle database management server. This
+  necessitates an Oracle 10g database client on the TMR server. All Inventory
+  objects will be created on the TMR server. This differs from previous USDA FS
+  installations which used a dedicated Inventory managed node server.</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>This release
+  provides a new endpoint version 43102, from the Tivoli Framework Patch
+  4.3.1-LCF-0002.</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>Products/Patches</span></b></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>The following are
+  comprehensive lists of products and patches installed in the Tivoli
+  Management Region. The product and patch configuration files tmr.cfg and
+  gw.cfg are located in /usr/local/Tivoli/etc/inst. These config files define
+  the specific configuration for TMR server or gateway managed node.</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b><span
+  style='font-size:9.0pt;font-family:Verdana'>TMR Products/Patches</span></b><span
+  style='font-size:9.0pt;font-family:Verdana'> (tmr-fresh.cfg)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Products:</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Management Framework 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Inventory Gateway, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Inventory, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Java Client Framework 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Java 1.4.2 for Tivoli</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Java RDBMS Interface Module
+  (JRIM) 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>JavaHelp 1.0 for Tivoli 4.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Pristine Manager, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Pristine Manager Gateway, Version
+  4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Management Framework SSLA
+  Version 1.3</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Resource Manager, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Resource Manager Gateway, Version
+  4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Activity Planner, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Change Manager, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Directory Query, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Distribution Status Console,
+  Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Patch Management, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Software Distribution, Version
+  4.3.1, Build 20081113</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Software Distribution Gateway,
+  Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Software Distribution Software
+  Package Editor, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Web Interface, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Patches:</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Software
+  Distribution Software Package Editor V. 4.3.1,Fix Pack
+  4.3.1-TIV-SWDJPS-FP0001(U829862 - 2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Tivoli Framework
+  Patch 4.3.1-LCF-0002 (build 09/23)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Activity Planner,
+  Version 4.3.1, Fix Pack 4.3.1-TIV-APM-FP0001 (U829862 - 2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Scalable Collection
+  Service, Version 4.3.1, Fix Pack 4.3.1-TIV-CLL-FP0001 (U829862 - 2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Inventory, Version
+  4.3.1, Fix Pack 4.3.1-TIV-INV-FP0001 (U829862 - 2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Inventory Gateway,
+  Version 4.3.1, Fix Pack 4.3.1-TIV-INVGW-FP0001 (U829862 - 2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Software
+  Distribution Gateway, Version 4.3.1, Fix Pack 4.3.1-TIV-SWDGW-FP0001 (U829862
+  - 2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Software
+  Distribution, Version 4.3.1, Fix Pack 4.3.1-TIV-SWDSRV-FP0001 (U829862 -
+  2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Tivoli Framework
+  Patch 4.3.1-TMF-0005 (build 11/23)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Management Framework SSLA
+  Version 1.3</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Scalable Collection
+  Service, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b><span
+  style='font-size:9.0pt;font-family:Verdana'>GW Products/Patches</span></b><span
+  style='font-size:9.0pt;font-family:Verdana'> (gw.cfg)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Products:</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Management Framework 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Inventory Gateway, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Java Client Framework 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>ava 1.4.2 for Tivoli</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Java RDBMS Interface Module
+  (JRIM) 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>JavaHelp 1.0 for Tivoli 4.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Pristine Manager Gateway, Version
+  4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+    style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Management Framework SSLA
+  Version 1.3</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Resource Manager Gateway, Version
+  4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Distribution Status Console,
+  Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Software Distribution Gateway,
+  Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>Patches:</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Tivoli Framework
+  Patch 4.3.1-LCF-0002 (build 09/23)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Scalable Collection
+  Service, Version 4.3.1, Fix Pack 4.3.1-TIV-CLL-FP0001 (U829862 - 2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Inventory Gateway,
+  Version 4.3.1, Fix Pack 4.3.1-TIV-INVGW-FP0001 (U829862 - 2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Software
+  Distribution Gateway, Version 4.3.1, Fix Pack 4.3.1-TIV-SWDGW-FP0001 (U829862
+  - 2009/10)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Tivoli Framework
+  Patch 4.3.1-TMF-0005 (build 11/23)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Tivoli</span><span
+  style='font-size:9.0pt;font-family:Verdana'> Management Framework SSLA
+  Version 1.3</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>Scalable Collection
+  Service, Version 4.3.1</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>The comprehensive
+  product and patch configuration files tmr.cfg and gw.cfg are located in
+  /usr/local/Tivoli/etc/inst. These config files define the full product and
+  patch configuration for TMR server or gateway managed node. The scripts
+  reload-tmr and reload-gw (located under /usr/local/Tivoli/etc/script /) will
+  run through the full configuration files by default, re-installing all
+  products and patches, with no other options.</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>#Tivoli Management
+  Framework Upgrade to Version 4.3.1 (build 11/19)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><b><span style='font-size:9.0pt;font-family:Verdana'>GW Patches</span></b><span
+  style='font-size:9.0pt;font-family:Verdana'> (cm431-gw-upgd.cfg)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+  margin-left:55.0pt;margin-bottom:.0001pt;text-indent:-19.0pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>#Tivoli Management
+  Framework Upgrade to Version 4.3.1 (build 11/19)</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:9.0pt;font-family:Verdana'>The comprehensive
+  product and patch configuration files tmr.cfg and gw.cfg are located in
+  /usr/local/Tivoli/etc/inst. These config files define the full product and
+  patch configuration for TMR server or gateway managed node. This includes all
+  products and patches from USDA Forest Service CM423 TMR Install as well as
+  those introduced by this upgrade. The scripts reload-tmr and reload-gw
+  (located under /usr/local/Tivoli/etc/script/) will run through the full
+  configuration files by default with no other options.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=687 colspan=4 style='width:515.5pt;border:solid black 1.0pt;
+  border-top:none;background:#E6DDC8;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=H1><a name=PREREQUISITES></a><span style='font-size:9.0pt;
+  font-family:Verdana'>Prerequisites</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=687 colspan=4 style='width:515.5pt;border:solid black 1.0pt;
+  border-top:none;padding:.1in 5.75pt .1in 5.75pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><b><span
+  style='font-size:9.0pt;font-family:Verdana'>Files</span></b></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            usdafs_cm431_1of3.tar
+  (1.6 GB)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            usdafs_cm431_2of3.tar
+  (1.6 GB)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            usdafs_cm431_3of3.tar
+  (1.5 GB)</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><b><span
+  style='font-size:9.0pt;font-family:Verdana'>Environment</span></b></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            TMR server running
+  AIX v5.3 operating system</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            TMR server full
+  system backup performed</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            GW managed node
+  servers running AIX v5, RHEL v5 orSLES10 operating system</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            Endpoint clients
+  running Windows, AIX v5, RHEL v5 or SLES10 operating systems </span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><b><span
+  style='font-size:9.0pt;font-family:Verdana'>Requirements</span></b></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            root administrative
+  privileges on all servers</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            Oracle 10g database
+  client installed on TMR server</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            TMR server minimum of
+  5GB disk space available under filesystem /usr/local/Tivoli</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>            TMR server minimum of
+  15GB disk space available under filesystem /usr/local/Tivoli/src </span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>TMR server minimum of 10GB disk
+  space available under filesystem /usr/local/Tivoli/depot</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:4.5pt;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr height=0>
+  <td width=224 style='border:none'></td>
+  <td width=59 style='border:none'></td>
+  <td width=254 style='border:none'></td>
+  <td width=210 style='border:none'></td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='line-height:normal'><b><span style='font-size:9.0pt;
+font-family:Verdana'>&nbsp;</span></b></p>
+
+<p class=H1b style='line-height:normal'>SECTION I: Manual Install Instructions<br>
+<span style='font-weight:normal'>Command prompt for </span><em><span
+style='font-family:"Trebuchet MS";font-weight:normal'>root</span></em><span
+style='font-weight:normal'> is designated by the pound symbol (</span><span
+style='font-weight:normal'>#</span><span style='font-weight:normal'>).</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Log
+on to TMR server</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>1.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Start terminal session
+on Tivoli Management Region (TMR) server as root user. Confirm root user logged
+into TMR server.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># hostname</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># whoami</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+directories</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>2.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Create following
+directories with at least the minimum of free disk space available.  It is
+recommended, but not required to create filesystems for the directories.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>Directory                                   Min
+Size Recommended Size</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli                        5GB
+                 5GB</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/src      
+           15GB                 20GB</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/depot
+ 10GB                 20GB</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b>Create directories
+on TMR server.</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Transfer
+files</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>3.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Copy
+usdafs_cm431_1of3.tar, usdafs_cm431_2of3.tar and usdafs_cm431_3of3.tar and
+checksum files to /usr/local/Tivoli/depot. The directory /usr/local/Tivoli/depot or any sufficiently large directory may be used to temporarily store the tar
+files. After installation the tar files should be removed.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;line-height:normal'><b>Copy install
+files usdafs_cm431_1of3.tar, usdafs_cm431_2of3.tar and usdafs_cm431_3of3.tar
+from DVD or network to TMR server /usr/local/Tivoli/depot.</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Extract
+files</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Verify tar file and
+extract contents then extract src.  The checksum of the tar files are included.
+The checksum of the tar file must be identical to the contents of the .cksum
+file. If not the file may be corrupt.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>4.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Change directory to
+/usr/local/Tivoli/.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;line-height:normal'><b># cd
+/usr/local/Tivoli</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>4.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Run command to untar
+files under directory /usr/local/Tivoli/. If disk space is scarce, each tar
+file may be untarred manually, after which the tarfile may be deleted.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># tar xvpf
+./depot/usdafs_cm431_1of3.tar</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># tar xvpf
+./depot/usdafs_cm431_2of3.tar</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># tar xvpf
+./depot/usdafs_cm431_3of3.tar</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>4.3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>While still in
+directory /usr/local/Tivoli/. Untar etc directory.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># tar xvpf
+./src/431etc.tar</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>4.4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Run script crtivdir to
+create additional directories and set permissions. This script was tested for
+AIX v5 servers only.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b>#
+/usr/local/Tivoli/src/crtivdir</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>The script will
+create directories that don't exist and set permissions as per following chart:</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>Directory                                               Mode</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/                                  2775</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/src/                            2775</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/depot/                        2777</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/etc/
+                           2775</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/var/                            2777</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/tmp
+                            2777</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/log/                            2777</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/archive/                      2777</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/log/cm431
+                 2777</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/db_bkup
+                     2775</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/backup                        2777</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>/usr/local/Tivoli/etc/cfg
+                       2775</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Environment
+file</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>The following
+environmental variables used in this procedure. These variables are set in the
+file .tivenv and are included for expediency.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>ult=/usr/local/Tivoli</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>ultv=/usr/local/Tivoli/var</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>ults=/usr/local/Tivoli/src</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>ulte=/usr/local/Tivoli/etc</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>ultes=/usr/local/Tivoli/etc/script</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>ultec=/usr/local/Tivoli/etc/cfg</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>lcfdir=/usr/local/Tivoli/lcf/dat/1</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>logdir=/usr/local/Tivoli/var/log</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>5.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Source custom
+environmental variable file. Verify that variable $ult is set to /usr/local/Tivoli.  Verify the command returns /usr/local/Tivoli.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># .
+/usr/local/Tivoli/etc/cfg/.tivenv</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># echo $ult</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Configuration
+files</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>This build process
+uses a set of region-specific configuration files used during and after the
+installation. A description of pertinent configuration files is included. These
+files may be prepared well in advance.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>It may be helpful
+to put together a list of managed nodes to be created in entire region. Then
+decide on a gateway label for node.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Preparation of some
+configuration files requires managed node or gateway labels (mdist.cfg and
+epmgr.cfg). The managed nodes and gateways haven't been created yet, so these
+configuration file will have to be checked against actual values before
+implementation.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Hub TMR: with no
+managed nodes or endpoints, only struct-subs.cfg needs to be prepared.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>6.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Policy Region and
+Profile Manager Configuration</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>6.1.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Configuration
+file defines custom policy regions and profile managers for endpoint
+subscriptions.  Change to directory /usr/local/Tivoli/etc/cfg/struct.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b># cd $ultec/struct</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>View file
+/usr/local/Tivoli/etc/cfg/struct/struct-subs.cfg-template for example of
+syntax. Each line of struct-subs.cfg should have a pair defining the policy
+region/profile manager to be created with parent policy region/profile manager.
+The defined policy regions and profile managers will be created in a later step
+(using make-reg). The PRs and PMs will be created in the order they are
+defined.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>Example
+struct-subs.cfg</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>#Child Parent</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.pr r2.pr</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.RMRS.pr
+r2.subs.pr</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.RMRS.svr-aix-all.pm
+r2.subs.RMRS.pr</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.RMRS.HQ.svr-aix.dpm
+r2.subs.RMRS.svr-aix-all.pm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.RMRS.RapidCityFSL.svr-aix.dpm
+r2.subs.RMRS.svr-aix-all.pm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.ArapRoosNF.pr
+r2.subs.pr</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.ArapRoosNF.svr-aix-all.pm
+r2.subs.ArapRoosNF.pr</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.ArapRoosNF.SO.svr-aix.dpm
+r2.subs.ArapRoosNF.svr-aix-all.pm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.ArapRoosNF.BoulderRD.svr-aix.dpm
+r2.subs.ArapRoosNF.svr-aix-all.pm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.ArapRoosNF.dsk-wnt-all.pm
+r2.subs.ArapRoosNF.pr</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.ArapRoosNF.SO.dsk-wnt.dpm
+r2.subs.ArapRoosNF.dsk-wnt-all.pm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>r2.subs.ArapRoosNF.BoulderRD.dsk-wnt.dpm
+r2.subs.ArapRoosNF.dsk-wnt-all.pm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>The naming
+convention consists of a the following components:</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>Policy regions:
+&lt;region&gt;.subs.&lt;forest&gt;.pr</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>Profile managers:
+&lt;region&gt;.subs.&lt;forest&gt;.&lt;interp&gt;.pm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>Dataless profile
+managers: &lt;region&gt;.subs.&lt;forest&gt;.&lt;station&gt;.&lt;interp&gt;.dpm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Where
+&lt;region&gt; is same region label the TMR will be created with,
+&lt;forest&gt; is Forest name, &lt;station&gt; is a sub-division of Forest, and &lt;interp&gt; is the interpreter type.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>6.1.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+file struct-subs.cfg defining custom policy regions and profile managers.  The
+region and profile manager names should align with the actual TMR name as
+output by Framework wtmrname command.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>Create and
+populate file struct-subs.cfg</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>6.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Endpoint Policy
+Configuration</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>If no action is
+taken, the included endpoint validation policy scripts will be used. If custom
+scripts are preferred, they may be put the policy_ep directory in place of the
+default scripts.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>6.2.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Change
+to directory /usr/local/Tivoli/etc/cfg/policy_ep.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal'><b># cd
+$ultec/policy_ep</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>6.2.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>The
+following endpoint validation policy files are included. Customize or replace
+files as needed. Endpoint policy will be set at a later step using script
+set-policy_ep.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>after_install_policy</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>allow_install_policy</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>login_policy</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>select_gateway_policy</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>6.3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Endpoint Policy
+after_install Configuration</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Define the dataless
+profile managers to which endpoints are subscribed upon initial login, based on
+network address.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>6.3.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Change
+to directory /usr/local/Tivoli/etc/cfg.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b># cd $ultec</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>6.3.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+file after_install.cfg (used by after_install_policy endpoint policy). See
+after_install.cfg-template for an example.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Example
+after_install.cfg</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>#Subnet Interp
+ProfileManager #Comment</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>9.99.15.* w32-ix86
+&lt;region&gt;.subs.RO1.dsk-wnt.dpm #comments</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>9.99.15.*
+linux-ix86 &lt;region&gt;.subs.RO1.svr-linux.dpm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>9.99.15.* aix4-r1
+&lt;region&gt;.subs.RO1.svr-aix.dpm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>9.99.199.* w32-ix86
+&lt;region&gt;.subs.RO2.dsk-wnt.dpm #comments</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>9.99.199.*
+linux-ix86 &lt;region&gt;.subs.RO2.svr-linux.dpm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>9.99.199.* aix4-r1
+&lt;region&gt;.subs.RO2.svr-aix.dpm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>*.*.*.* w32-ix86
+&lt;region&gt;.subs.RO.dsk-wnt.dpm #tmr catch-all</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>*.*.*.* linux-ix86
+&lt;region&gt;.subs.RO.svr-linux.dpm #tmr catch-all</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>*.*.*.* aix4-r1
+&lt;region&gt;.subs.RO.svr-aix.dpm #tmr catch-all</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Each line consists
+of a the following components:</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>&lt;subnet&gt;
+&lt;interp&gt; &lt;profile_manager&gt; #comment</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Where
+&lt;subnet&gt; may consist of wild-card elements (*), which will be matched
+from right to left.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>Create and
+populate file after_install.cfg</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>6.4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Endpoint Policy
+allow_install and select_gateway_policy Configuration</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Define gateways to
+be assigned to an endpoint based on network address.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>6.4.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Change
+to directory /usr/local/Tivoli/etc/cfg.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b># cd $ultec</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Create epmgr.cfg
+file with default gateways defined for a given subnet. View file
+epmgr.cfg-template for example of syntax. Endpoints originating from a
+specified subnet will be logged in to the corresponding gateway.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>In following
+example, substitute actual gateway label for &lt;gwX_label&gt; and TMR gateway
+label for &lt;tmr-gw&gt; (as returned by the wgateway command). This file must
+be checked for correspondence with actual gateway labels after gateway
+creation.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Example epmgr.cfg</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>#Subnet Gateway
+Enable(y/n)</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>99.1.1.*
+&lt;gw1_label&gt; y</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>99.1.*.*
+&lt;gw2_label&gt; y</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>*.*.*.*
+&lt;tmr-gw&gt; y</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>The last line of
+epmgr.cfg allows the TMR server gateway to be defined as default gateway if no
+other is defined.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>Create and
+populate file epmgr.cfg</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>6.5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Gateway Repeater
+Configuration</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Define repeater
+parameters for each managed node.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>6.5.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Change
+to directory /usr/local/Tivoli/etc/cfg.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b># cd $ultec</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>6.5.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+mdist.cfg file with repeater configuration (set via wrpt and wmdist) on one
+line for each managed node, comma-separated. View the file mdist.cfg-template
+for example of syntax.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>The
+&lt;GW_dispatcher&gt; and &lt;client_range&gt; values are not assigned at this
+stage. The managed node labels can be defined on each line, but dispatcher
+values should be left unfilled, since these can only be known after managed
+nodes and gateways are created.<br>
+In following example, substitute actual gateway label for
+&lt;TMR_managed_node_label&gt; and &lt;GW_managed_node_label&gt;. The
+&lt;client_range&gt; field defines the repeater clients and may be specified as
+a single number, a colon separated-list (1:5:34:101) or a continuous range
+(5-25).<br>
+Example mdist.cfg</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'># MN, OID, wan,
+range, mem_max, disk_max, disk_hiwat, disk_time, disk_dir, net_load, max_conn,
+stat_intv, rpt_dir, permanent_storage, max_sessions_high, max_sessions_medium,
+max_sessions_low, disk_max, mem_max, send_timeout, execute_timeout, notify_interval,
+conn_retry_interval, retry_ep_cutoff, net_load, packet_size, target_netload,
+debug_level</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>&lt;TMR_managed_node_label&gt;,
+1, wd-, &lt;client_range&gt;, 128000, 4800000, 4800000, 1,
+/usr/local/Tivoli/depot, 5000, 100, 180, /usr/local/Tivoli, TRUE, 5, 5, 5,
+4800, 128, 300, 600, 10, 900, 7200, 5000, 16, 0, 3</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>&lt;GW_managed_node_label&gt;,
+&lt;GW_dispatcher&gt;, ,&lt;client_range&gt; , 128000, 4800000, 4800000, 1,
+/usr/local/Tivoli/depot, 5000, 100, 180, /usr/local/Tivoli, TRUE, 5, 5, 5,
+4800, 128, 300, 600, 10, 900, 7200, 5000, 16, 0, 3</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.35in;margin-bottom:.0001pt;line-height:normal'>&lt;GW_managed_node_label&gt;,
+&lt;GW_dispatcher&gt;, ,&lt;client_range&gt; , 128000, 4800000, 4800000, 1,
+/usr/local/Tivoli/depot, 5000, 100, 180, /usr/local/Tivoli, TRUE, 5, 5, 5,
+4800, 128, 300, 600, 10, 900, 7200, 5000, 16, 0, 3</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>The labels, dispatchers,
+and range should be unique on each line, but the other example values may be
+used as base values.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>Create and
+populate file mdist.cfg</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>7.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+TMR server</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Run Tivoli provided pre-installation script then create TMR server. Install products and patches,
+then configure.  From TMR server, initiate SSH connection to TMR server,
+specifying TMR fully qualified domain name (FQDN) as target. This step stores
+the TMR public key in the SSH known_hosts file, and allows endpoint
+installation to proceed in script insttiv. Substitute actual TMR server FQDN
+for &lt;TMR FQDN&gt;.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># ssh
+root@&lt;TMR FQDN&gt;</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>7.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Change directory to
+/usr/local/Tivoli/etc/cfg/inst. Prepare TMR configuration files for a fresh TMR
+build.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b># cd $ultec/inst</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b># cp
+tmr-fresh.cfg tmr.cfg</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>7.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Create base Framework v4.1.1
+TMR server, install products/patches, create gateway and create endpoint. This
+operation runs the Tivoli WPREINST.SH and wserver scripts. This process
+supports AIX TMRs only.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Product and patch
+installation in this operation use custom configuration files and the Tivoli winstall and wpatch commands.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Change to log file
+directory /usr/local/Tivoli/var/log/cm431/. Supply actual TMR server root
+password for &lt;password&gt;. If the -p option and argument are not supplied,
+the password will be requestd as user input. Substitute desired TMR region
+label for &lt;region_label&gt;. Example region labels are r1, r2, mci and abq.
+The TMR region name will be set to '&lt;region_label&gt;.pr' which is the value
+returned by Framework command wtmrname</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b># cd
+$logdir/cm431</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b># $ultes/insttiv
+-p &lt;password&gt; -r &lt;region_label&gt; 2&gt;&amp;1 | tee insttiv.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>7.3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Set environment.  Add
+the following three lines at end of the root user's .profile if not already
+present.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b>if [ -f
+/etc/Tivoli/setup_env.sh ]; then</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b>    .
+/etc/Tivoli/setup_env.sh</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b>fi</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>7.4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Log out root user and
+then log in again to source the environment file.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># exit</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>7.5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Once logged in again
+as root user, verify Tivoli framework environment. Print the defined value of
+the environmental variable $DBDIR.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;line-height:normal'><b># echo $DBDIR     </b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>The previous command
+should have returned the path to the Tivoli object database directory. If
+nothing was returned, check that the Tivoli environment file
+/etc/Tivoli/setup_env.sh exists and confirm the lines added previously to the
+.profile.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>7.6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Verify Tivoli root administrator roles. The Tivoli root administrator should have all global
+roles.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;line-height:normal'><b># wgetadmin |
+grep ^roles</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;line-height:normal'>Example of Tivoli administrator with all global roles.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>Global TMR
+Authorization Roles</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>roles: global
+super, senior, admin, user, backup, restore, install_client, install_product,
+policy, Query_view, Query_execute, Query_edit, RIM_view, RIM_update,
+HTTP_Control, Dist_control, Inventory_view, Inventory_scan, Inventory_edit,
+Inventory_end_user, APM_Manage, APM_View, APM_Edit, APM_Admin, CCM_View,
+CCM_Manage, CCM_Edit, CCM_Admin, WebUI_Admin, Query_directory_view,
+Query_directory_execute, Query_directory_edit, Pristine_Read, Pristine_Write,
+Pristine_Execute</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>7.7.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Change to directory
+/usr/local/Tivoli/var/log/cm431. Run script to create TMR gateway, policy
+regions and profile managers and set ownership and permisions for files and
+directories.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># cd
+$logdir/cm431</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b>#
+$ultes/config-tmr 2&gt;&amp;1 | tee config-tmr.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>8.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+Gateway managed nodes</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Hub TMR: skip this
+step.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Create Tivoli managed node and install endpoint gateway, products, patches and endpoint to create
+Tivoli Gateway server. Supported platforms include AIX v5, RHEL v5 and SLES10.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>As root user on TMR
+server, confirm current directory is /usr/local/Tivoli/var/log/cm431, the
+common log repository for this process.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'><b>REPEAT THIS STEP
+FOR ALL GATEWAY SERVERS</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>8.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Create Tivoli managed node and endpoint gateway on target server.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Install products and
+patches on managed node. This operation uses custom configuration files and the
+  Tivoli wclient, winstall and wpatch commands. Substitute the actual managed
+node label for &lt;managed_node&gt; (this is the &lt;fqdn&gt; value used in the
+managed node creation). Managed nodes can be listed by running command 'wlookup
+-aLr ManagedNode'.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Run script to
+install managed node, endpoint gateway, products and patches. Where
+&lt;fqdn&gt; is fully qualified domain name of target, and
+&lt;gateway_label&gt; is label of gateway object to be created. The gateway
+label should end with -gw. The managed node will be created using &lt;fqdn&gt;
+as label.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>IMPORTANT: The -j
+option uses SSH protocol to connect to target. Prior to installation, an SSH
+connection must be initiated from TMR server to target host, specified by FQDN.
+This stores the target host's public key in the ~/.ssh/known_hosts file. If
+host is not in known_hosts file, the operation will time out with a host
+authentication error.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b># $ultes/inst-mn
+-j -p &lt;password&gt; &lt;fqdn&gt; &lt;gateway_label&gt; 2&gt;&amp;1 | tee
+inst-mn.&lt;fqdn&gt;</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Review log file for
+errors. Retry managed nodes that experience failures.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>8.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Create endpoint</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Create endpoint on
+Gateway server using SSH. A SSH connection must be initiated to the target host
+prior to installing the endpoint, as was performed in prior gateway managed
+node install step. Where &lt;password&gt; is root password and &lt;fqdn&gt;
+will be set as the endpoint label.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b># $ultes/inst-ep
+-j -p &lt;password&gt; &lt;fqdn&gt; 2&gt;&amp;1 | tee inst-ep.&lt;fqdn&gt;</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Managed node created
+with endpoint gateway, products/patches and endpoint installed. Proceed to next
+Gateway installation.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>9.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Inventory
+database schema<br>
+Install Tivoli inventory database schema on Oracle database.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>9.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Prepare database admin
+and schema scripts.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'> The database
+administrator should be provided with these scripts beforehand in order to
+customized the datafiles specifications.  Original database scripts are located
+at /usr/local/Tivoli/src/cm431install/SQL.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Oracle DBA must edit
+admin scripts to specify location, name and size of datafiles (.dbf) and extent
+values for each tablespace definition. If multiple databases are running on an
+Oracle RAC the fully qualified file names must be uniqure. If multiple
+tablespaces specify the same fully qualified file, corruption will ensue.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>The following
+default USDA Forest Service TMR database admin and schema scripts are included
+in the directory /usr/local/Tivoli/etc/script/sql/SQL/admin.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_inv_ora_admin.sql</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_ccm_ora_admin.sql</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_mdist_ora_admin.sql</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_plans_ora_admin.sql</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_pristine_ora_admin.sql</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>9.1.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Change
+ownership and permissions to oracle.dba on sql directory. Create log directory
+for sql script results.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal'><b># chown -R
+oracle.dba $ultes/sql</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal'><b># mkdir -p -m775
+$logdir/cm431/sqllog</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>9.1.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Change
+to user oracle.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal'><b># su - oracle</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>9.1.3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Source
+custom environment file .tivenv.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal'><b>$ .
+/usr/local/Tivoli/etc/cfg/.tivenv</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>9.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Run SQL ADMIN scripts</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>9.2.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Change
+to database script logging directory /usr/local/Tivoli/var/log/cm431/sqllog.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>$ cd
+$logdir/cm431/sqllog</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>The following admin
+SQL scripts will be executed. Scripts are located at
+/usr/local/Tivoli/etc/script/sql/SQL/admin/. Note all admin script will be run
+&quot;as sysdba&quot;.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>Script                                        User      Password</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_inv_ora_admin.sql
+                 sys        usfsora</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_ccm_ora_admin.sql
+               sys        usfsora</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_mdist_ora_admin.sql
+ sys        usfsora</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_plans_ora_admin.sql
+             sys        usfsora</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_pristine_ora_admin.sql
+          sys        usfsora</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>9.2.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>While
+still in SQL log directory /usr/local/Tivoli/var/log/cm431/sqllog/, run CM431
+inventory admin scripts as Oracle user sys and password &lt;sys_password&gt;.
+Substitute the actual database net service name for &lt;db_name&gt;.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>$
+$ultes/sql/tiv_schema_setup -s1 -p &lt;sys_password&gt; &lt;db_name&gt;
+2&gt;&amp;1 | tee -a admin.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Review log files
+for errors. Expect to see a set of errors that are non-catastrophic, for
+example, drop actions just prior to create actions.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>9.3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Run SQL SCHEMA scripts</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>The following schema
+SQL scripts will be executed. Scripted are located at
+/usr/local/Tivoli/etc/script/sql/SQL/schema/.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>Script                                        User                  Password</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_inv_ora_schema.sql
+               invtiv                 tivoli</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_ccm_ora_schema.sql
+ tivoli                 tivoli</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_mdist_ora_schema.sql
+           mdstatus            mdstatus</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_plans_ora_schema.sql
+           planner             planner</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_pristine_ora_schema.sql
+        pristine  pristine</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>9.3.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>While
+still in SQL log directory /usr/local/Tivoli/var/log/cm431/sqllog/, run CM431
+inventory schema scripts. Substitute the actual database net service name for
+&lt;db_name&gt;.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>$
+$ultes/sql/tiv_schema_setup -s2 &lt;db_name&gt; 2&gt;&amp;1 | tee -a schema.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Review log files
+for errors. Expect to see a set of errors that are non-catastrophic. For
+example, drop actions just prior to create actions.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>9.4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Run SQL SCHEMA FIXPACK
+scripts</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>The following schema
+fixpack SQL scripts will be executed. Scripted are located at
+/usr/local/Tivoli/etc/script/sql/RDBMS/.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>Script                                                    User      Password</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>fs_inv_ora_schema_431_FP01.sql
+           invtiv     tivoli</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>9.4.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>While
+still in SQL log directory /usr/local/Tivoli/var/log/cm431/sqllog, run CM431
+inventory schema fix pack scripts. Substitute the actual net service database
+name for &lt;db_name&gt;.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>$
+$ultes/sql/tiv_schema_setup -s3 &lt;db_name&gt; 2&gt;&amp;1 | tee -a fixpack.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Review log files for
+errors. Expect to see a set of errors that are non-catastrophic. For example,
+drop actions just prior to create actions.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>9.5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Exit user Oracle and
+return to root session.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;line-height:normal'><b>$ exit</b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>10.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>TMR Configuration</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Configure Tivoli
+Management Region components. Create database interfaces, run scripts to
+configure Inventory, Software Distribution, Change Configuration Manager,
+Activity Planner and Resource Manager.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>On TMR server as
+user root. The environment file /usr/local/Tivoli/etc/cfg/.tivenv must be
+sourced.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>10.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Create RIM objects</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>The following RIM
+objects will be created:</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>RIM                   User                  Password</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>inv_query          invtiv
+                tivoli</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>invdh_1             invtiv
+                tivoli</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>mdist2               mdstatus
+           mdstatus</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>planner             planner
+            planner</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>ccm                  tivoli
+                tivoli</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.5in;margin-bottom:.0001pt;line-height:normal'>trm                   tivoli
+                tivoli</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.1.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Change directory to
+/usr/local/Tivoli/var/log/cm431.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b># cd
+$logdir/cm431</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.1.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>As root user, run
+script to create Tivoli RIM objects on TMR server for communication with Oracle
+database. The location of $ORACLE_HOME is expected to be /var/lpp/oracle. Where
+&lt;net_service_name&gt; is database net service name, and
+&lt;instance_name&gt; is database instance name. The variables net_service_name
+and instance_name are defined in /var/lpp/oracle/network/admin/tnsnames.ora.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>#
+$ultes/create-rim -n &lt;net_service_name&gt; -i &lt;instance_name&gt; 2&gt;&amp;1
+| tee create-rim.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.1.3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Run script to verify
+RIM objects. Upon successful RIM connection, the session is released with an x
+to exit, and the next RIM object is tested.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>#
+$ultes/tool/rim_test.sh</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>If command returns
+a connection error, then run wgetrim for RIM object to get its attributes and
+check the net service name and instance name.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>10.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Configure Inventory</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.2.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>While still in
+directory /usr/local/Tivoli/var/log/cm431, run script to configure Tivoli
+Inventory v4.3.1 and import software signatures.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b># $ultes/inv/config-inv
+2&gt;&amp;1 | tee config-inv.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Latest software
+signature file, located at
+$ultec/inv/ITLCM23_20100131/itlcm22-allProducts-fullSwCat-20100131.xml, is
+imported. The command winvsig is deprecated. The command winvmigrate should be
+used to import signatures from newer xml software catalogs. The latest software
+signature file (IBM Software Catalog for ITLCM 2.2/2.3 - All Software) may be
+downloaded from the URL below.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><a
+href="http://www-306.ibm.com/software/sysmgmt/products/support/IBMTivoliLicenseManager.html">http://www-306.ibm.com/software/sysmgmt/products/support/IBMTivoliLicenseManager.html</a></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>Note: After
+successfully processing software signatures, error message &quot;INVCO0294I No
+valid package was found.&quot; will be displayed, because no package was
+migrated. This error can be disregarded.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>10.3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Configure Activity Planner</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.3.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>While still in
+directory /usr/local/Tivoli/var/log/cm431, run script to configure Tivoli
+Activity Planner v4.3.1. Confirm that tivapm user account is accessible by
+logging onto system as tivapm. Any login restrictions (such as expired
+password, failed logins, etc.) must be removed before moving on. The Activity
+Planner cannot start until tivapm is available.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>#
+$ultes/apm/config-apm 2&gt;&amp;1 | tee config-apm.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.3.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Set Tivoli activity
+planner password. Use tivapm for the old and new password.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>Old password:
+tivapm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'>New password:
+tivapm</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b># wsetapmpw</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>10.4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Migrate TMR endpoint</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Hub TMR: Delete
+endpoint instead.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.4.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Migrate TMR endpoint
+from TMR gateway to some other gateway. The choice of gateway is arbitrary, so long
+as it is not the TMR gateway. Where &lt;TMR_endpoint&gt; is TMR endpoint label
+and &lt;gateway_label&gt; is gateway label.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b># wep
+&lt;TMR_endpoint&gt; migrate &lt;gateway_label&gt;</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>10.5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Configure endpoint validation policy</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Hub TMR: Skip this
+step.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.5.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Update endpoint
+validation policy configuration file to reflect actual gateway labels and
+subnets.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'>Confirm values in
+file /usr/local/Tivoli/etc/cfg/epmgr.cfg are correct. This file was manually
+populated in an earlier step. Verify gateways specified in config file
+correspond to actual gateway labels. Ensure third field (column) is set to 'y'
+to enable subnet.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b>Verify file
+/usr/local/Tivoli/etc/cfg/epmgr.cfg.</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.5.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Run script to
+configure TMR endpoint validation policy.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;line-height:normal'><b>#
+$ultes/set-policy_ep</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>10.6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Configure gateway repeaters</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Hub TMR: Skip this
+step.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.6.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Update repeater
+configuration file to reflect actual manged node labels and dispatcher values. 
+Update /usr/local/Tivoli/etc/cfg/mdist.cfg config file with actual
+&lt;TMR_dispatcher&gt;, &lt;GW_dispatcher&gt; and &lt;client_range&gt; values.
+The &lt;client_range&gt; field defines the repeater clients and may be
+specified as a single number, a colon separated-list (1:5:34:101) or a
+continuous range (5-25). Also verify all managed node labels are correct.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b>Update the
+/usr/local/Tivoli/etc/cfg/mdist.cfg config file with actual &lt;TMR_dispatcher&gt;,
+&lt;GW_dispatcher&gt; and &lt;client_range&gt; values.</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.85in;margin-bottom:.0001pt;text-indent:-.35in;line-height:normal'>10.6.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>While still in
+directory /usr/local/Tivoli/var/log/cm431, run script to configure the gateway
+repeater wmdist and wrpt parameters. Both scripts use configuration file
+/usr/local/Tivoli/etc/cfg/mdist.cfg to define repeater parameter values.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b>#
+$ultes/tune-mdist 2&gt;&amp;1 | tee tune-mdist.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal'><b>#
+$ultes/tune-rpt 2&gt;&amp;1 | tee tune-rpt.log</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>11.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Restart object
+dispatchers</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Restart all nodes
+to enable full functionality.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>11.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Shutdown all client managed node object dispatchers. Restart TMR server
+object dispatcher. Start all client managed node object dispatchers.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># odadmin
+shutdown clients</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># odadmin reexec</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># odadmin start
+clients</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>12.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Inter-region
+connection</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>Connect TMR server
+to TEC server for exchange of event data. A two-way connection will be
+initiated.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>12.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>While still logged into TMR server as root, connect TMR server to TEC
+server.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># connect-tec
+TEC_host 2&gt;&amp;1 | tee connect-tec.log            </b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Where TEC_host is
+TEC server hostname.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>12.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Confirm TMR-TEC connection. Run wlsconn to get a regional connection
+listing.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># wlsconn</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Hub TMR: Connect HUB
+TMR to spoke TMRs with wconnect.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>13.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Install Tivoli Desktop
+for Windows</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>The Tivoli Desktop
+for Windows client provides a GUI interface to the TMR server. To install the
+Tivoli Desktop for Windows GUI copy Config_Mgr_V431_desktop.zip and
+cm431fp01_desktop.zip from TMR server to Windows workstation.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>13.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Copy files from TMR server to Windows workstation. The two files
+combined need 1GB disk space.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b>Copy
+/usr/local/Tivoli/src/Config_Mgr_V431_desktop.zip to Windows client.</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b>Copy
+/usr/local/Tivoli/src/cm431fp01_desktop.zip to Windows client.</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>13.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Extract both zip files on Windows client under any directory, for
+example c:\tmp.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b>Extract files
+Config_Mgr_V431_desktop.zip and cm431fp01_desktop.zip</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>13.3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Change directory to where zip files were extraced in previous step, for
+example c:\tmp. From there change directory again to Config_Mgr_V431_desktop.
+Run setup.exe to install Tivoli Desktop for Windows v4.3.1.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b>Run setup.exe</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>13.4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Upgrade Desktop</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>Change directory to
+where zip files were extracted in previous step, for example c:\tmp. From there
+change directory again to cd2_cm431fp01\cd2\spb_installer. Run Setup.exe to
+upgrade to Tivoli Desktop for Windows v4.3.1 Fix Pack 1.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>When prompted,
+specify cd2_cm431fp01\cd2\package\CM431_SPB_FP01.xml as XML configuration file.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b>Run Setup.exe</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>14.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Check and backup
+object database</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'>All TMR
+installation and configuration has been completed. Check and backup Tivoli
+object database.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>14.1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Check Tivoli object database and fix errors. Run the wchkdb command two
+times as indicated. The second run should have a clean result.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># wchkdb -u</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># wchkdb -u</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.55in;margin-bottom:.0001pt;text-indent:-.3in;line-height:normal'>14.2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Perform Tivoli object database backup. Substitute actual region label
+for &lt;region&gt;.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'><b># wbkupdb -sd
+$ultv/db_bkup/&lt;region&gt;-db_bkup-post_cm431</b></p>
+
+<p class=H1b style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-size:9.0pt;font-family:Verdana'><br>
+SECTION II: Tivoli Install Instructions</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal'>N/A</p>
+
+<p class=H1b style='line-height:normal'><a name="VALIDATION_STEPS"></a><span
+style='font-size:9.0pt;font-family:Verdana'><br>
+SECTION III: Validation Steps</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Validate
+TMR Framework level is 4.3.1.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'><b># wlsinst –a
+|grep Framework</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Validate
+TMR Configuration Manager level is 4.3.1.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'><b># wlsinst –a |
+grep Inventory</b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Validate
+TMR endpoint level is 43102.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal'><b># wep
+&lt;TMR_endpoint_label&gt; get version</b></p>
+
+<p class=H1b style='line-height:normal'><a name="BACKOUT_INSTRUCTIONS"></a><span
+style='font-size:9.0pt;font-family:Verdana'><br>
+SECTION IV: Backout Instructions</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Restore
+TMR server from backup image.</p>
+
+<p class=axNormal align=center style='text-align:center'><b><span
+style='font-size:9.0pt;font-family:Verdana'>&nbsp;</span></b></p>
+
+<p class=T1><span style='font-size:9.0pt;font-family:Verdana'>&#916;  END OF </span><span
+style='font-size:9.0pt;font-family:Verdana'>RELEASE NOTICE</span><span
+style='font-size:9.0pt;font-family:Verdana'>  &#916;</span></p>
+
+</div>
+
+</body>
+
+</html>

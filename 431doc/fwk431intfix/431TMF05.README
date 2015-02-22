@@ -1,0 +1,304 @@
+Date:   November 23, 2009
+
+Interim Fix:  4.3.1-TMF-0005
+
+Component:  Tivoli Framework 4.3.1
+
+(c) Copyright IBM Corporation 2001, 2009. All rights reserved.
+
+General Description:
+
+    4.3.1-TMF-0005 is a interim fix for TMR servers, managed nodes, and
+    gateways. No other interim fixes or fixpacks need to be installed
+    prior to the installation of 4.3.1-TMF-0005.
+
+Problems Fixed:
+
+  New fixes in 4.3.1-TMF-0005: 
+
+    Internal CMVC defect 224584
+    Symptoms: Adaptive Bandwidth Control is not able to use libpcap on
+    some AIX systems when the ODMDIR environment variable is not set in
+    the Framework environment, which causes distributions to fail.
+    
+    Internal CMVC defect 229267
+    Symptoms: bdbx does not get a database file name from the arguments 
+    list when there are other arguments.
+    
+    Internal CMVC defect 230119
+    Symptoms: APM GUI list nothing when enable the bind variables for 
+    Planner
+
+    Internal CMVC defect 235755
+    Symptoms: If "OSERV_IPC_POLL_TYPE=POLL" environment variable is defined
+    for linux-ix86 oserv process, poll() system call will be used instead of 
+    select(). Since this setting is checked while oserv startup, 
+    "odadmin environ set" is not enough. Including "OSERV_IPC_POLL_TYPE=POLL; 
+    export OSERV_IPC_POLL_TYPE" in start-up script like /etc/Tivoli/oserv.rc 
+    will be the best.
+
+    Internal CMVC defect 235945
+    Symptoms: Setting repeater parameters on the special "all" and "default"
+    repeaters using "wmcast -s" no longer fails with error:
+     
+        *** glibc detected *** wmcast: double free or corruption (fasttop):
+        0x080c2480 *** 
+    
+    on Linux-ix86(Red Hat AS 4.0 or later) systems. 
+
+    Internal CMVC defect 237010
+    Symptoms: Setting repeater parameters on the special "all" repeaters
+    using "wmdist -j(or -k)" no longer fails with a segfault on newer
+    (Red Hat AS 4.0 or later) Linux systems. 
+
+    Internal CMVC defect 237202
+    Symptoms: When installing endpoint on SLES11 by winstlcf command,
+    some insserv warning messages are reported and winstlcf regards the
+    installation as failed, but in fact the endpoint is installed and
+    works well on SLES11. 
+
+    APAR IZ37146
+    Symptoms: When using single port BDT (spBDT), a connection failure
+    can occur. This rarely happens, and when it does, the only
+    indication of the problem is a method will timeout after one hour
+    waiting for a BDT or iom connection. For example, the $DBDIR/bdtlog
+    may have an error message similar to:
+
+        2008/11/07 10:16:21 -01: BDT_CONNECT: timeout channel aborted
+        (3844739083I9401IX2:000000144913F954 mach1)". 
+
+    APAR IZ51049
+    Symptoms: On a Windows managed node, oserv.exe fails to start. 
+    The oservlog may contain a message similar to: 
+        
+        !WARNING: oserv_boot_info returned error 43 
+        !WARNING: odb.adj file is corrupted - will try to restore 
+        from backup 
+
+    APAR IZ52610
+    Symptoms: Tivoli Management Framework 4.3.1 GA version of distmgr.exe 
+    and wmdist.exe for w32-ix86 interp has problems that can 
+    cause the process crash. 
+
+    APAR IZ55011
+    Symptoms: When the endpoint status is "disconnected",
+    "wepstatus -v <endpoint_label>" and "wepstatus <endpoint_label>" commands
+    may report memory or segment fault, and even core dump in some cases.
+
+    APAR IZ55342
+    Symptoms: ManagedNode installation could get core dumped if the install
+    image is located on ManagedNode other than TMR.
+    The core dump can happen when customer choose the install image from a
+    non-TMR managednode. It can also happen when the TMR is somehow treated
+    as non-TMR managednode while in ManagedNode create phase.
+    Looking into tivoli.cinstall, the installation is ended with the
+    following lines:
+
+        1316  Before Command real ms=5144/11516, cpu ms=0/0
+        1317  executing following command #4 on :
+        1318  set -a;PATH="path";echo BEG_OF_STREAM;ThisDir=somevalue
+        ;ThisHost=managedNode-to-be ;ThisPkg=CAT;cd
+        /path/msg_cat;sapack.exe -u-;sleep 2; echo; echo END_OF_STREAM
+
+    The core dump only appears in TMF4.3.1 environment, previous
+    version is not affected.
+
+    APAR IZ58959
+    Symptoms: On Windows TMR and Gateway, when the port range is bound, 
+    the port range value is destroyed.
+
+    APAR IZ59501
+    Symptoms: When distributing Software Package Block by TMF4.3.1&TCM4.3.1 
+    in "From File Server" mode, if the SPB file doesn't exist in the file 
+    server path specified in the remote.dir file on 431 endpoint, 
+    the distribution hangs, while on 411 endpoint, it aborts and doesn't hang. 
+    This fix lets the distribution to 431 endpoint abort immediately and not 
+    block other distributions on the endpoint, as 411 endpoint does.
+
+
+Architecture(s):
+
+    Solaris, AIX, HPUX, Windows, Linux-ix86, Linux-s390, Linux-ppc,
+    Solaris2-ix86
+
+Interim Fixes Superseded by this Interim Fix:
+
+    4.3.1-TMF-0001LA
+
+Dependencies:
+
+    TMF_4.3.1
+
+Database Changes and Additional Information:
+
+    1) Silent installation of TMF (TMR server / Endpoint) could hung up on 
+    some Windows platforms. This issue has been found on Windows Server 2008
+    and Windows Vista so far. This issue can be also seen when installing TMF 
+    from TCM installation wizard because the wizard launch TMF installer in 
+    silent mode.
+    The workaround for this issue is to install TMF in interactive mode rather 
+    than silent mode. For TCM installation, it is recommended to install TMF 
+    in interactive mode before installing TCM.
+
+    2) The following command can be used to create a new odb.adj file in the 
+    database directory of the Tivoli server.
+
+    # odadmin set_ORB_pw od (where od is the object dispatcher number)
+
+    But this newly-created odb.adj file works only if the Tivoli server and 
+    managed node are both UNIX operating systems or both Windows operating 
+    systems.
+    The description of this limitation is written at 115 page of 
+    "TMF 4.3.1 Maintenance and Troubleshooting Guide".
+
+Files Replaced by this Interim Fix (for all supported values of INTERP):
+
+    See the image report in the file 431TMF05/431TMF05.image.rpt for a
+    complete list of the files replaced by this interim fix.
+
+Interim fix Contents:
+
+    This README file
+    The cdrom image for this interim fix
+    The image report for this interim fix
+
+Applying this Interim Fix:    
+
+    1)  Extract the interim fix:
+
+        On a Unix system:
+        
+        Extract the contents into a scratch directory. For the purpose
+        of this release note, assume that the symbol $PATCH points to
+        this directory.
+
+        # cd $PATCH
+        # tar xvf 4.3.1-TMF-0005.tar
+
+        On a Windows system:
+
+        Extract the contents into a scratch directory. For the purpose
+        of this release note, assume that the symbol %PATCH% points to
+        this directory. 
+
+        > %SystemRoot%\system32\drivers\etc\Tivoli\setup_env
+        > X:              
+          ^-- 'X' is drive letter where %PATCH% is found
+        > cd %PATCH%
+        > tar xvf 4.3.1-TMF-0005.tar
+
+        NOTE:  If you are extracting the tar image on a Windows
+        system, you will find an executable for tar in the TME
+        installation on Windows under bin/w32-ix86/tools/tar.exe.
+
+    2)  Once the IZ51049 problem occurs, the interim fix can not be
+        installed because the oserv is not started.
+        In such case, perform the following steps to start the oserv
+        on the managed node.
+        
+        a) Replace the oserv.exe.
+        
+        > cd %BINDIR%/bin
+        > rename oserv.exe oserv.exe.org
+        > copy %PATCH%\431TMF05\oserv.exe .
+
+        Perform the following if oserv.exe is found in $DBDIR
+        > cd %DBDIR%
+        > rename oserv.exe oserv.exe.org
+        > copy %PATCH%\431TMF05\oserv.exe .
+        
+        b) Start the oserv.
+        
+        After the oserv is started, perform the following steps to 
+        install the interim fix.
+
+    3)  If this interim fix is to be installed on a release level of
+        3.7.1 or greater, follow these instructions for using Software
+        Installation Service (SIS).  If not, skip to step 3 below.
+
+        NOTE: SIS can install Tivoli products on any hardware
+              platform supported by Tivoli, but there are some
+              hardware platforms on which SIS cannot be run. Please
+              check your SIS User's Manual for the list of platforms
+              on which SIS can be run.
+
+        NOTE: You must have the install_product and super authorization
+              roles to successfully install this interim fix.
+
+        a)  From the Tivoli Desktop, pull down 
+            Desktop --> Install --> Software Installation Service.
+        b)  SIS will initialize, and bring up the Get Installation
+            Password Dialog.  Enter your Installation Password.
+        c)  Click the Install Button on the dialog which contains
+            the Tivoli image.
+        d)  Click the Select Product Button on the Install Spreadsheet
+            Dialog.
+        e)  Click the Import Product Button on the Select Product
+            Dialog.
+        f)  Locate the media to 4.3.1-TMF-0005 using the file browser,
+            and select the PATCHES.LST file by double-clicking it.
+        g)  Select 4.3.1-TMF-0005 in the Import Product Dialog, and
+            click the Import Button.
+        h)  When the import is complete, click the OK Button on the
+            Global Progress Dialog.
+        i)  Select 4.3.1-TMF-0005 in the Select Product Dialog, if it
+            is not already selected, and click the OK Button.
+        j)  Now click the Select Machine Button on the Install
+            Spreadsheet Dialog.
+        k)  Select the machine(s) you would like to install
+            4.3.1-TMF-0005 on and click the OK Button.
+        l)  Click the appropriate cell(s) in the Install Spreadsheet
+            Dialog. (NOTE: This should yield an "X" in the cell(s)
+            for the machines you want to install 4.3.1-TMF-0005 to).
+        m)  Click the Install Button.
+        n)  Select the install algorithm you want to use on the
+            Installation Algorithm Dialog, and click OK.
+        o)  SIS will perform the installation(s) you designated
+            in the Install Spreadsheet Dialog.
+        p)  Installation is complete. Check the Additional 
+            Installation Instructions section below.
+
+    4)  Use the following steps to install the interim fix using the
+        Tivoli GUI install mechanism.
+        NOTE: You must have the install_product and super authorization
+        roles to successfully install this interim fix.
+
+        a)  Select the "Install -> Install Patch..." option from the
+           "Desktop" menu to display the "Install Patch" dialog.
+        b)  Press the "Select Media..." button to display the "File
+            Browser" dialog.
+        c)  Enter the path to the directory containing the interim fix,
+            $PATCH, in the "Path Name:" field.
+        d)  Press the "Set Media & Close" button to return to the
+            "Install Patch" dialog.
+        e)  The patch install list now contains the name of the interim
+            fix. Select the interim fix by clicking on it. 
+        f)  Select the clients to install this interim fix on. This
+            interim fix needs to be installed on the TME server and on
+            each managed node client.
+        g)  Press the "Install" button to install the interim fix.
+
+Additional Installation Instructions:
+
+    After applying this interim fix, perform the following numbered
+    steps to restart the oservs on the TMR server and managed nodes /
+    gateways.
+
+    1) From the TMR server, run the following command to shut down all
+       managed nodes / gateways:
+
+       odadmin shutdown clients
+
+    2) When the client oservs have all terminated, run the following
+       command to restart the TMR server:
+
+       odadmin reexec 1
+
+    3) Once the oserv on the TMR server has fully restarted, then run
+       the following command to restart the managed nodes / gateways:
+
+       odadmin start clients
+
+Known Defects:
+
+    None.

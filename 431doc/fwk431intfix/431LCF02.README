@@ -1,0 +1,434 @@
+Date:   September 19, 2009
+
+Interim Fix:  4.3.1-LCF-0002
+
+Component: Tivoli Framework 4.3.1
+
+(c) Copyright IBM Corporation 2001, 2009. All rights reserved.
+
+General Description:
+
+    4.3.1-LCF-0002 is a interim fix for endpoints that can be installed
+    on 3.7B or later systems to allow for subsequent endpoint upgrades.
+    No other interim fixes or fixpacks need to be installed prior to the
+    installation of 4.3.1-LCF-0002.
+
+Problems Fixed:
+
+  New fixes in 4.3.1-LCF-0002:
+
+    Internal CMVC defect 237202
+    Symptoms: When installing endpoint on SLES11 by winstlcf command,
+    some insserv warning messages are reported and winstlcf regards the
+    installation as failed, but in fact the endpoint is installed and
+    works well on SLES11. 
+
+    Internal CMVC defect 237984
+    Symptoms: On Unix platforms, the upgrade directory is missing
+    under the 4.1.1 and 4.3.1 endpoint image directory.
+        
+        $BINDIR/../lcf_bundle.41100/upgrade
+        $BINDIR/../lcf_bundle.43100/upgrade
+
+    APAR IZ33029
+    Symptoms: In the last.cfg file, an extra space at the end of the
+    line where the value of the lcs.login_interfaces variable is
+    specified causes logins to fail with message: "hostname cannot be
+    resolved".
+
+    APAR IZ45338
+    Symptoms: while executing winstsp the following error pops up:
+    Application Error : The instruction at "xxxxxx" referenced 
+    memory at "0x00000000". The memory could not be "read".
+
+    APAR IZ59501
+    Symptoms: When distributing Software Package Block by TMF4.3.1&TCM4.3.1 
+    in "From File Server" mode, if the SPB file doesn't exist in the file 
+    server path specified in the remote.dir file on 431 endpoint, 
+    the distribution hangs, while on 411 endpoint, it aborts and doesn't hang. 
+    This fix lets the distribution to 431 endpoint abort immediately and not 
+    block other distributions on the endpoint, as 411 endpoint does.
+
+  Fixes from 4.3.1-LCF-0001 (included in the 4.3.1 Framework GA release):
+
+    Internal CMVC defect 217475
+    Symptoms: Provide a compatibility interim fix to support Framework
+    4.3.1 endpoints on earlier Framework releases, i.e., the Framework
+    4.1.1, 4.1, and 3.7.1 releases.
+
+    Additional Information: 4.3.1-LCF-0001 contains binaries / libraries
+    that are installed in the lcf_bundle.43100 directory on the gateway
+    of an earlier Framework release. After the installation of
+    4.3.1-LCF-0001, that gateway will be able to support 4.3.1 endpoints.
+    Note that 4.3.1-LCF-0001 should not be installed on the Framework
+    4.3.1 release itself since the contents of 4.3.1-LCF-0001 are
+    already provided in the 4.3.1 GA release. 4.3.1-LCF-0001 should just
+    be installed on earlier Framework releases.
+
+Architecture(s):
+
+    Solaris, AIX, HPUX, Windows, Linux-ix86, Linux-s390, Linux-ppc,
+    Solaris2-ix86, and OS/400 (Endpoint Only) 
+
+    Note: This interim fix contains endpoint fixes for the above
+    platform types. All these platform types (except for OS/400) can
+    also be gateways, and this interim fix can be installed on those
+    gateways in order to upgrade endpoints of any of the above platforms
+    with the fixes in this interim fix.
+
+Interim Fixes superseded by this interim fix:
+
+    4.3.1-LCF-0001
+
+Dependencies:
+
+    TMF_3.7 or later Framework release.
+
+Database Changes and Special Considerations:
+
+    The following is a summary of the directory names used on a gateway
+    for the endpoint binaries in different Framework releases:
+
+    36x binaries (endpoint version < 80) are in lcf_bundle
+    37x binaries (endpoint version 80 - 40999 ) are in lcf_bundle.40
+    41 binaries (endpoint version 41000 - 41099) are in lcf_bundle.41000
+    411 binaries (endpoint version 41100 - 41199) are in lcf_bundle.41100
+    431 binaries (endpoint version >= 43100) are in lcf_bundle.43100
+
+Files Replaced by this Interim Fix (for all supported values of INTERP):
+
+    See the image report in the file 431LCF02/431LCF02.image.rpt for a
+    complete list of the files replaced by this interim fix.
+
+Interim Fix Contents:
+
+    - This README file
+    - The cdrom image for this interim fix
+    - The image report for this interim fix
+    - The endpoint installation images for Windows. These installation
+      images are in the directory 431LCF02/LCF that is created when the
+      interim fix is extracted from the tar file.
+    - Software Package Blocks (SPBs) are provided for the installation
+      of endpoints using Software Distribution version 4.1 (or later).
+      SPBs for AIX, HPUX, Linux-ix86, Linux-ppc, Linux-s390,, Solaris,
+      Solaris2-ix86, and Windows are in the 431LCF02/SPB directory. See
+      the Additional Installation Instructions section below for details.
+
+Applying the Interim Fix:
+
+    1)  Extract the interim fix:
+
+        On a Unix system:
+
+        Extract the contents into a scratch directory. For the purpose
+        of this release note, assume that the symbol $PATCH points to
+        this directory.
+
+        # cd $PATCH
+        # tar xvf 4.3.1-LCF-0002.tar
+
+        On a Windows system:
+
+        Extract the contents into a scratch directory. For the purpose
+        of this release note, assume that the symbol %PATCH% points to
+        this directory. 
+
+        > %SystemRoot%\system32\drivers\etc\Tivoli\setup_env
+        > X:              
+          ^-- 'X' is drive letter where %PATCH% is found
+        > cd %PATCH%
+        > tar xvf 4.3.1-LCF-0002.tar
+
+        NOTE:  If you are extracting the tar image on a Windows system,
+        you will find an executable for tar in the TME installation on
+        Windows under bin/w32-ix86/tools/tar.exe.
+
+    2)  If this interim fix is to be installed on a release level of
+        3.7.1 or greater, follow these instructions for using Software
+        Installation Service (SIS). If not, skip to step 3 below.
+
+        NOTE: SIS can install Tivoli products on any hardware
+              platform supported by Tivoli, but there are some
+              hardware platforms on which SIS cannot be run. Please
+              check your SIS User's Manual for the list of platforms
+              on which SIS can be run.
+
+        NOTE: You must have the install_product and super authorization
+              roles to successfully install this interim fix.
+
+        a)  From the Tivoli Desktop, pull down 
+            Desktop --> Install --> Software Installation Service.
+        b)  SIS will initialize, and bring up the Get Installation
+            Password Dialog.  Enter your Installation Password.
+        c)  Click the Install Button on the dialog which contains
+            the Tivoli image.
+        d)  Click the Select Product Button on the Install Spreadsheet
+            Dialog.
+        e)  Click the Import Product Button on the Select Product
+            Dialog.
+        f)  Locate the media to 4.3.1-LCF-0002 using the file browser,
+            and select the PATCHES.LST file by double-clicking it.
+        g)  Select 4.3.1-LCF-0002 in the Import Product Dialog, and
+            click the Import Button.
+        h)  When the import is complete, click the OK Button on the
+            Global Progress Dialog.
+        i)  Select 4.3.1-LCF-0002 in the Select Product Dialog, if it
+            is not already selected, and click the OK Button.
+        j)  Now click the Select Machine Button on the Install
+            Spreadsheet Dialog.
+        k)  Select the machine(s) you would like to install
+            4.3.1-LCF-0002 on and click the OK Button.
+        l)  Click the appropriate cell(s) in the Install Spreadsheet
+            Dialog. (NOTE: This should yield an "X" in the cell(s)
+            for the machines you want to install 4.3.1-LCF-0002 to).
+        m)  Click the Install Button.
+        n)  Select the install algorithm you want to use on the
+            Installation Algorithm Dialog, and click OK.
+        o)  SIS will perform the installation(s) you designated
+            in the Install Spreadsheet Dialog.
+        p)  Installation is complete. Check the Additional 
+            Installation Instructions section below.
+
+    3)  Use the following steps to install the interim fix using the
+        Tivoli GUI install mechanism.
+        NOTE: You must have the install_product and super authorization
+        roles to successfully install this interim fix.
+
+        a)  Select the "Install -> Install Patch..." option from the
+           "Desktop" menu to display the "Install Patch" dialog.
+        b)  Press the "Select Media..." button to display the "File
+            Browser" dialog.
+        c)  Enter the path to the directory containing the interim fix,
+            $PATCH, in the "Path Name:" field.
+        d)  Press the "Set Media & Close" button to return to the
+            "Install Patch" dialog.
+        e)  The patch install list now contains the name of the interim
+            fix. Select the interim fix by clicking on it. 
+        f)  Select the clients to install this interim fix on. This
+            interim fix needs to be installed on gateway machines.
+        g)  Press the "Install" button to install the interim fix.
+
+Additional Installation Instructions:
+
+    This interim fix upgrades the endpoints from earlier versions to
+    version 43102. In order to upgrade your endpoints: 
+
+    1) Make sure the endpoint has logged into the TMR.
+
+    2) Verify that the endpoint has logged in by using the "wep ls"
+       command.
+
+    3) Before the upgrade, do:
+  
+        wadminep <ep_name> view_version
+
+       The version number returned should be a value less than 43102,
+       depending on which other interim fixes affecting endpoint code
+       have been applied.
+
+    4) For Framework 4.1 or 4.1.1, perform step 4a) below. For Framework
+       3.7 or 3.7.1, perform step 4b) below.
+
+       4a) (Framework 4.1 / 4.1.1) From the Tivoli region server or the
+           gateway that the endpoint is logged into, enter the following 
+           command: 
+
+             wepupgd <ep_name>
+
+           NOTE: The wepupgd command will upgrade the endpoint to the
+           4.1 / 4.1.1 binaries in lcf_bundle.41000 / lcf_bundle.41100
+           by default, and not to the 4.3.1 binaries in lcf_bundle.43100. 
+           To upgrade an endpoint to the 4.3.1 binaries in
+           lcf_bundle.43100, the path to the lcf_bundle.43100 directory
+           should be specified on the wepupgd command. For example, 
+
+             wepupgd -p <path to lcf_bundle.43100> <ep_name>
+
+       4b) (Framework 3.7 / 3.7.1) From the Tivoli region server or the
+           gateway that the endpoint is logged into, enter the following
+           command: 
+
+              wadminep <ep_name> upgrade
+
+           NOTE 1: The wadminep command will use binaries from the
+           machine on which the upgrade command is executed. So, for
+           example, if wadminep is executed on a Tivoli region server
+           and the endpoint's gateway is a different machine, then the
+           binaries on the Tivoli region server (not the endpoint's
+           gateway) will be used for the upgrade.
+
+           NOTE 2: For Framework 3.7 / 3.7.1, the wadminep command will
+           upgrade the endpoint to the 3.7.1 binaries in lcf_bundle.40
+           by default, not to the 4.3.1 binaries in lcf_bundle.43100.
+           To upgrade an endpoint to the 4.3.1 binaries in
+           lcf_bundle.43100, the path to the lcf_bundle.43100 directory
+           should be specified on the wadminep command.  For example,
+
+              wadminep <ep_name> upgrade <path to lcf_bundle.43100>
+
+    5) After the upgrade, do: 
+ 
+        wadminep <ep_name> view_version
+
+       It should return a 43102.
+
+    ------------------------------------------------------------------
+
+    This interim fix contains the Windows library TivoliAP.dll. Since
+    TivoliAP.dll may already be in use by Windows, the Windows system
+    must be rebooted after an upgrade (or a new installation where an
+    older version of TivoliAP.dll was in use) so that this new version
+    of TivoliAP.dll will be loaded into memory. If you do not reboot,
+    then Windows will continue to use the older TivoliAP.dll that was
+    previously loaded.
+
+    (The TivoliAP.dll being replaced is used by the Windows security
+    service. Due to this library being locked, we must follow the
+    Microsoft solution for handling locked libraries. This solution
+    dictates that we must reboot the Windows system to allow the locked
+    library to be replaced at boot time.)
+
+    Note: The version of TivoliAP.dll supplied in this interim fix is
+    the same as the version in the Framework 4.3.1 GA release. Thus, if
+    this interim fix is applied to a 4.3.1 system or to a older
+    Framework release where 4.3.1-LCF-0001 was previously installed,
+    then it is not necessary for the Windows endpoints to be rebooted.
+    For earlier endpoint versions, however, there is no problem in
+    continuing to run with an older version of TivoliAP.dll except that
+    certain fixes will not be available. Thus, this endpoint reboot does
+    not have to be done when an endpoint is upgraded and can be deferred
+    until a later time.
+
+    ------------------------------------------------------------------
+
+        Installing Components using Software Package Blocks (SPBs)
+
+    Before installing images from software package blocks, the Software
+    Distribution version 4.1 (or later) component of IBM Tivoli
+    Configuration Manager must be deployed. (Software Distribution
+    version 4.0 is not supported.) To install an image from a software
+    package block (SPB) to an existing endpoint, perform the following
+    steps:
+
+    1)  From the Tivoli desktop, double-click the appropriate policy
+        region icon to display the Policy Region window.
+    2)  In the Policy Region window, double-click the appropriate
+        profile manager icon to display the Profile Manager window.
+    3)  Select Profile from the Create menu to display the Create
+        Profile window.
+    4)  Create a software package profile.
+    5)  Right-click the new software package profile and select Import
+        to display the Import window.
+    6)  In the Location of Input File group box, select Managed Node
+        from the drop-down list.
+    7)  Click the Browse (...) button to display the Select Input File
+        window.
+    8)  In the Select Input File window, perform the following steps:
+        a) In the Managed Node list, select the machine where tar file
+           was extracted. 
+        b) In the Input File Path list, select the 431LCF02/SPB
+           directory.
+        c) Select the image to import.
+        d) Click Set File & Close to return to the Import window.
+    9)  In the Location of Source Host group box, perform the following
+        steps:
+        a) Ensure that the Build check box is selected.
+        b) In the Source Host Name text box, type the source host name.
+        c) In the SPB Path text box, type the path to the software
+           package block. 
+    10) Click Import & Close to return to the Profile Manager window.
+    11) Right-click the software package profile, and select Install to
+        display the Install Software Package window.
+    12) In the Available Subscribers list, select the endpoints where
+        you want to install the image.
+    13) Click Install & Close to begin the installation. The window
+        remains open until the operation is submitted.
+
+    ------------------------------------------------------------------
+
+    To install a new endpoint on an iSeries machine, run the following
+    command from the gateway:
+
+      w4inslcf.pl -g gateway_name 
+          -L 'log_threshold=3 lcs.machine_name=ep_name' \
+          iSeries-machine-name-or-IP-address
+
+    To install an iSeries endpoint with multiple network cards from a
+    gateway that has multiple network cards, as shown by the following
+    example of a desired configuration: 
+
+          Gateway NIC to use      : 146.84.36.37
+          AS/400 TMA Network card : 146.84.39.126
+          Endpoint HostName       : cheese (146.84.39.126)
+          Endpoint name is        : queso
+          AS/400 TMA local port   : 18752
+          Log threshold is        : 3
+
+    then the following command can be used to install that endpoint:
+
+      w4inslcf.pl -L 'local_ip_interface=146.84.39.126 \
+          lcs.machine_name=queso log_threshold=3' -l 18752 \
+          -g ibmtmp1+8752 -T 146.84.36.37 cheese
+
+    ------------------------------------------------------------------
+
+    NOTE: The Linux endpoints do not support the following monitors:
+
+      * Client RPC timeouts
+      * NFS bad calls
+      * RPC bad calls
+      * Jobs in print queues
+      * Total size queued
+      * Page -scans
+
+    Installation of an endpoint using the winstlcf command with its
+    default options may fail or hang. This problem affects Red Hat 6.2
+    (and higher). The default winstlcf endpoint installation uses the
+    Linux rexecd daemon on both the source and the target for
+    communication. On the Linux operating systems mentioned above, the
+    rexecd daemon contains a defect which prevents Tivoli endpoints from
+    installing. Because of security policy in Red Hat 6.2 (and higher),
+    root access via the rexecd has been disabled, which prevents Tivoli
+    endpoints from installing. 
+
+    Workaround: Install the endpoint using the winstlcf command with the
+    -e Trusted Host option as follows:
+
+    Follow operating system instructions to configure the target's
+    .rhosts file to allow trusted host root access for the gateway from
+    which the installation is being performed. If configured properly,
+    the following command executed from the gateway should return
+    "hello": 
+
+       rsh target_machine_name -l root echo hello
+
+    If "Permission Denied" is returned, consult operating system
+    documentation on how to correctly configure trusted host access and
+    repeat the above test.
+
+    From the gateway in which you successfully ran the test above,
+    install the target endpoint using the Trusted Host access method as
+    follows:
+
+      winstlcf -e target_machine_name
+
+    Contact the appropriate vendor to obtain the following service patch
+    which corrects rexec:
+
+    Red Hat 7.0: Patch "glibc-2.2-12" as described in Red Hat Service
+    Advisory "RHSA-2001:001"
+
+    Turbolinux: Contact vendor to obtain a rexec fix or use the
+    workaround.
+
+    Follow operating system instructions to properly enable rexec to
+    allow root access to the target since, due to security
+    considerations, many operating system vendors disable rexec by
+    default. Tivoli strongly recommends that once the Tivoli
+    installation is complete, rexec access to the target be disabled or
+    restored to a configuration recommended by the operating system
+    vendor.
+
+Known Defects:
+
+    None.

@@ -1,0 +1,14 @@
+# USDA Forest Service TMR Install Documents:
+# 2010-02-01
+#
+
+# Build new CM431 TMR:
+# ./431doc/usdafs_cm431/
+RN-2010-Tivoli_Configuration_Manager_4.3.1_Install_v1.1.docx
+RN-2010-Tivoli_Configuration_Manager_4.3.1_Install_v1.1.htm
+
+# Upgrade TMR to CM431:
+# ./431doc/usdafs_cm431/
+RN-2010-Tivoli_Configuration_Manager_4.3.1_Upgrade_v1.1.docx
+RN-2010-Tivoli_Configuration_Manager_4.3.1_Upgrade_v1.1.htm
+

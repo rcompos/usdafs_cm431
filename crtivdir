@@ -1,0 +1,125 @@
+#!/usr/bin/perl
+# $Header: $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Perform pre-installation directory creation
+#               priot to installing Framework v4.1.1 TMR server.
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+
+use strict;
+use Getopt::Std;
+use Cwd;
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'dfhl', \%opt );
+if( $opt{ h } ) { usage() };
+my $dbug      = $opt{ d } ? 1 : 0;
+my $force     = $opt{ f } ? 1 : 0;
+my $list      = $opt{ l } ? 1 : 0;
+
+my $ult       = "/usr/local/Tivoli";
+my $ultv      = "$ult/var";
+my $ults      = "$ult/src";
+my $ulte      = "$ult/etc";
+my $ultes     = "$ulte/script";
+my $ultec     = "$ulte/cfg";
+my $depot     = "$ult/depot";
+my $lcfdir    = "$ult/lcf/dat/1";
+my $oracle_home = "/var/lpp/oracle";
+
+print "\nUSDA Forest Service CM431 TMR directory creation\n";
+print "\n***  Listing actions only - no changes will be made  ***\n" if $list;
+
+print "\nCreating directories.\n\n";
+
+# Dirs that must pre-exist
+# directory, arg_to_chmod
+my @dir_list = ( 
+                 [ "$ult",       "2775", "-R ugo+r" ],
+                 [ "$ults",      "2775", "-R ugo+r" ],
+                 [ "$depot",     "2777", "-R ugo+r" ],
+               );
+
+my $i = 0;
+while( $i < $#dir_list + 1 ) {
+    my $dir  = $dir_list[$i][0];
+    my $mod = $dir_list[$i][1];
+    my $arg = $dir_list[$i][2] ? $dir_list[$i][2] : 0;
+    if( -d $dir ) {
+        print "  chmod $mod $dir\n";
+        `chmod $mod $dir` unless $list;
+        if( $arg ) {
+            print "  chmod $arg $dir\n";
+            `chmod $arg $dir` unless $list;
+        }
+    } else { 
+        print "ERROR: Directory doesn't exist: $dir\n";
+    }
+    $i++;
+}
+
+
+# Dirs that will be created if not exist 
+# directory, numeric_perm
+# where numeric_perm an argument to mkdir and chmod
+my @dir_new = ( 
+                [ "$ulte",                  "2775", "-R ugo+r" ], 
+                [ "$ultv",                  "2777", "-R ugo+r" ],
+                [ "$ultv/tmp",              "2777", "-R ugo+r" ], 
+                [ "$ultv/log",              "2777", "-R ugo+r" ], 
+                [ "$ults/archive",          "2777", "-R ugo+r" ], 
+                [ "$ultv/log/cm431",        "2777", "-R ugo+r" ],
+                [ "$ultv/db_bkup",          "2775", "-R ugo+r" ],
+                [ "$ultv/backup",           "2777", "-R ugo+r" ],
+                [ "$ultec",                 "2775", "-R ugo+r" ],
+              );
+
+$i = 0;
+while( $i < $#dir_new + 1 ) {
+    my $dir = $dir_new[$i][0];
+    my $mod = $dir_new[$i][1];
+    my $arg = $dir_new[$i][2];
+    unless( -d $dir ) {
+        print "  mkdir -m$mod $dir\n";
+        `mkdir -m$mod $dir` unless $list;
+    }
+    print "  chmod $arg $dir\n";
+    `chmod $arg $dir` unless $list;
+    $i++;
+}
+
+print "\n***  Listing actions only - no changes will be made  ***\n" if $list;
+
+print "\n$0 complete\n\n";
+
+
+##################
+#   end corpus   #
+##################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhl] 
+
+Desc:  Create directories for USDA Forest Service CM431 TMR Install.
+       Run this script prior to installing Tivoli Framework
+       v4.1.1 TMR server.  
+
+       -h  Help
+       -l  List actions to be performed
+           No actions will be taken.
+       -f  Force execution without confirmation 
+
+USAGE
+    exit;
+}   # end usage
+
+

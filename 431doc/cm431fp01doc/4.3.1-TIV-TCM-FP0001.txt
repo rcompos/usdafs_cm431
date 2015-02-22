@@ -1,0 +1,3409 @@
+                    IBM Tivoli Configuration Manager
+                Readme File for Fix Pack 1 - PTF U829862
+
+Version 4.3.1
+
++---- Note ------------------------------------------------------------+
+
+Before using this information and the product it supports, read the
+information in 3.0, "Notices".
+
++----------------------------------------------------------------------+
+
+
+
+This edition applies to Fix Pack 1 (PTF U829862) for version 4, release
+3, modification level 1 of IBM Tivoli Configuration Manager (program
+number 5724-C06)
+
+Copyright International Business Machines Corporation 2003, 2009.
+US Government Users Restricted Rights -- Use, duplication or disclosure 
+restricted by GSA ADP Schedule Contract with IBM Corp.
+
+
+Contents
+
+1.0 Tables
+2.0 IBM Tivoli Configuration Manager 4.3.1 ReadMe File for Fix Pack 
+    4.3.1-TIV-TCM-FP0001 (PTF U829862)
+  2.1 About this release
+    2.1.1 CD-ROM structure
+    2.1.2 Enhancements
+      2.1.2.1 New features in this fix pack
+    2.1.3 Product compatibility
+    2.1.4 Limitations
+    2.1.5 Internationalization limitations
+    2.1.6 Product fix history
+      2.1.6.1 Fixes contained in this fix pack
+        2.1.6.1.1 APARs fixed for Inventory
+        2.1.6.1.2 APARs fixed for Scalable Collection Service
+        2.1.6.1.3 APARs fixed for Software Distribution
+        2.1.6.1.4 APARs fixed for Activity Planner
+        2.1.6.1.5 APARs fixed for Patch Management
+        2.1.6.1.6 APARs fixed for CM Extension for Tivoli License 
+                  Manager
+  2.2 Installation
+    2.2.1 Supported platforms
+    2.2.2 Upgrading large environments
+    2.2.3 Traditional fix pack installation methods
+      2.2.3.1 Installing fix packs using ISMP
+      2.2.3.2 Installing fix packs using the Tivoli desktop
+      2.2.3.3 Installing fix packs using the CLI
+        2.2.3.3.1 wpatch command
+      2.2.3.4 Installing fix packs using SIS
+    2.2.4 Software package block (SPB) fix pack installation for GUI 
+          components
+      2.2.4.1 SPB Patch Installer
+      2.2.4.2 Software Distribution server command
+      2.2.4.3 Software Distribution disconnected command
+      2.2.4.4 Software package block fix packs
+    2.2.5 Updating the inventory schema
+    2.2.6 Updating the inventory queries
+    2.2.7 Updating the Inventory signatures and packages
+    2.2.8 Upgrading plug-ins
+  2.3 Documentation notes
+    2.3.1 Documentation problems and corrections contained in this fix 
+          pack
+      2.3.1.1 User's Guide for Inventory
+      2.3.1.2 Database Schema Reference
+      2.3.1.3 Patch Management Guide
+      2.3.1.4 Planning and Installation Guide
+        2.3.1.4.1 Upgrade and migration considerations
+      2.3.1.5 Reference Manual for Software Distribution
+      2.3.1.6 User's Guide for Deployment Services
+      2.3.1.7 Release Notes
+      2.3.1.8 License Management with License Compliance Manager Version 
+              2.3 Fix Pack 4
+3.0 Notices
+  3.1 Trademarks
+
+1.0 Tables
+
+1. IBM Tivoli Configuration Manager, Version 4.3.1 Fix Pack 1 CD 1
+2. IBM Tivoli Configuration Manager, Version 4.3.1 Fix Pack 1 CD 2
+3. Customer enhancement request references
+4. Fixes included in this fix pack
+5. APARs for Inventory
+6. APARs for Scalable Collection Service
+7. APARs for Software Distribution
+8. APARs for Activity Planner
+9. APARs for Patch Management
+10. IND files included in this fix pack
+11. Default variables defined in SPB fix packs
+12. Names of SPB files and software profiles
+13. SQL scripts for updating the Inventory schema
+14. SQL scripts for updating the Historical Inventory schema
+15. Columns added to views
+16. Columns removed from views
+17. Columns added to queries
+18. Columns removed from queries
+19. Columns added to tables
+20. Columns removed from tables
+21. Columns added to Physical Processor View
+22. Software Packages for Installing the Administrative Interfaces
+
+2.0 IBM Tivoli Configuration Manager 4.3.1 ReadMe File for Fix Pack 
+    4.3.1-TIV-TCM-FP0001 (PTF U829862)
+
+This readme file provides important information about Fix Pack 1 (PTF
+U829862) for IBM® Tivoli® Configuration Manager Version 4.3.1. This
+readme file is the most current information for the fix pack and takes
+precedence over all other documentation for IBM Tivoli Configuration
+Manager, Version 4.3.1. This fix pack fixes a variety of defects of
+Tivoli Configuration Manager.
+
+The Common Inventory Technology (CIT) level distributed in this fix pack
+is 2.6.0.1006.
+
+Please review this section thoroughly before installing or using this
+fix pack.
+
+2.1 About this release
+
+This section includes the following topics:
+
+*  2.1.1, "CD-ROM structure"
+*  2.1.2, "Enhancements"
+*  2.1.3, "Product compatibility"
+*  2.1.4, "Limitations"
+*  2.1.6, "Product fix history"
+
+2.1.1 CD-ROM structure
+
+IBM Tivoli Configuration Manager, Version 4.3.1 Fix Pack 1 includes two
+CD-ROMs as detailed in the following tables: 
+
+Table 1. IBM Tivoli Configuration Manager, Version 4.3.1 Fix Pack 1 CD 1
++-----------------------------+---------------------------------------+
+| Directory or path           | Contents                              |
++-----------------------------+---------------------------------------+
+| /xml                        | The XML file to be used by the ISMP   |
+|                             | installation program.                 |
++-----------------------------+---------------------------------------+
+| /cit_enabler                | Enabler for Inventory scan on VMware  |
+|                             | environments.                         |
++-----------------------------+---------------------------------------+
+| /CIT_SPB                    | Software package block (SPB) files    |
+|                             | used to upgrade the CIT component to  |
+|                             | version 2.6.0.1006.                   |
++-----------------------------+---------------------------------------+
+| /images/INVENTORY           | Images required for the Inventory fix |
+|                             | pack.                                 |
++-----------------------------+---------------------------------------+
+| /images/MCOLLECT            | Images required for the Scalable      |
+|                             | Collection Services fix pack.         |
++-----------------------------+---------------------------------------+
+| /images/SWD                 | Images required for Software          |
+|                             | Distribution, Activity Planner, Patch |
+|                             | Management, CM Extension for Tivoli   |
+|                             | License Manager fix pack.             |
++-----------------------------+---------------------------------------+
+| /rad                        | The RAD files required to install     |
+|                             | Tivoli Provisioning Manager for       |
+|                             | Operating System Deployment.          |
++-----------------------------+---------------------------------------+
+
+Table 2. IBM Tivoli Configuration Manager, Version 4.3.1 Fix Pack 1 CD 2
++-----------------------------+---------------------------------------+
+| Directory or path           | Contents                              |
++-----------------------------+---------------------------------------+
+| /tools/LoginControl         | Software package block (SPB) and      |
+|                             | executable files used to implement    |
+|                             | the concurrent login feature. For     |
+|                             | more information about this feature,  |
+|                             | see 2.1.2, "Enhancements".            |
++-----------------------------+---------------------------------------+
+| /tools/JarVersion           | Scripts to retrieve and display the   |
+|                             | version of the .jar files currently   |
+|                             | installed.                            |
++-----------------------------+---------------------------------------+
+| /tools/apm_reporting        | Files to implement the Activity plan  |
+|                             | group creation, submission, and       |
+|                             | tracking.                             |
++-----------------------------+---------------------------------------+
+| /package                    | Software package block (SPB) files    |
+|                             | used to patch GUI components and the  |
+|                             | XML descriptor file.                  |
++-----------------------------+---------------------------------------+
+| /spb_installer              | SPB Patch Installer that installs SPB |
+|                             | fix pack locally and the SPB Patch    |
+|                             | Installer Guide.                      |
++-----------------------------+---------------------------------------+
+| /tpm_install                | Files to implement an improved        |
+|                             | installation for Automation Server.   |
+|                             | To use the improved installation, in  |
+|                             | the installation image that you       |
+|                             | copied from the Prerequisite Software |
+|                             | Installer for Automation Server CD 2, |
+|                             | replace the files in the /tpm_install |
+|                             | directory with these files. For more  |
+|                             | information, see IBM Tivoli           |
+|                             | Configuration Manager: Patch          |
+|                             | Management Guide.                     |
++-----------------------------+---------------------------------------+
+
+2.1.2 Enhancements
+
+This section contains a list of enhancements introduced in this fix
+pack.
+
+2.1.2.1 New features in this fix pack
+
+This fix pack contains the following enhancements: 
+
+Table 3. Customer enhancement request references
++------------+----------------------------------------+---------------+
+|            | Enhancement                            | Reference     |
++------------+----------------------------------------+---------------+
+| Inventory  | Inventory software scan returns access | MR0808085933  |
+|            | time information                       |               |
++------------+----------------------------------------+---------------+
+| Inventory  | Exclude history tables                 | 235414        |
++------------+----------------------------------------+---------------+
+| Patch      | Windows Update Agent (WUA) 3.0 support |               |
+| Management |                                        |               |
++------------+----------------------------------------+---------------+
+| DLA        | Discovery Library Adapter (DLA)        |               |
+|            | version 7.1.-TCMDLA-I                  |               |
++------------+----------------------------------------+---------------+
+| New        | Windows 7 support                      |               |
+| Endpoint   |----------------------------------------|               |
+| support    | SLES 11 support                        |               |
++------------+----------------------------------------+---------------+
+| New        | Windows 2008 r2 support                |               |
+| platform   |                                        |               |
+| support    |                                        |               |
++------------+----------------------------------------+---------------+
+
+Inventory software scan returns access time information - Feature 
+MR0808085933
+         With this feature, if you perform an Inventory software scan,
+         configured using the Scan for installed products using
+         signature matching scan option, you retrieve new information
+         named ACCESSED TIME, which shows the GMT time when the
+         signature file was last accessed.
+
+Exclude history tables - Feature 235414
+         With this feature you can now exclude the history processing of
+         some tables, to improve performance when loading the scan
+         results into the database. All the Inventory tables that
+         contain the COMPUTER_SYS_ID attribute have history data
+         collected.
+
+         If you have Inventory tables for which you do not need to keep
+         the history tables, perform the following steps:
+         1. Create the EXCLUDED_H_TABLES table.
+         2. Insert the name of the table to be excluded in
+            EXCLUDED_H_TABLES.
+
+         You can find the SQL statements for performing these operations
+         in the h_inv_dbvendor_schema_431_FP01.sql script file.
+
+
+WUA 3.0 support
+         With this feature the support has been extended to WUA version
+         3.0 for the Patch Management component.
+
+         If you have installed WUA 3.0, perform the following steps
+         before using the new WUA version:
+         1. Locate and open the WUA.spd file.
+         2. Replace, for example, all WindowsUpdateAgent20-x86.exe
+            occurrences in the file with the following file name: 
+            WindowsUpdateAgent30-x86.exe
+
+         For more details about the WUA 3.0 support, see also the 2.1.4,
+         "Limitations" section.
+
+
+Discovery Library Adapter (DLA) version 7.1.-TCMDLA-I
+         The new version of the Discovery Library Adapter (DLA) for
+         Tivoli Configuration Manager has been published on the OPAL Web
+         site and replaces older versions.
+
+         This DLA provides resource instance and resource relationship
+         instance information for the Tivoli Configuration Manager
+         according to the IDML specification using a lightweight,
+         easy-to-use solution based on IBM Tivoli Director Integrator.
+
+
+Windows 7 and SLES 11 endpoint support 
+         The endpoint support has now been extended to endpoints having
+         the following operating systems installed: 
+         *  Windows 7
+         *  SLES 11
+
+         Note: To enable WSUS 3.0 to manage Windows 7 endpoints for
+               Patch Management operations, you must download the
+               Windows Server Update Services 3.0 SP2 from the following
+               Microsoft Web site:
+
+               http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=a206ae20-2695-436c-9578-3403a7d46e40
+
+
+Windows 2008 r2 platform support
+         The support has now been extended to Tivoli servers and
+         endpoints with the Windows 2008 r2 operating system installed.
+
+         Note: To enable WSUS 3.0 to manage Windows 2008 r2 endpoints
+               for Patch Management operations, you must download the
+               Windows Server Update Services 3.0 SP2 from the following
+               Microsoft Web site:
+
+               http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=a206ae20-2695-436c-9578-3403a7d46e40
+
+2.1.3 Product compatibility
+
+Compatibility is defined as whether different versions of a Tivoli
+product can communicate with different versions of Tivoli Management
+Framework or other Tivoli products.
+
+IBM Tivoli Configuration Manager, Version 4.3.1 fix pack
+4.3.1.-TIV-TCM-FP0001 was tested using:
+*  Tivoli Management Framework, Version 4.3.1.
+*  Tivoli Provisioning Manager for Software, version 5.1.1.
+
+2.1.4 Limitations
+
+Defect 66833: Emergency patches are not installable on Windows 7
+endpoints.
+
+Defect 59806: A patch installation might fail with exit code 1641. The
+workstation is automatically rebooted and the patch installation is
+completed when the workstation restarts. If the patch installation was
+performed using an activity plan, also the activity plan fails. Use the
+wsecrprt command to verify the patch installation.
+
+Defect 59828: An activity plan for installing Microsoft service packs
+might fail. In the Software Distribution log file, one or more patches,
+contained in the service pack, fail with exit code 1642. This exit code
+does not mean that the service pack installation has failed, it means
+that the specific patch is not needed because the specific software
+module you are trying to upgrade is not present.
+
+Defect 59811: The "2007 Microsoft Office Suite Service Pack 1"
+installation fails. If you perform a query in Patch Management using the
+wsecrprt command, the patch is missing. Despite this error, in most
+cases the patch has been installed correctly. Verify the patch
+installation from the Add or Remove Programs list of the Windows
+operating system. A ticket has been opened to Microsoft for this
+software limitation.
+
+APAR IY88658: The SSL connection is not supported for the Enterprise
+Directory Query component.
+
+Defect 58552: When running an activity plan to install a patch on a
+Windows 2000 Advanced Server, the patch installation might fail with
+exit code 1. The problem is generated by how parameters are parsed by
+the operating system.
+
+As a workaround to successfully install the patch, you must modify the
+inhibit_parsing key. Inhibit parsing prevents the standard parsing of
+the values passed to the patch installation script. To modify the value
+of the inhibit_parsing key, perform the following steps:
+1. In the Patch Management policy region, locate the patch that you are
+   trying to install and unbuild it by converting the software package
+2. Launch the Software Package Editor and edit the Execute Program
+   object named $(temp_dir)\Hotfix\$(EXE)
+3. Select Advanced
+4. Clear the Inhibit Parsing check box
+5. Save and close the modified software package
+6. Rebuild the software package by converting it
+7. Distribute the software package only to the endpoints on which the
+   distribution failed previously.
+
+Refer to the IBM Tivoli Configuration Manager: Reference Manual for
+Software Distribution and IBM Tivoli Configuration Manager: User's Guide
+for Software Distribution for more information about the inhibit parsing
+option.
+
+Defect 201407: If the Common Inventory Technology (CIT) package is
+installed on the endpoint in transactional mode, and the following
+commit operation is not performed or fails, a subsequent transactional
+installation of the same package fails with RC=10.
+
+To avoid this problem, before installing CIT, you must perform the
+commit operation or manually uninstall CIT. This problem often occurs
+when you install CIT by using an inventory scan.
+
+Defect 181204: When you distribute a hardware scan profile to a Windows®
+2003 with an AMD Opteron processor, the processor being detected is
+incorrect. It results in "Pentium® M" instead of "AMD Opteron Family"
+because of a Microsoft® problem.
+
+Defect 58827: Messages sent to the Activity Plan Monitor and stored in
+the activity plan database are truncated if their length is greater than
+the length defined in the schema. All the messages, except for Tivoli
+Provisioning Manager for Operating System Deployment messages, are
+truncated at the end. The Tivoli Provisioning Manager for Operating
+System Deployment messages are truncated at the beginning because they
+start with the copyright information, which is not useful for the error
+explanation.
+
+2.1.5 Internationalization limitations
+
+Defect 58877: Messages displayed in Error Messages when you monitor an
+IBM Tivoli Provisioning Manager for Operating System Deployment plan, by
+selecting a target and then Show/Hide Details from the pull-down menu of
+the Activity Plan Monitor GUI, are sometimes in English.
+
+Defect 58757: The Tivoli Provisioning Manager for Operating System
+Deployment messages that are displayed in the Activity Plan Monitor
+after you submit a plan are garbled. Workaround: You can either change
+the language of Tivoli Provisioning Manager for Operating System
+Deployment to English or open the rbagent.log log and search for the
+corresponding error message.
+
+Defect 58916: When a DB2 error occurs on Tivoli Provisioning Manager for
+Operating System Deployment in non-English environment, the DB2 error
+message shown in Activity Plan Monitor might be garbled. This is a known
+problem of IBM Tivoli Provisioning Manager for Operating System
+Deployment Fix Pack 1. To identify the error, look for the DB2 message
+ID and SQL code in the DB2 message reference.
+
+2.1.6 Product fix history
+
+The following section includes all the fixes included in this fix pack.
+
+2.1.6.1 Fixes contained in this fix pack
+
+Table 4 lists the fixes included in this fix pack:
+
+Table 4. Fixes included in this fix pack
++----------------------------------+----------------------------------+
+| Fix pack                         | Component/Service                |
++----------------------------------+----------------------------------+
+| 4.3.1-TIV-INV-FP0001             | Inventory, Version 4.3.1         |
++----------------------------------+----------------------------------+
+| 4.3.1-TIV-INVGW-FP0001           | Inventory Gateway, Version 4.3.1 |
++----------------------------------+----------------------------------+
+| 4.3.1-TIV-CLL-FP0001             | Scalable Collection Service,     |
+|                                  | Version 4.3.1                    |
++----------------------------------+----------------------------------+
+| 4.3.1-TIV-SWDSRV-FP0001          | Software Distribution, Version   |
+|                                  | 4.3.1                            |
++----------------------------------+----------------------------------+
+| 4.3.1-TIV-SWDGW-FP0001           | Software Distribution Gateway,   |
+|                                  | Version 4.3.1                    |
++----------------------------------+----------------------------------+
+| 4.3.1-TIV-SWDJPS-FP0001          | Software Distribution Software   |
+|                                  | Package Editor, Version 4.3.1    |
++----------------------------------+----------------------------------+
+| 4.3.1-TIV-APM-FP0001             | Activity Planner, Version 4.3.1  |
++----------------------------------+----------------------------------+
+| 4.3.1-TIV-PMG-FP0001             | Patch Management, Version 4.3.1  |
++----------------------------------+----------------------------------+
+| 4.3.1-TIV-TLMEXT-FP0001          | CM Extension for Tivoli License  |
+|                                  | Manager, Version 4.3.1           |
++----------------------------------+----------------------------------+
+
+2.1.6.1.1 APARs fixed for Inventory
+
+Table 5 lists the APARs that were fixed for Inventory:
+
+Table 5. APARs for Inventory
++---------------------------------------------------------------------+
+|         Inventory, Version 4.3.1, 4.3.1-TIV-INV-FP0001 and          |
+|                       4.3.1-TIV-INVGW-FP0001                        |
++-------------+-------------+-------------+-------------+-------------+
+| IZ36578     | IZ37067     | IZ37463     | IZ40935     | IZ41054     |
++-------------+-------------+-------------+-------------+-------------+
+| IZ42275     | IZ42283     | IZ42943     | IZ44261     | IZ44909     |
++-------------+-------------+-------------+-------------+-------------+
+| IZ46768     | IZ47661     | IZ49535     | IZ49791     | IZ49856     |
++-------------+-------------+-------------+-------------+-------------+
+| IZ50748     | IZ51170     | IZ51313     | IZ52869     | IZ53428     |
++-------------+-------------+-------------+-------------+-------------+
+| IZ55281     | IZ63870     | IZ64673     |             |             |
++-------------+-------------+-------------+-------------+-------------+
+
+APAR IZ36578 
+
+Abstract: 
+         LPAR property/group not added to the hardware Windows
+         configuration of existing profiles
+
+Error Description:
+         The LPAR property/group is not added to the hardware Windows
+         configuration of an existing profile, if one of the following
+         fix packs has already been applied: 
+         *  Configuration Manager 4.2.3 Fix Pack 2
+         *  Configuration Manager 4.2.3 Fix Pack 3
+         *  Configuration Manager 4.2.3 Fix Pack 4
+
+APAR IZ37067 
+
+Abstract: 
+         Inventory log file is written as nobody:nobody
+
+Error Description:
+         Inventory log file is created as nobody:nobody 666. 666 is a
+         too high permission that is not compliant with the security
+         rules. Set it to 644.
+
+APAR IZ37463 
+
+Abstract: 
+         Signature files have size 0
+
+Error Description:
+         A signature software scan can find files having a zero (0) file
+         size. However, the MATCH_SWARE_VIEW that joins the SIGNATURE
+         table with UNMATCHED_FILES, which represents the results of the
+         file system scan named "Scan for Basic Information", does not
+         display any match for signature files having size 0, even if
+         the file system scan can detect these files.
+
+APAR IZ40935 
+
+Abstract: 
+         Data is truncated because the field for the OS_SUB_VERS data
+         only allows 32 characters
+
+Error Description:
+         The value for the Inventory hardware scan data OS_SUB_VERS,
+         named "Sub Version" in the MIF file, is limited to 32
+         characters, but, for example, the result data for the polish
+         Microsoft Windows XP Professional service pack 1 is 35
+         characters long. The following is a sample tivhscan.mif file: 
+         Start Attribute
+         Name = "Sub Version"
+         ID = 5
+         Type = String(32)
+         Value = "Build 2600: Dodatek Service Pack. 1"
+         End Attribute 
+
+APAR IZ41054 
+
+Abstract: 
+         The 20081130 catalog file causes an Inventory scan failure
+
+Error Description:
+         If you have downloaded the catalog named 
+         itlcm22-allProducts-fullSwCat-20081130.xml
+
+         and you have run one of these commands: 
+         *  winvmigrate -c itlcm22-allProducts-fullSwCat-20081130.xml
+         *  winvsig -a -f itlcm22-allProducts-fullSwCat-20081130.xml
+
+         when you perform an Inventory scan against a Windows endpoint
+         the scan fails.
+
+Additional information:
+         The scan failure is caused by an incorrect signature in the
+         catalogWindows.txt file, which is downloaded on the endpoint.
+         The reason is that the Configuration Manager scanner does not
+         accept an extended signature that is split into multiple rows: 
+         42987]57b056a4abfe46c0b480d883136ada59]0]400]1]&nil;]
+         <Signaturename="Oracle 11g"
+         guid="57b056a4abfe46c0b480d883136ada59"&gt;<Variable
+
+         The signature must be all in one single row.
+
+APAR IZ42275 
+
+Abstract: 
+         Tivoli Desktop 4.3.1 if installed into a non-default path
+         causes an Inventory GUI launch problem
+
+Error Description:
+         If you install the Tivoli desktop from Configuration Manager
+         4.3.1 CD 3 and specify a non-default installation path such as
+         c:\tivoli\desktop, when you try to launch the inventory editor
+         GUI it does not launch. A hard-coded issue is present in the
+         file c:\Tivoli\Desktop\Console\InvGUI.bat. The suggested
+         workaround for this issue is to change the path to match your
+         non-default installation path.
+
+APAR IZ42283 
+
+Abstract: 
+         Inventory profile creation using the Tivoli desktop does not
+         work on Windows platforms
+
+Error Description:
+         When you try to create an inventory profile using the Tivoli
+         desktop, the profile might not be created and an oserv failure
+         popup panel might be displayed. The problem does not
+         necessarily occur during the first attempt to create the
+         profile.
+
+APAR IZ42943 
+
+Abstract: 
+         Software signature scan fails
+
+Error Description:
+         After loading the file named
+         inventory-allProducts-fullSwCat-20080831.xml and performing a
+         signature scan, the software signature scan fails. This issue
+         is caused by the extended signature being split into multiple
+         rows.
+
+APAR IZ44261 
+
+Abstract: 
+         MIF parse error in tivrscan.mif on AS/400 endpoints
+
+Error Description:
+         When performing a scan on an AS/400 endpoint for "scan registry
+         for product information", the following error occurs:
+         Dec 01 13:35:30 Q MethInit ** Exception caught in run_impl: MIF
+         parse
+         error: tivrscan.mif: line 780: syntax error
+         Context: "5"
+
+APAR IZ44909 
+
+Abstract: 
+         wscanfs -reset failure due to LIBPATH setting
+
+Error Description:
+         Because of the LIBPATH setting used by Configuration Manager,
+         an Inventory scan performed on AIX platforms might fail and
+         display the following error message: 
+         INFO: Command to run: /opt/tivoli/cit/bin/wscanfs -reset
+         INFO: Dumping CLI invocation parameters:
+         /opt/tivoli/cit/bin/wscanfs
+         -reset
+         INFO: after tiv_spawn() pid=28246
+         INFO: Timeout=-1
+         INFO: before calling unix_wait()  pid=28246
+         INFO: inside unix_wait()
+         INFO: inside unix_wait() timeout=-1
+         INFO: cli invocation status=8
+         ERROR: sa_discover threw an exception
+         INFO: Releasing the lock...
+
+APAR IZ46768 
+
+Abstract: 
+         Deadlocks when writing to the PRINTER table
+
+Error Description:
+         When running big Inventory scans, deadlocks can be found in the
+         RIM log for the PRINTER and MOUSE tables.
+
+Additional Information:
+         The PRINTER and MOUSE tables are leaf tables (no
+         computer_sys_id) so they can be concurrently accessed by
+         different output threads.
+
+APAR IZ47661 
+
+Abstract: 
+         Inventory 431 malloc occurs
+
+Error Description:
+         Inventory 431 malloc occurs when performing a compression of
+         MIF files on the endpoint.
+
+APAR IZ49535 
+
+Abstract: 
+         Inventory scan on AIX platforms might cause malloc
+
+Error Description:
+         Tivoli Configuration Manager 431 Inventory scan on AIX
+         platforms might cause malloc when scanning large file systems.
+
+APAR IZ49791 
+
+Abstract: 
+         INV_CONFIG_EP_METHS process might hang
+
+Error Description:
+         The Common Inventory Technology scanner wscansw might create a
+         malformed or truncated output file named inv/SCAN/swscan.xml
+         especially if the wscansw command cores.
+
+APAR IZ49856 
+
+Abstract:
+         Log message contains misleading information when the signature
+         catalog is not found
+
+Error Description:
+         When the catalog of the signatures is not downloaded, the log
+         file shows that wscanner tried to run but does not specify that
+         the problem is caused by a missing catalog. A more specific log
+         file would be useful.
+
+APAR IZ50748 
+
+Abstract: 
+         Directory exclusion in Inventory profile does not work with CIT
+         2.6
+
+Error Description:
+         With the Common Inventory Technology (CIT) version 2.6 provided
+         by Tivoli Configuration Manager, the directory exclusion does
+         not work correctly.
+
+APAR IZ51170 
+
+Abstract: 
+         Incorrect number of lines after running wqueryinv command
+
+Error Description:
+         Even if the PHYSICAL PROCESSOR table contains the correct
+         number of entries, when performing wqueryinv, more entries are
+         added.
+
+APAR IZ51313 
+
+Abstract: 
+         Signature catalog should not be sent if the signature scan is
+         not required
+
+Error Description:
+         A signature catalog for Windows is sent to a Windows endpoint
+         even if the Inventory profile is not configured to scan for
+         signatures. The same issue occurs on UNIX platforms.
+
+APAR IZ52869 
+
+Abstract: 
+         Log file specified with wsetinvglobal must allow you to specify
+         the permissions
+
+Error Description:
+         You must be able to specify what the permissions are in the log
+         file specified when running the wsetinvglobal command. These
+         permissions were modified into 666 nobody:esms with APAR
+         IZ37067 and they are now 644 again.
+
+Additional Information:
+         To enable the fix provided, you must enable the
+         GA_INV_LOG_FILE_CHMOD environment variable as follows:
+         run
+         odadmin environ get >e
+         edit e
+         and add at the bottom of the file e
+         GA_INV_LOG_FILE_CHMOD=TRUE
+         
+         odadmin environ set <e
+         odadmin reexec all
+
+APAR IZ53428 
+
+Abstract: 
+         $remote keyword not working if preceeded by "/"
+
+Error Description:
+         Common Inventory Technology (CIT) provides the capability to
+         scan a remote drive if it is preceded by the $REMOTE:: key. The
+         Inventory server and the wsetinvpcfiles / wsetinvunixfiles
+         commands add a / prefix to all the directory names specified in
+         the Include Directory section. CIT cannot read this key. 
+
+         The following fix applies to UNIX endpoints only:
+
+         The Tivoli Configuration Manager code has been modified, so
+         that the "/" prefix is not added, if the "$REMOTE" string is
+         located at the beginning of the directory name.
+
+
+Additional Information:
+         Even if the $REMOTE prefix is correctly set, the scan against a
+         remote drive might not work, in particular on Windows
+         platforms, because the remote drive might not be visible to the
+         TRAA (wlcftap) TMF user, when it invokes any command. For
+         example, when running a simple TMF task such as:
+         ls -la N:/
+
+         where N:/ is a remote resource, the scan might not work.
+
+APAR IZ55281 
+
+Abstract: 
+         ACCESSED TIME information is now provided by the tivsscan.mif
+         file
+
+Error Description:
+         If you perform an Inventory software scan, configured using the
+         Scan for installed products using signature matching scan
+         option, you retrieve new information named ACCESSED TIME, which
+         shows the GMT time when the signature file was last accessed.
+
+Additional Information:
+         The software signature scan on the endpoint now discovers the
+         ACCESSED TIME information for each matched signature. On the
+         endpoint, the inv/SCAN/tivsscan.mif file now shows this
+         information. The INVENTORY_SWARE and H_INVENTORY_SWARE queries
+         have been updated to display the new column. Also the
+         INST_SWARE_VIEW and H_INST_SWARE_VIEW have been modified.
+
+APAR IZ63870 
+
+Abstract: 
+         wscanvpd might fail with return code 52
+
+Error Description:
+         The wscanvpd command uses a Windows API to collect the product
+         information, and if this API fails, then wscanvpd also fails on
+         some endpoints and displays a return code of 52.
+
+APAR IZ64673 
+
+Abstract: 
+         SQL0180N inserting the ACCESSED_TIME column into the database
+
+Error Description:
+         When inserting the ACCESSED_TIME column into the MSWARE_DESC
+         table, a SQL0180N error occurs, during the UPDATE with
+         difference scan. When performing REPLACE with current results,
+         no error is generated.
+
+2.1.6.1.2 APARs fixed for Scalable Collection Service
+
+Table 6 lists the APAR that was fixed for Scalable Collection Service:
+
+Table 6. APARs for Scalable Collection Service
++---------------------------------------------------------------------+
+|  Scalable Collection Service, Version 4.3.1, 4.3.1-TIV-CLL-FP0001   |
++-------------+-------------+-------------+-------------+-------------+
+| IZ60279     |             |             |             |             |
++-------------+-------------+-------------+-------------+-------------+
+
+APAR IZ60279 
+
+Abstract: 
+         inv_rcv_meths.exe failure
+
+Error Description:
+         The inv_rcv_meths.exe fails and ends in an unexpected way,
+         tracking the error in oservlog, and preventing the Inventory
+         database from being updated.
+
+2.1.6.1.3 APARs fixed for Software Distribution
+
+Table 7 lists the APARs that were fixed for Software Distribution:
+
+Table 7. APARs for Software Distribution
++---------------------------------------------------------------------+
+|    Software Distribution, Version 4.3.1, 4.3.1-TIV-SWDSRV-FP0001    |
++-------------+-------------+-------------+-------------+-------------+
+| IZ35031     | IZ37181     | IZ37727     | IZ39094     | IZ43906     |
++-------------+-------------+-------------+-------------+-------------+
+| IZ44090     | IZ46760     | IZ46966     | IZ47592     | IZ50171     |
++-------------+-------------+-------------+-------------+-------------+
+| IZ50436     | IZ55429     | IZ55739     | IZ56029     | IZ57803     |
++-------------+-------------+-------------+-------------+-------------+
+| IZ59322     | IZ59502     | IZ59604     | IZ59646     | IZ60188     |
++-------------+-------------+-------------+-------------+-------------+
+| IZ60341     | IZ60609     | IZ61292     | IZ62258     | IZ62947     |
++---------------------------------------------------------------------+
+|            Software Distribution Gateway, Version 4.3.1,            |
+|                       4.3.1-TIV-SWDGW-FP0001                        |
++-------------+-------------+-------------+-------------+-------------+
+| None        |             |             |             |             |
++---------------------------------------------------------------------+
+|   Software Package Editor, Version 4.3.1, 4.3.1-TIV-SWDJPS-FP0001   |
++-------------+-------------+-------------+-------------+-------------+
+| None        |             |             |             |             |
++---------------------------------------------------------------------+
+|        Software Package Editor for Endpoints, Version 4.3.1,        |
+|                       4.3.1-TIV-SWDEP-FP0001                        |
++-------------+-------------+-------------+-------------+-------------+
+| None        |             |             |             |             |
++-------------+-------------+-------------+-------------+-------------+
+
+APAR IZ35031 
+
+Abstract: 
+         Performance issue with Software Package Editor
+
+Error Description:
+         Saving a software package definition (SPD) file to the
+         repository using the Software Package Editor, reorganizes the
+         files. For software packages containing thousands of files,
+         there is a performance problem.
+
+APAR IZ37181 
+
+Abstract: 
+         wldsp command issued to 1850 target managed nodes has a
+         mdist2_result methods problem
+
+Error Description:
+         When issuing the wldsp command to a target list of 1850 managed
+         nodes, the mdist2_result methods that are returned by this
+         command generate several object_get_alls, which cause a
+         performance problem.
+
+Additional information:
+         This APAR enhances the fix done for APAR IZ31961.
+
+APAR IZ37727 
+
+Abstract: 
+         Nested package logging is incorrect
+
+Error Description:
+         When a parent package has nested packages, the log reporting is
+         incorrect.
+
+APAR IZ39094 
+
+Abstract: 
+         SPB wimpspo command hangs on Linux-ix86 platforms
+
+Error Description:
+         On Linux-ix86 platforms, when issuing the wimpspo command on a
+         software package block, the command fails because it hangs.
+
+APAR IZ43906 
+
+Abstract: 
+         Reports occasionally lost by report manager
+
+Error Description:
+         The Report Manager component occasionally loses some reports.
+         For this reason, the data replication to the Tivoli
+         Provisioning Manager for Software environment cannot be
+         completely accurate.
+
+APAR IZ44090 
+
+Abstract: 
+         spd_eng crashes when negative value is returned by file
+         last_modified
+
+Error Description:
+         The installation of a software package performed using the
+         wdinstsp command ends with an error. The negative value
+         returned from file::last_modified return data is not considered
+         as a valid value and generates the abend.
+
+APAR IZ46760 
+
+Abstract: 
+         Replace wrongTivoli_MD2GUI.spb in Configuration Manager 4.3.1
+         GA (APAR IZ40953)
+
+Error Description:
+         The workaround for APAR IZ40953 causes the following problem:
+         the Software Distribution Console does not open in
+         Configuration Manager 4.3.1 GA code. Before installing
+         Configuration Manager 4.3.1, you must replace the
+         Tivoli_MD2GUI.spb in the Configuration Manager images with the
+         one provided in the Tivoli Management Framework 4.3.1 images.
+
+APAR IZ46966  
+
+Abstract: 
+         wspmvdata command causes spd_eng to crash when retrieving a
+         file
+
+Error Description:
+         When retrieving a file from an endpoint to the HUB in your
+         environment using the wspmvdata command, you receive a TRAP
+         error.
+
+APAR IZ47592 
+
+Abstract: 
+         spd_eng abends when accessing corrupted key in the registry
+
+Error Description:
+         The spd_eng process abends when accessing a corrupted key
+         (HKEY_LOCAL_MACHINE) in the registry of a Microsoft Windows
+         workstation.
+
+APAR IZ50171 
+
+Abstract: 
+         continue_on_invalid_targets setting is not working on target
+         lists
+
+Error Description:
+         If you set the continue_on_invalid_targets option to yes, the
+         option does not seem to work when an endpoint is not subscribed
+         to the profile manager where the software package is defined.
+
+APAR IZ50436
+
+Abstract: 
+         The allow_defer option allows you to postpone the operation
+         until after its deadline
+
+Error Description:
+         When using the allow_defer option, you can postpone a Software
+         Distribution operation after its planned deadline.
+
+APAR IZ55429 
+
+Abstract: 
+         The lcf_before script needs a new argument: the software
+         package
+
+Error Description:
+         The lcf_before script now has in its parameter list also the
+         software package name.
+
+APAR IZ55739 
+
+Abstract: 
+         Unable to insert multiple files and directories using the
+         Software Package Editor
+
+Error Description:
+         When using the Software Package Editor on Windows platforms,
+         you can select an option to insert multiple files or
+         directories. The following problem occurs: after highlighting
+         the files or the directories, and clicking Add, nothing
+         happens. Files or directories are not displayed in the lower
+         section of the dialog and do not allow you to confirm your
+         insertion.
+
+APAR IZ56029 
+
+Abstract: 
+         wdusrprf command must handle better the missing dll libraries
+         to avoid pop-up errors
+
+Error Description:
+         When dll libraries are missing, the wdusrprf command is run on
+         each new login and pop-up errors are displayed.
+
+APAR IZ57803 
+
+Abstract: 
+         wspmvdata command - spd_eng hangs on missing file on SCO-UNIX
+         endpoint
+
+Error Description:
+         When running the wspmvdata command against SCO-UNIX endpoints,
+         the retrieval of a non-existant file causes the spd_eng process
+         to hang, and the failing results are not sent back to the
+         gateway.
+
+APAR IZ59322 
+
+Abstract: 
+         Repair function is not working
+
+Error Description:
+         The installation of a software package using the repair
+         function does not work and ends with the following error:
+         DISSE0459E A failure occurred when the server tried to contact
+         the endpoint. The endpoint might be down.
+
+APAR IZ59502 
+
+Abstract: 
+         REMOVE_WIN_REGISTRY_KEY must display an error when the key
+         cannot be deleted
+
+Error Description:
+         When trying to delete an entry in the registry using the
+         REMOVE_WIN_REGISTRY_KEY option, the entry is not removed if it
+         contains a value, but no error message is displayed.
+
+APAR IZ59604 
+
+Abstract: 
+         Improvement needed for APAR IZ50436: The allow_defer option can
+         now postpone software distribution operations until after the
+         deadline
+
+Error Description:
+         When using the options -l deadline=deadline and -l
+         enable_notification=y, the software distribution becomes
+         mandatory. Also using -l allow_defer=y and -l allow_reject=y is
+         no longer possible.
+
+APAR IZ59646 
+
+Abstract: 
+         SIG 11 in FILE_SYSTEM_OBJECT::EQUAL_ATTRIBUTES
+
+Error Description:
+         The AIX function getpwnan might abend. It is not called if the
+         user owner of the file is ROOT. The problem occurs only in AIX
+         environments with massive data move operations.
+
+APAR IZ60188 
+
+Abstract: 
+         MDIST2 console does not pop up if started from APM
+
+Error Description:
+         The MDIST2 console does not pop up, and remains at 85 %, if
+         started within the Activity Planner Monitor. As soon as you
+         close the Activity Planner Monitor, the MDIST2 console pops up
+         correctly.
+
+APAR IZ60341 
+
+Abstract: 
+         S=11 error when loading a software package using the advanced
+         options
+
+Error Description:
+         From the Tivoli desktop if you right-click a software package,
+         and select Load -> Advanced options-> Distribution settings,
+         odstat displays the following error:
+         *13813 O+hdq1-13542  done  0   0 08:55:20  S=11
+         1197978402.1.865#SoftwarePackage::Spo# dialog_icon
+
+APAR IZ60609 
+
+Abstract: 
+         Exceptions of wspmvdata command are wrongly logged in the
+         default log file DataMovingRequest.1.log
+
+Error Description:
+         When performing a retrieve operation from an unavailable
+         endpoint using the wspmvdata command at distribution expiration
+         time, the gateway logs the exception in the default log file,
+         even if the wswdcfg split_dm_logkeyword option is set to yes.
+         After the fix, the exception is correctly logged into
+         DataMovingRequests.DistID.log.
+
+APAR IZ61292 
+
+Abstract: 
+         $(user_profile_dir) not honored
+
+Error Description:
+         The $(user_profile_dir) variable is not honored when installing
+         a software package using this variable, for example, if you
+         specify it as target directory. The All Users folder is used
+         instead.
+
+APAR IZ62258 
+
+Abstract: 
+         Remove failure when files have versions
+
+Error Description:
+         The remove operation of a SPB file fails when files have
+         different versions.
+
+APAR IZ62947 
+
+Abstract: 
+         Activity plan remains started if Inventory activity fails
+
+Error Description:
+         If you submit an activity plan with a single Inventory
+         activity, and the Inventory activity fails on one of the
+         targets involved, an error message is correctly returned to the
+         Activity Plan Monitor, but the APM Handler does not process it.
+         The following exception is thrown in the APM Handler traces: 
+         09/08/31 10:55:49.652 CEST:  APMHandler   F  :
+         com.tivoli.apm.core.APMHandler: 
+         ExRIMError Exception updating database. The report will be reprocessed:
+         com.tivoli.framework.RIM.ExRIMSQLParseFailed
+         com.tivoli.framework.RIM.ExRIMSQLParseFailed
+         at
+         com.tivoli.framework.RIM.ExRIMSQLParseFailedHelper.read(ExRIMSQL
+         ParseFailedHelper.java(Inlined Compiled Code))
+
+2.1.6.1.4 APARs fixed for Activity Planner
+
+Table 8 lists the APARs that were fixed for Activity Planner: 
+
+Table 8. APARs for Activity Planner
++---------------------------------------------------------------------+
+|        Activity Planner, Version 4.3.1, 4.3.1-TIV-APM-FP0001        |
++-------------+-------------+-------------+-------------+-------------+
+| IZ36265     | IZ40600     | IZ43804     | IZ49769     | IZ55464     |
++-------------+-------------+-------------+-------------+-------------+
+
+APAR IZ36265 
+
+Abstract: 
+         Recursion start time calculations cause poor performance in
+         Activity Planner
+
+Error Description:
+         When submitting a recursive activity plan with time interval as
+         frequency type, in the Activity Planner Handler traces you can
+         see that the new recursion date is calculated started from the
+         submission time, displaying several messages such as the
+         following: 
+         recursion ... skipped: Recursion date performed is less than actual date.
+
+APAR IZ40600 
+
+Abstract: 
+         Activity plan MAIL_ID tag is not exported
+
+Error Description:
+         When exporting an activity plan using the command line or the
+         Activity Plan Editor, the mail_id tag is not exported to the
+         output XML file.
+
+APAR IZ43804 
+
+Abstract: 
+         APM traces are needed when specifying targets from a file
+
+Error Description:
+         Using the Activity Planner you can specify the targets from a
+         file, and you specify the managed node and the path to that
+         target file. When attempting to select a text file with
+         populated endpoints to be used as targets from either the plan
+         or activity level, you receive the following error message: 
+         AMN4025E An incorrect value was specified for either
+         the Managed Node or the Path to file parameter. Check whether the
+         managed node and file name exist and have been entered correctly.
+
+         The problem is that the file exists, it is valid, and it has
+         the correct permissions. Therefore, traces are needed to
+         understand what the problem is.
+
+APAR IZ49769 
+
+Abstract: 
+         Issue with wstopapm -f command
+
+Error Description:
+         The wstopapm with the -f  option does not work when you switch
+         users from non-root to root. Using the force option, the user
+         is checked against the idmap of $root_user.
+
+APAR IZ55464 
+
+Abstract: 
+         wsetapmpw on Solaris only works with 8 characters
+
+Error Description:
+         The wsetapmpw command performed on Solaris platforms only works
+         with 8 characters. The problem is due to a limitation of the
+         Solaris getapss API. With this APAR, the wsetapmpw command has
+         been enabled to use more than 8 characters.
+
+2.1.6.1.5 APARs fixed for Patch Management
+
+Table 9 lists the APARs that were fixed for Patch Management:
+
+Table 9. APARs for Patch Management
++---------------------------------------------------------------------+
+|        Patch Management, Version 4.3.1, 4.3.1-TIV-PMG-FP0001        |
++-------------+-------------+-------------+-------------+-------------+
+| IZ39651     | IZ40784     |             |             |             |
++-------------+-------------+-------------+-------------+-------------+
+
+APAR IZ39651 
+
+Abstract: 
+         Errors in the REMOVE_CTRL_M.SH script
+
+Error Description:
+         The tpm_install/Remove_ctrl_M.sh script contains the following
+         incorrect statement:
+         sed -e 's/
+         $//' "$line" >"$home_dir"/tmpa
+
+         but it should contain:
+         sed -e 's/$//' "$line" >"$home_dir"/tmpa
+
+APAR IZ40784 
+
+Abstract: 
+         Parser failure because of carriage return in
+         ApprovedChanges.txt file
+
+Error Description:
+         Depending on the Cygwin version, the ApprovedChanges.txt file
+         might contain extra carriage return characters, which cause a
+         parser failure, for example, when running WSUS 3.0. With WSUS
+         version 2.x the parser problem does not occur.
+
+2.1.6.1.6 APARs fixed for CM Extension for Tivoli License Manager
+
+The CM Extension for Tivoli License Manager component does not currently
+contain any fixed APARs.
+
+2.2 Installation
+
+This section describes how to install Fix Pack 1 to upgrade the various
+components of IBM Tivoli Configuration Manager, Version 4.3.1. The
+method of installation depends on the component that you are upgrading.
+When you have installed the fix pack, you cannot uninstall it
+automatically. Ensure that you perform a complete backup of your system
+before installing this fix pack.
+
+2.2.1 Supported platforms
+
+Supported platforms at the time of the release are detailed in the IBM
+Tivoli Configuration Manager: Release Notes. For the most recent
+information, consult the supported platforms matrix on the IBM software
+support Web site: http://www.ibm.com/software/support.
+
+
+1. From the Web site, select Tivoli from the Other support sites list.
+2. When the page displays, select IBM Tivoli Configuration Manager from
+   the Choose a product pull-down list.
+3. Click the Get The Latest Supported Platforms Matrix link.
+4. Enter your IBM registration ID and password.
+
+2.2.2 Upgrading large environments
+
+To upgrade large environments, start installing the fix pack on the
+Tivoli gateways. If you cannot install the fix pack on the Tivoli server
+and all the gateways at the same time, to ensure that all gateways keep
+working, perform the following steps:
+
+1. Install the fix pack on the Tivoli gateways.
+2. Install the fix pack on the Inventory server.
+3. Upgrade the Inventory database on the RDBMS server. 
+
+   Note: Until you perform step 2 and 3 of the procedure, you can only
+         run Inventory scans on endpoints attached to the gateways, on
+         which you have not yet installed Fix Pack 1.
+
+2.2.3 Traditional fix pack installation methods
+
+You can install the fix pack for IBM Tivoli Configuration Manager using
+any of the following different installation methods: 
+*  2.2.3.1, "Installing fix packs using ISMP" 
+
+   The InstallShield MultiPlatform (ISMP) program, which installs the
+   appropriate IBM Tivoli Configuration Manager fix pack components for
+   the entire Tivoli management region (Tivoli region).
+
+*  2.2.3.2, "Installing fix packs using the Tivoli desktop" 
+
+   A graphical user interface that you use to select the fix pack
+   components to install and the target workstations on which to install
+   them.
+
+*  2.2.3.3, "Installing fix packs using the CLI" 
+
+   Tivoli Management Framework command that you use to specify the fix
+   pack components to install and the target workstations on which to
+   install them from the command line interface.
+
+*  2.2.3.4, "Installing fix packs using SIS" 
+
+   The SIS console or SIS commands you use to specify the fix pack
+   components to install and on which target workstations to install
+   them.
+
+2.2.3.1 Installing fix packs using ISMP
+
+The InstallShield MultiPlatform (ISMP) program provides a wizard-guided
+process for installing fix packs. It performs a check of the environment
+and installs the prerequisites, if any, to perform the upgrade process.
+
+This installation can be used on all platforms supported as a Tivoli
+server, excluding Linux® for S/390®. It cannot be used to install the
+License Management Extension or the Active Directory feature.
+
+Note: Before starting the upgrade process, back up the object database
+      on the Tivoli server.
+
+For details about performing backup operations, see Tivoli Management
+Framework: Maintenance and Troubleshooting Guide.
+
+To upgrade your IBM Tivoli Configuration Manager environment with the
+fix pack, complete the following steps: 
+1. Locate the setup executable and run the following command in the root
+   directory of IBM Tivoli Configuration Manager Installation CD:
+   *  On Windows platforms, setup.exe -cmpatch
+   *  On all other platforms, setup_$(INTERP).bin -cmpatch, where
+      $(INTERP) represents the operating system on which you are
+      launching the upgrade process.
+
+2. Accept the Software License Agreement. Click Next.
+3. Select the /xml fix pack directory. Click Next.
+4. The actions necessary to upgrade your environment are being
+   generated. When the process completes, a panel displays the fix pack
+   components to install. Click Next.
+5. Select one of the following depot options:
+
+   Query when needed
+            The InstallShield wizard prompts you for the location of
+            product images. This option requires you to respond to a
+            series of prompts during the installation process. This is
+            the default setting.
+
+   Verify local depot
+            The InstallShield wizard prompts for the directory to which
+            you have copied the installation images. The InstallShield
+            wizard then searches all subdirectories of this directory to
+            verify that all images are present. If an image is not
+            found, you are prompted to provide its location. The
+            installation process can then run unattended.
+
+   Remote   Select this option if images are deployed on a managed node
+            before you start the installation.
+
+   Click Next.
+6. In the Step List, select the steps that you want to run. Change the
+   status of steps that you do not want to run immediately to Held.
+7. Click Run All to run all steps whose status is Ready or click Run
+   Next to run steps individually.
+
+ For more information about installing using ISMP, see IBM Tivoli
+Configuration Manager: Planning and Installation Guide.
+
+2.2.3.2 Installing fix packs using the Tivoli desktop
+
+When installing fix packs using the Tivoli desktop, the images are
+located in the images subdirectory on the IBM Tivoli Configuration
+Manager, Version 4.3.1 Fix Pack 1 CD 1. The Tivoli desktop can upgrade
+the same product on multiple workstations sequentially.
+
+The basic procedure for using the Tivoli desktop to upgrade a product is
+as follows: 
+1.  From the Tivoli desktop, select: 
+
+   Upgrading an existing component
+            Install -> Install Patch
+2.  Select the media and component to be upgraded or added.
+3.  Select the workstations where the component is to be upgraded or
+   added.
+4.  Click Install.
+
+ For detailed information about using the Tivoli desktop to install or
+upgrade products, see Tivoli Enterprise: Installation Guide.
+
+2.2.3.3 Installing fix packs using the CLI
+
+Use the wpatch command to install updates to existing components.
+
+2.2.3.3.1 wpatch command
+
+When upgrading existing components using the wpatch command, specify the
+name of the index file using the file shown in Table 10. When using the
+wpatch command to upgrade a product, you specify the following
+information on the command line: 
+*  The location of the image on the installation media.
+*  The name of the index file associated with the product to be
+   upgraded.
+*  The workstations where the image is to be installed.
+
+Example: 
+
+wpatch -c CD-ROM/images -i index_file managed_node
+
+ where:
+
+-c CD-ROM/images
+         Specifies the path to the images on the IBM Tivoli
+         Configuration Manager, Version 4.3.1 Fix Pack 1 CD 1.
+
+-i index_file
+         Specifies the product installation index file to which the fix
+         pack is installed.
+
+managed_node
+         Specifies the managed node on which the fix pack is installed.
+
+If you do not specify a workstation when running the wpatch command, the
+image is installed on all managed nodes in the Tivoli region where there
+is a prior version of this image.
+
+For detailed information about using the wpatch command, see Tivoli
+Management Framework: Reference Manual.
+
+ The following table contains a list of IND files for existing
+components included in this fix pack. 
+
+Table 10. IND files included in this fix pack
++---------------+---------------------------------------+-------------+
+| IND file      | Component name                        | Tag         |
++---------------+---------------------------------------+-------------+
+| INVFP1.IND    | Inventory, Version 4.3.1              | 4.3.1-TIV-I |
+|               |                                       | NV-FP0001   |
++---------------+---------------------------------------+-------------+
+| LCFFP1.IND    | Inventory Gateway, Version 4.3.1      | 4.3.1-TIV-I |
+|               |                                       | NVGW-FP0001 |
++---------------+---------------------------------------+-------------+
+| CLLFP1.IND    | Scalable Collection Service, Version  | 4.3.1-TIV-C |
+|               | 4.3.1                                 | LL-FP0001   |
++---------------+---------------------------------------+-------------+
+| APMFP1.IND    | Activity Planner, Version 4.3.1       | 4.3.1-TIV-A |
+|               |                                       | PM-FP0001   |
++---------------+---------------------------------------+-------------+
+| PMGFP1.IND    | Patch Management, Version 4.3.1       | 4.3.1-TIV-P |
+|               |                                       | MG-FP0001   |
++---------------+---------------------------------------+-------------+
+| SDGWFP1.IND   | Software Distribution Gateway,        | 4.3.1-TIV-S |
+|               | Version 4.3.1                         | WDGW-FP0001 |
++---------------+---------------------------------------+-------------+
+| SWDFP1.IND    | Software Distribution, Version 4.3.1  | 4.3.1-TIV-S |
+|               |                                       | WDSRV-FP000 |
+|               |                                       | 1           |
++---------------+---------------------------------------+-------------+
+| SWDISJPS.IND  | Software Distribution Software        | 4.3.1-TIV-S |
+|               | Package Editor, Version 4.3.1         | WDJPS-FP000 |
+|               |                                       | 1           |
++---------------+---------------------------------------+-------------+
+| TLMXTFP1.IND  | CM Extension for Tivoli License       | 4.3.1-TIV-T |
+|               | Manager, Version 4.3.1                | LMEXT-FP000 |
+|               |                                       | 1           |
++---------------+---------------------------------------+-------------+
+
+2.2.3.4 Installing fix packs using SIS
+
+When installing fix packs using Tivoli Software Installation Service,
+select the fix pack component to be installed using the component name
+shown in Table 10.
+
+Tivoli Software Installation Service does not distinguish between
+products and fix packs. Whether the installation image is used for an
+installation or upgrade, Tivoli Software Installation Service refers to
+all installation images as products.
+
+Tivoli Software Installation Service can install multiple products on
+multiple workstations in parallel. This software can install several
+products on several computer systems in less time than using the
+installation methods provided by Tivoli Management Framework.
+
+The basic procedure for using Tivoli Software Installation Service to
+install products is as follows: 
+1.  Import the product images into the Tivoli Software Installation
+   Service depot.
+2.  Select the components to be installed.
+3.  Select the workstations where each component is to be installed.
+4.  Click Install.
+
+ For detailed information about using Tivoli Software Installation
+Service, see Tivoli Enterprise: Installation Guide.
+
+2.2.4 Software package block (SPB) fix pack installation for GUI 
+      components
+
+To upgrade the GUI components of IBM Tivoli Configuration Manager using
+the SPB fix packs on endpoints or standalone workstations, use one of
+the following installation methods: 
+*  2.2.4.1, "SPB Patch Installer"
+*  2.2.4.2, "Software Distribution server command"
+*  2.2.4.3, "Software Distribution disconnected command"
+
+IBM Tivoli Configuration Manager, Version 4.3.1 GA package is a
+prerequisite of the SPB fix packs.
+
+To successfully install fix packs using any of these installation
+methods, you must ensure that the values of the default variables
+specified in the software package block correspond to the existing
+installation on the workstation to be upgraded. If they do not
+correspond, ensure that they are stored in the swdis.var file. If these
+values were deleted from the swdis.var file, you must overwrite them at
+fix pack installation time using the appropriate panel of the SPB Patch
+Installer, or using the "-D" command line option (wdinstsp -D
+variable=value GUI_component.spb).
+
+The default variables for each component defined in the SPB fix packs
+are listed in Table 11. 
+
+Table 11. Default variables defined in SPB fix packs
++-----------------------+-----------------------+---------------------+
+| Variable              | Value                 | Description         |
++---------------------------------------------------------------------+
+|                   Tivoli_INV_GUI_Fix.v4.3.1.FP01                    |
++-----------------------+-----------------------+---------------------+
+| Version               | 4.3.1                 | The version of      |
+|                       |                       | Inventory to which  |
+|                       |                       | the SPB applies     |
++-----------------------+-----------------------+---------------------+
+| DSWIN_DIR             | $(program_files)\Tivo | The directory where |
+|                       | li\Desktop            | the Tivoli Desktop  |
+|                       |                       | is installed.       |
++---------------------------------------------------------------------+
+|                   Tivoli_APM_GUI_Fix.v4.3.1.FP01                    |
++-----------------------+-----------------------+---------------------+
+| DSWIN_DIR             | $(program_files)\Tivo | The directory where |
+|                       | li\Desktop            | the Tivoli Desktop  |
+|                       |                       | is installed.       |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | $(program_files)\Tivo | The directory where |
+|                       | li\JavaTools          | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|                  Tivoli_SWDEP_AIX_Fix.v4.3.1.FP01                   |
++-----------------------+-----------------------+---------------------+
+| target_dir            | $(product_dir)/spedit | The directory where |
+|                       | or                    | the Software        |
+|                       |                       | Package Editor is   |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|                   Tivoli_SWDEP_HP_Fix.v4.3.1.FP01                   |
++-----------------------+-----------------------+---------------------+
+| target_dir            | $(product_dir)/spedit | The directory where |
+|                       | or                    | the Software        |
+|                       |                       | Package Editor is   |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|               Tivoli_SWDEP_LINUX_IX86_Fix.v4.3.1.FP01               |
++-----------------------+-----------------------+---------------------+
+| target_dir            | $(product_dir)/spedit | The directory where |
+|                       | or                    | the Software        |
+|                       |                       | Package Editor is   |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|               Tivoli_SWDEP_LINUX_S390_Fix.v4.3.1.FP01               |
++-----------------------+-----------------------+---------------------+
+| target_dir            | $(product_dir)/spedit | The directory where |
+|                       | or                    | the Software        |
+|                       |                       | Package Editor is   |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|                Tivoli_SWDEP_LINUXPPC_Fix.v4.3.1.FP01                |
++-----------------------+-----------------------+---------------------+
+| target_dir            | $(product_dir)/spedit | The directory where |
+|                       | or                    | the Software        |
+|                       |                       | Package Editor is   |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|                   Tivoli_SWDEP_NT_Fix.v4.3.1.FP01                   |
++-----------------------+-----------------------+---------------------+
+| target_dir            | $(product_dir)\spedit | The directory where |
+|                       | or                    | the Software        |
+|                       |                       | Package Editor is   |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | $(program_files)\Tivo | The directory where |
+|                       | li\JavaTools          | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|                Tivoli_SWDEP_NTAS400_Fix.v4.3.1.FP01                 |
++-----------------------+-----------------------+---------------------+
+| target_dir            | $(product_dir)\spedit | The directory where |
+|                       | oras400               | the Software        |
+|                       |                       | Package Editor for  |
+|                       |                       | AS/400® is          |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | $(program_files)\Tivo | The directory where |
+|                       | li\JavaTools          | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|                Tivoli_SWDEP_SOLARIS_Fix.v4.3.1.FP01                 |
++-----------------------+-----------------------+---------------------+
+| target_dir            | $(product_dir)\spedit | The directory where |
+|                       | or                    | the Software        |
+|                       |                       | Package Editor is   |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|               Tivoli_JRE_SOLARIS_IX86_Fix.v4.3.1.FP01               |
++-----------------------+-----------------------+---------------------+
+| Tivoli_JRE_140_versio | 1.4.0                 | The version of the  |
+| n                     |                       | JRE                 |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|              Tivoli_SWDEP_SOLARIS_IX86_Fix.v4.3.1.FP01              |
++-----------------------+-----------------------+---------------------+
+| target_dir            | $(product_dir)\spedit | The directory where |
+|                       | or                    | the Software        |
+|                       |                       | Package Editor is   |
+|                       |                       | installed.          |
++---------------------------------------------------------------------+
+|                         Tivoli_JRE_AIX_Fix                          |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| Tivoli_JRE_140_versio | 1.4.0                 | The version of the  |
+| n                     |                       | JRE                 |
++---------------------------------------------------------------------+
+|                          Tivoli_JRE_HP_Fix                          |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| Tivoli_JRE_140_versio | 1.4.0                 | The version of the  |
+| n                     |                       | JRE                 |
++---------------------------------------------------------------------+
+|                      Tivoli_JRE_LINUX_IX86_Fix                      |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| Tivoli_JRE_140_versio | 1.4.0                 | The version of the  |
+| n                     |                       | JRE                 |
++---------------------------------------------------------------------+
+|                      Tivoli_JRE_LINUX_PPC_Fix                       |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| Tivoli_JRE_140_versio | 1.4.0                 | The version of the  |
+| n                     |                       | JRE                 |
++---------------------------------------------------------------------+
+|                      Tivoli_JRE_LINUX_S390_Fix                      |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| Tivoli_JRE_140_versio | 1.4.0                 | The version of the  |
+| n                     |                       | JRE                 |
++---------------------------------------------------------------------+
+|                          Tivoli_JRE_NT_Fix                          |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | $(program_files)\Tivo | The directory where |
+|                       | li\JavaTools          | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| Tivoli_JRE_140_versio | 1.4.0                 | The version of the  |
+| n                     |                       | JRE                 |
++---------------------------------------------------------------------+
+|                       Tivoli_JRE_SOLARIS_Fix                        |
++-----------------------+-----------------------+---------------------+
+| TME_JAVATOOLS         | /opt/Tivoli/JavaTools | The directory where |
+|                       |                       | JRE 1.4.0 is        |
+|                       |                       | installed.          |
++-----------------------+-----------------------+---------------------+
+| Tivoli_JRE_140_versio | 1.4.0                 | The version of the  |
+| n                     |                       | JRE                 |
++-----------------------+-----------------------+---------------------+
+
+Note: When you install the fix pack, if you are using the APM or CCM GUI
+      components, install also the remote desktops at the same fix pack
+      level.
+
+2.2.4.1 SPB Patch Installer
+
+This installation method uses ISMP technology that you can use to
+install fix packs on an endpoint or standalone workstation to upgrade
+IBM Tivoli Configuration Manager, Version 4.3.1 GUI components. The SPB
+Patch Installer is supported on Microsoft Windows, IBM AIX®, Solaris
+Operating Environment, Linux for Intel®, and HP-UX.
+
+The following is a summary of the upgrade process using the SPB Patch
+Installer. Refer to the SPB Patch Installer Guide located in the
+spb_installer directory on the IBM Tivoli Configuration Manager, Version
+4.3.1 Fix Pack 1 CD 2 for complete instructions about using this tool.
+
+To install the SPB fix packs using the SPB Patch Installer, perform the
+following steps: 
+1. Insert the IBM Tivoli Configuration Manager, Version 4.3.1 Fix Pack 1
+   CD 2.
+2. Locate and run the setup program located in the spb_installer
+   directory. 
+   *  On Windows, run the setup.exe file.
+   *  On all other platforms, run the setup_$(interp).bin.
+
+3. Read the Welcome panel and click Next.
+4. Specify the CM431_SPB_FP01.xml file for the fix pack located in the
+   /package subdirectory on the IBM Tivoli Configuration Manager,
+   Version 4.3.1 Fix Pack 1 CD 2. Click Next.
+5. Select Apply and click Next.
+6. Specify the components that you want to install and click Next.
+7. Clear the selection of the components for which you do not want to
+   install in undoable mode. Click Next.
+8. You might be prompted to specify the value of some variables defined
+   in the SPB. Ensure that they are consistent with the existing
+   installation on the workstation to be upgraded.
+9. A Summary panel is displayed. Click Next. The upgrade process starts.
+
+2.2.4.2 Software Distribution server command
+
+To use this type of installation, your Tivoli environment must contain
+an installation of the Software Distribution Server component, the
+Software Distribution Gateway component, and at least one Tivoli
+endpoint. The following steps must be performed to apply the SPB fix
+pack on the targets: 
+1. Create a new Profile in a Profile Manager, using the naming
+   convention described in Table 12.
+2. Import the SPB file provided in the new Profile.
+3. Select the endpoints to which you want to distribute the fix pack.
+4. Submit the installation using either the command line or the Tivoli
+   desktop.
+
+ If you need to overwrite the values of the default variables, use the
+"-D" option (winstsp -D variable=value GUI_component.spb) from the
+command line, or the Default Variables panel from the Tivoli desktop.
+
+2.2.4.3 Software Distribution disconnected command
+
+To use this type of installation, you must have the Software
+Distribution Software Package Editor component installed on the
+endpoint. If you need to overwrite the values of the default variables,
+use the "-D" option (wdinstsp -D variable=value GUI_component.spb) from
+the command line.
+
+2.2.4.4 Software package block fix packs
+
+Table 12 contains the names of the Fix Pack 1 software package blocks
+and the names of the software profiles that must be used when using SPBs
+to install components. IBM Tivoli Configuration Manager, Version 4.3.1
+GA SPBs are a prerequisite of the fix pack SPBs. 
+
+Table 12. Names of SPB files and software profiles
++--------------------------------------+------------------------------+
+| SPB Files                            | Package name with Version    |
++--------------------------------------+------------------------------+
+| Tivoli_INV_GUI_Fix.v4.3.1.FP01.spb   | Tivoli_INV_GUI_Fix.v4.3.1.FP |
+|                                      | 01                           |
++--------------------------------------+------------------------------+
+| Tivoli_APM_GUI_Fix.v4.3.1.FP01.spb   | Tivoli_APM_GUI_Fix.v4.3.1.FP |
+|                                      | 01                           |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_AIX_Fix.v4.3.1.FP01.spb | Tivoli_SWDEP_AIX_Fix.v4.3.1. |
+|                                      | FP01                         |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_HP_Fix.v4.3.1.FP01.spb  | Tivoli_SWDEP_HP_Fix.v4.3.1.F |
+|                                      | P01                          |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_LINUXPPC_Fix.v4.3.1.FP0 | Tivoli_SWDEP_LINUXPPC_Fix.v4 |
+| 1.spb                                | .3.1.FP01                    |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_LINUX_IX86_Fix.v4.3.1.F | Tivoli_SWDEP_LINUX_IX86_Fix. |
+| P01.spb                              | v4.3.1.FP01                  |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_LINUX_S390_Fix.v4.3.1.F | Tivoli_SWDEP_LINUX_S390_Fix. |
+| P01.spb                              | v4.3.1.FP01                  |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_NTAS400_Fix.v4.3.1.FP01 | Tivoli_SWDEP_NTAS400_Fix.v4. |
+| .spb                                 | 3.1.FP01                     |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_NT_Fix.v4.3.1.FP01.spb  | Tivoli_SWDEP_NT_Fix.v4.3.1.F |
+|                                      | P01                          |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_SOLARIS_Fix.v4.3.1.FP01 | Tivoli_SWDEP_SOLARIS_Fix.v4. |
+| .spb                                 | 3.1.FP01                     |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_SOLARIS_IX86_Fix.v4.3.1 | Tivoli_SWDEP_SOLARIS_IX86_Fi |
+| .FP01.spb (1)                        | x_v4.3.1.FP01                |
++--------------------------------------+------------------------------+
+| Tivoli_SWDEP_SOLARIS_IX86.spb        | Tivoli_SWDEP_SOLARIS_IX86    |
++--------------------------------------+------------------------------+
+| Tivoli_JRE_AIX_Fix.spb (2)           | Tivoli_JRE_AIX               |
++--------------------------------------+------------------------------+
+| Tivoli_JRE_HP_Fix.spb (2)            | Tivoli_JRE_HP                |
++--------------------------------------+------------------------------+
+| Tivoli_JRE_LINUX_IX86_Fix.spb (2)    | Tivoli_JRE_LINUX_IX86        |
++--------------------------------------+------------------------------+
+| Tivoli_JRE_LINUX_PPC_Fix.spb (2)     | Tivoli_JRE_LINUX_PPC         |
++--------------------------------------+------------------------------+
+| Tivoli_JRE_LINUX_S390_Fix.spb (2)    | Tivoli_JRE_LINUX_S390        |
++--------------------------------------+------------------------------+
+| Tivoli_JRE_NT_Fix.spb (2)            | Tivoli_JRE_NT                |
++--------------------------------------+------------------------------+
+| Tivoli_JRE_SOLARIS_Fix.spb (2)       | Tivoli_JRE_SOLARIS           |
++--------------------------------------+------------------------------+
+| Tivoli_JRE_SOLARIS_IX86_Fix.spb      | Tivoli_JRE_SOLARIS_IX86      |
++--------------------------------------+------------------------------+
+
+Notes: 
+1. (1) If you are installing the Software Package Editor component for
+   Solaris on x86, using the Software Distribution command line, you
+   must install the following prerequisite packages first: 
+   a. Tivoli_JRE_SOLARIS_IX86.spb. This package is a prerequisite for
+      installing the Software Package Editor GUI on Solaris 8 and
+      Solaris 9.
+   b. Tivoli_SWDEP_SOLARIS_IX86.spb. This is an empty package used to
+      update the local catalog in accordance with the adopted SPB naming
+      convention on Solaris 8, 9, and 10.
+
+   If you are installing the SPB components using SPB_patch_installer,
+   the prerequisite packages are automatically installed.
+2. (2) Install these software package blocks that you find under the
+   /package path to enable the Daylight Saving Time (DST) feature. It is
+   not mandatory to perform this installation. If you do not install
+   these software package blocks, the time stamp of log and trace files
+   is not at Daylight Saving Time used by the following countries: 
+   *  United States
+   *  Canada
+   *  Brazil
+   *  Bermuda
+   *  Western Australia
+
+2.2.5 Updating the inventory schema
+
+When you install a new fix pack, you must update the Inventory schema.
+
+A fix pack does not necessarily contain fixes on SQL scripts and, if
+present, these fixes do not necessarily apply to all database vendors.
+
+Table 13 lists the SQL scripts to run for updating the Inventory schema:
+
+
+Table 13. SQL scripts for updating the Inventory schema
++-------------------+-------+-------+-------+------+------+-----+-----+
+|                   | Oracl |  DB2  | MSSQL | Syba | Info | DB2 | DB2 |
+|                   |   e   |       |       |  se  | rmix | MVS | MVS |
+|                   |       |       |       |      |      |     | cus |
+|                   |       |       |       |      |      |     | tom |
++-------------------+-------+-------+-------+------+------+-----+-----+
+| inv_db_431_FP01.s |   X   |   X   |   X   |  X   |  X   |  X  |  X  |
+| ql                |       |       |       |      |      |     |     |
++-------------------+-------+-------+-------+------+------+-----+-----+
+
+Table 14 lists the SQL scripts to run for updating the Historical
+Inventory schema: 
+
+Table 14. SQL scripts for updating the Historical Inventory schema
++-------------------+-------+-------+-------+------+------+-----+-----+
+|                   | Oracl |  DB2  | MSSQL | Syba | Info | DB2 | DB2 |
+|                   |   e   |       |       |  se  | rmix | MVS | MVS |
+|                   |       |       |       |      |      |     | cus |
+|                   |       |       |       |      |      |     | tom |
++-------------------+-------+-------+-------+------+------+-----+-----+
+| h_inv_db_431_FP01 |   X   |   X   |   X   |  X   |  X   |  X  |  X  |
+| .sql              |       |       |       |      |      |     |     |
++-------------------+-------+-------+-------+------+------+-----+-----+
+
+Copy the appropriate schema scripts to any system where SQL access is
+available, such as the database server or the database client
+workstation if the client allows SQL connectivity, to run the schema
+scripts.
+
+Notes: 
+1. Error or information messages might be displayed when running the
+   database scripts. Each database has unique behavior, so some messages
+   can be expected.
+2. The inv_db2_mvs_custom_*.sql script might contain some customizable
+   variables such as: 
+   *  XX_OWNER
+   *  XX_STOGRP
+   *  XX_DBNAME
+
+   Descriptions for these variables can be found inside the
+   inv_db2_mvs_admin.sql script.
+
+For example, if you use DB2 and install this fix pack to update the
+Inventory schema, refer to the DB2 column of Table 13 and run the
+scripts identified in the table rows by X in the order specified:
+1. inv_db2_431_FP01.sql
+2. h_inv_db2_431_FP01.sql
+
+Note: SQL scripts delivered with fix packs might alter the existing
+      tables or columns, if you created materialized queries or views.
+      Depending on the tables modified by the fix pack SQL scripts, the
+      following error might occur for DB2 (and a similar error for other
+      RDBMS vendors): 
+      SQL0270N  Function not supported (Reason code = "21").  SQLSTATE=42997
+      The error indicates dependency on MQT as explained below:
+      21 A column cannot be dropped or have its length, data type, or
+       nullability altered on a table which is a base table for a
+       materialized query table.                                      
+
+      To fix this problem, perform the following actions:
+      1. Drop the dependent materialized query table or tables.
+      2. Drop the column of the base table, or alter the length, data
+         type, or nullability of this column.
+      3. Recreate the materialized query table or tables.
+
+2.2.6 Updating the inventory queries
+
+This fix pack installation provides scripts to update inventory queries
+with the new database information introduced by the fix pack. The
+scripts inventory_query.sh and h_inventory_query.sh are located on the
+managed nodes where the patch is installed, in the following directory:
+
+$BINDIR/../generic/inv/SCRIPTS/QUERIES 
+
+2.2.7 Updating the Inventory signatures and packages
+
+If you have not already run the command winvmigrate to migrate
+Configuration Manager signatures from the old SWSIGS.INI format to the
+new IBM software catalog format, or if you imported the IBM software
+catalog before installing Configuration Manager 4.3.1 Fix Pack 1, then
+you must migrate the signatures belonging to the IBM software catalog.
+To do this, after upgrading the inventory schema as described in 2.2.5,
+"Updating the inventory schema", perform the following steps:
+1. Download the latest IBM software catalog file from the following Web
+   site:
+   http://www-306.ibm.com/software/sysmgmt/products/support/IBMTivoliLicenseManager.html
+2. Run the following command:
+   winvmigrate -c IBM_software_catalog_file
+
+If you plan to implement license management facilities in your
+Configuration Manager environment, refer to IBM Tivoli Configuration
+Manager: License Management with License Compliance Manager version 2.3.
+
+2.2.8 Upgrading plug-ins
+
+To upgrade plug-ins, you must run the upgrade scripts for Activity
+Planner.
+
+If you have installed 4.3.1-TIV-APM-FP0001, 4.3.1-TIV-SWDSRV-FP0001, and
+4.3.1-TIV-INV-FP0001 run the following scripts located in the
+$BINDIR/TME/APM/SCRIPTS directory. You must have the APM_Admin Tivoli
+region authorization role to run them. 
+
+sh reg_swd_plugin.sh -r
+         Enables the Activity Planner for Software Distribution.
+
+sh reg_inv_plugin.sh -r
+         Enables the Activity Planner for Inventory.
+
+sh reg_tl_plugin.sh -r
+         Enables the Activity Planner for the Task Library.
+
+Run the wstopapm and wstartapm commands, after running the scripts.
+
+2.3 Documentation notes
+
+This section contains new information and documentation corrections
+contained in this fix pack.
+
+2.3.1 Documentation problems and corrections contained in this fix pack
+
+2.3.1.1 User's Guide for Inventory
+
+This section contains new and updated information for IBM Tivoli
+Configuration Manager User's Guide for Inventory:
+
+         In Appendix F. Troubleshooting, in the "Scalable Collection
+         Service" section, before the "Log and data files" section:
+
+         add the following information:
+
+         Symptom catalog and log files adapters
+
+         Starting from the Autonomic Computing AC Log and Trace 4.5.0.3
+         fix pack, adapters are supported for the mcollect.log file.
+
+         In this fix pack are available also the symptom catalogs for
+         Tivoli Configuration Manager version 4.3.1.
+
+
+Defect 247275
+         In Appendix E. Installing and uninstalling Common Inventory
+         Technology (CIT), in the "Scanning virtual environments"
+         section:
+
+         add the following row to the "Versions of VMware tested on CIT"
+         table:
+
+         ESX Server 3.5
+
+
+APAR IZ50799
+         In Chapter 3. Working with Inventory profiles in the "Software
+         scan configuration options" section, subsection "Scan Options"
+         replace the current text:
+
+         Signature data includes the name, size, and usually the quick
+         checksum value of the file used to identify the software
+         product.
+
+         with the following text:
+
+         Signature data includes the name and the size of the file used
+         to identify the software product.
+
+
+APAR IZ50799
+         In Chapter 5. Collecting custom information with Inventory in
+         the "Using signatures" section replace the current text:
+
+         Signature data includes the name, size, and usually the Quick
+         checksum value of the file used to identify the software
+         product.
+
+         with the following text:
+
+         Signature data includes the name and the size of the file used
+         to identify the software product.
+
+
+APAR IZ50799
+         In Appendix B. Commands in the "winvsig" section replace the
+         current description for the -a command option with the
+         following text:
+
+         Adds one or more signatures to the configuration repository,
+         and modifies existing signatures. Each signature must have a
+         unique file name and size. If the specified signature already
+         exists, the information for the existing signature (for
+         example, the description or version) is modified.
+
+
+APAR IZ50799
+         In Appendix B. Commands in the "winvsig" section replace the
+         current description for the -f command option with the
+         following text:
+
+         Specifies the name of a file that contains the data for one or
+         more signatures. The signature data in the file must be in the
+         following format: 
+
+         <I>,name,size,description,version
+
+         The signature file supports also the XML file format.
+
+
+APAR IZ53312
+         At the end of Appendix E. Installing and uninstalling Common
+         Inventory Technology (CIT), add the following new section:
+
+         Setting the CIT processes priority on Windows
+
+         On Windows platforms, you can specify locally on each endpoint
+         the priority for the different CIT processes by editing the
+         cit.properties file and adding, for example, the following
+         priorities:
+
+         fscanner.changepriority=low
+         swscanner.changepriority=low
+         hwscanner.changepriority=low
+         vpdscanner.changepriority=low
+
+         If you want to add the priority settings directly to the
+         CIT_win.spb package used to install CIT, perform the following
+         steps: 
+         1. Take the CIT_win.spb package from a gateway. The package is
+            located under the
+            ..bin/lcf_bundle.41100/lib/w32-ix86/inv/CIT/SPB directory.
+         2. Using the Software Package Editor disconnected command line,
+            unbuild the CIT_win.spb package by running the command: 
+            wdubldsp.exe
+
+            The command extracts a software package (.sp file) and the
+            CIT files.
+         3. Edit the unpacked cit.properties file and add, at the bottom
+            of the file, the following lines: 
+            fscanner.changepriority=low
+            swscanner.changepriority=low
+            hwscanner.changepriority=low
+            vpdscanner.changepriority=low
+
+            Save the file.
+         4. Build the CIT_win.spb again by running the command: 
+            wdbldspb.exe
+
+             The new CIT_win.spb now includes the new cit.properties
+            file with the priority settings that you set.
+         5. Save the original CIT_win.spb on the gateways and store the
+            new CIT_win.spb under the same directory.
+         6. During the next CIT installations, on the endpoints, are
+            automatically included the CIT priority settings contained
+            in the cit.properties file.
+
+
+APAR IZ53836
+         In Appendix B. Commands in the "wqueryinv" section add the
+         following note:
+
+         
+
+         Note: When using a Tivoli query containing views sharing the
+               same TME_OBJECT_ID field and running the wqueryinv
+               command against that query, the command fails with a
+               parse error due to an ambiguous column reference. For
+               example, if you are using an Oracle database the error
+               message displayed is the following: 
+               ORA-00918: column ambiguously defined
+
+               You can run the command only with Tivoli queries where
+               only one table and view have the TME_OBJECT_ID field.
+
+2.3.1.2 Database Schema Reference
+
+This section contains new and updated information for IBM Tivoli
+Configuration Manager Database Schema Reference:
+
+Defect 245830
+         In Chapter 3. Configuration repository views add the following
+         columns to the following views:
+
+Table 15. Columns added to views
++----------------------------------+----------------------------------+
+| Configuration repository view    | Columns added to the view        |
++----------------------------------+----------------------------------+
+| V_ACT_ST                         | COUNTER                          |
++----------------------------------+----------------------------------+
+| V_ACT_STATUS_EX                  | TARGETS                          |
+|                                  | GATEWAYS                         |
+|                                  | DEPOTS                           |
++----------------------------------+----------------------------------+
+| V_PLAN_STATUS                    | TGT_RESOURCE_TYPE                |
++----------------------------------+----------------------------------+
+| V_PLAN_STATUS_EX                 | ACTIVITIES                       |
+|                                  | REC_NUM                          |
++----------------------------------+----------------------------------+
+| V_TGT_ACT_DEP_ST                 | DEPOT_LABEL                      |
+|                                  | COUNTER                          |
+|                                  | START_TIME                       |
+|                                  | COMPLETION_TIME                  |
++----------------------------------+----------------------------------+
+| V_TGT_ACT_GW_ST                  | COUNTER                          |
+|                                  | START_TIME                       |
+|                                  | COMPLETION_TIME                  |
++----------------------------------+----------------------------------+
+| V_TGT_ACT_ST                     | COUNTER                          |
++----------------------------------+----------------------------------+
+| V_TGT_GW_FLTR                    | COUNTER                          |
+|                                  | START_TIME                       |
+|                                  | COMPLETION_TIME                  |
++----------------------------------+----------------------------------+
+| ASP_VIEW                         | COMPUTER_SYS_ID                  |
+|                                  | TME_OBJECT_ID                    |
++----------------------------------+----------------------------------+
+| CHECK_PACKAGES                   | PLATFORM                         |
++----------------------------------+----------------------------------+
+| COMPUTER_VIEW                    | OS_ARCH                          |
++----------------------------------+----------------------------------+
+| IP_ADDR_VIEW                     | PERM_MAC_ADDRESS                 |
++----------------------------------+----------------------------------+
+| LPAR_VIEW                        | NODECAP_IN_CORES                 |
+|                                  | LPARCAP_IN_CORES                 |
+|                                  | SHAREDPC_IN_CORES                |
+|                                  | PHYS_SHAREDPC                    |
+|                                  | PHYS_SHAREDPC_CORES              |
+|                                  | LPAR_ONLINE_VP_COUNT             |
+|                                  | LPAR_IS_SHARED_TYPE              |
+|                                  | LPAR_IS_CAPPED                   |
+|                                  | LPAR_ENTITLEMENT                 |
+|                                  | LPAR_MIN_VP_COUNT                |
+|                                  | LPAR_MAX_VP_COUNT                |
+|                                  | LPAR_MIN_CAPACITY                |
+|                                  | LPAR_MAX_CAPACITY                |
+|                                  | LPAR_IDLE_CP_WEIGHT              |
+|                                  | SMT_IS_ENABLED                   |
+|                                  | NODE_ACT_PROC_COUNT              |
++----------------------------------+----------------------------------+
+| LOGICAL_PARTITIONS_VIEW          | PHYS_SHAREDPC                    |
+|                                  | PHYS_SHAREDPC_CORES              |
+|                                  | LPAR_ONLINE_VP_COUNT             |
+|                                  | LPAR_IS_SHARED_TYPE              |
+|                                  | LPAR_IS_CAPPED                   |
+|                                  | LPAR_ENTITLEMENT                 |
+|                                  | LPAR_MIN_VP_COUNT                |
+|                                  | LPAR_MAX_VP_COUNT                |
+|                                  | LPAR_MIN_CAPACITY                |
+|                                  | LPAR_MAX_CAPACITY                |
+|                                  | LPAR_IDLE_CP_WEIGHT              |
+|                                  | SMT_IS_ENABLED                   |
+|                                  | NODE_ACT_PROC_COUNT              |
++----------------------------------+----------------------------------+
+| MEM_MODULES_TOTAL                | TME_OBJECT_ID                    |
++----------------------------------+----------------------------------+
+| OS_VIEW                          | OS_ARCH                          |
++----------------------------------+----------------------------------+
+| PACKAGE_FILE_VIEW                | PLATFORM                         |
++----------------------------------+----------------------------------+
+| PC_BIOS_VIEW                     | UPTIME                           |
++----------------------------------+----------------------------------+
+| SERVICE_INFO_VIEW                | TME_OBJECT_LABEL                 |
+|                                  | TME_OBJECT_ID                    |
++----------------------------------+----------------------------------+
+| SMBIOS_DATA_VIEW                 | SYS_PRODUCT_NAME                 |
+|                                  | POWERON_PASSWORD                 |
++----------------------------------+----------------------------------+
+| SWARE_MATCH_CRC32                | CHECKSUM_CRC32                   |
++----------------------------------+----------------------------------+
+| SWARE_MATCH_MD5                  | CHECKSUM_MD5                     |
++----------------------------------+----------------------------------+
+| SWARE_MATCH_QUICK                | CHECKSUM_QUICK                   |
++----------------------------------+----------------------------------+
+| EP_PATCHES_VIEW                  | GUID                             |
+|                                  | UPDATEID                         |
+|                                  | REBOOTBEHAVIOR                   |
++----------------------------------+----------------------------------+
+| PM_PATCHES_VIEW                  | GUID                             |
+|                                  | UPDATEID                         |
+|                                  | REBOOTBEHAVIOR                   |
++----------------------------------+----------------------------------+
+| SP_PATCHES_VIEW                  | GUID                             |
+|                                  | UPDATEID                         |
+|                                  | REBOOTBEHAVIOR                   |
++----------------------------------+----------------------------------+
+| DEV_DET_BEA_VIEW                 | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| DEV_DET_EXT_VIEW                 | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| DEV_INFO_BEA_VIEW                | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| DEV_INFO_EXT_VIEW                | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| DMACC_CON_EXT_VIEW               | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_LOGIN_VIEW                    | NAME                             |
+|                                  | TW                               |
+|                                  | LOGINTY                          |
+|                                  | DATA                             |
+|                                  | RECORD_TIME                      |
++----------------------------------+----------------------------------+
+
+
+Defect 245830
+         In Chapter 3. Configuration repository views remove the
+         following columns from the following views:
+
+Table 16. Columns removed from views
++----------------------------------+----------------------------------+
+| Configuration repository view    | Columns removed from the view    |
++----------------------------------+----------------------------------+
+| V_PLAN_STATUS_EX                 | REC_NUMBER                       |
++----------------------------------+----------------------------------+
+| SMBIOS_DATA_VIEW                 | PRODUCT_NAME                     |
++----------------------------------+----------------------------------+
+| NOSIG_FILES_VIEW                 | PATH                             |
++----------------------------------+----------------------------------+
+| DEV_DET_BEA_VIEW                 | LABEL                            |
++----------------------------------+----------------------------------+
+| DEV_DET_EXT_VIEW                 | LABEL                            |
++----------------------------------+----------------------------------+
+| DEV_INFO_BEA_VIEW                | LABEL                            |
++----------------------------------+----------------------------------+
+| DEV_INFO_EXT_VIEW                | LABEL                            |
++----------------------------------+----------------------------------+
+| DMACC_CON_EXT_VIEW               | LABEL                            |
++----------------------------------+----------------------------------+
+
+
+Defect 245830
+         In Chapter 4. Queries add the following columns to the
+         following queries:
+
+Table 17. Columns added to queries
++------------------------------------+--------------------------------+
+| Query                              | Columns added to the query     |
++------------------------------------+--------------------------------+
+| ASP_QUERY                          | TME_OBJECT_ID                  |
+|                                    | COMPUTER_SYS_ID                |
++------------------------------------+--------------------------------+
+| COMPUTER_QUERY                     | OS_ARCH                        |
++------------------------------------+--------------------------------+
+| INST_FILE_QUERY                    | FILE_SIZE_KB                   |
++------------------------------------+--------------------------------+
+| INVENTORY_SWARE                    | ACCESSED_TIME                  |
++------------------------------------+--------------------------------+
+| IP_ADDR_QUERY                      | PERM_MAC_ADDRESS               |
++------------------------------------+--------------------------------+
+| LOGICAL_PARTITIONED_SYSTEMS_QUERY  | NODECAP_IN_CORES               |
++------------------------------------+--------------------------------+
+| LOGICAL_PARTITIONS_QUERY           | LPARCAP_IN_CORES               |
+|                                    | NODECAP_IN_CORES               |
+|                                    | SHAREDPC_IN_CORES              |
+|                                    | PHYS_SHAREDPC                  |
+|                                    | PHYS_SHAREDPC_CORES            |
+|                                    | LPAR_ONLINE_VP_COUNT           |
+|                                    | LPAR_IS_SHARED_TYPE            |
+|                                    | LPAR_IS_CAPPED                 |
+|                                    | LPAR_ENTITLEMENT               |
+|                                    | LPAR_MIN_VP_COUNT              |
+|                                    | LPAR_MAX_VP_COUNT              |
+|                                    | LPAR_MIN_CAPACITY              |
+|                                    | LPAR_MAX_CAPACITY              |
+|                                    | LPAR_IDLE_CP_WEIGHT            |
+|                                    | SMT_IS_ENABLED                 |
+|                                    | NODE_ACT_PROC_COUNT            |
++------------------------------------+--------------------------------+
+| MEM_MODULES_TOTAL                  | TME_OBJECT_ID                  |
++------------------------------------+--------------------------------+
+| OS_QUERY                           | OS_ARCH                        |
++------------------------------------+--------------------------------+
+| SERVICE_INFO_QUERY                 | TME_OBJECT_LABEL               |
+|                                    | TME_OBJECT_ID                  |
+|                                    | COMPUTER_SYS_ID                |
+|                                    | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| SOLARIS_CPU_QUERY                  | PROCESSOR_NUM                  |
++------------------------------------+--------------------------------+
+| MO_AP_NAP_QUERY                    | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_AP_NAPB_QUERY                   | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_AP_NAPD_QUERY                   | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_AP_NAPN_QUERY                   | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_AP_PX_QUERY                     | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_AP_PXA_QUERY                    | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_AP_PXD_QUERY                    | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_AP_PXN_QUERY                    | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_AP_PXNO_QUERY                   | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_AP_PXP_QUERY                    | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| MO_DS_DB_QUERY                     | RECORD_TIME                    |
++------------------------------------+--------------------------------+
+| CM_STATUS_QUERY                    | TME_OBJECT_ID                  |
++------------------------------------+--------------------------------+
+
+
+Defect 245830
+         In Chapter 4. Queries remove the following columns from the
+         following queries:
+
+Table 18. Columns removed from queries
++----------------------------------+----------------------------------+
+| Query                            | Columns removed from the query   |
++----------------------------------+----------------------------------+
+| ALL_NET_CARD_QUERY               | ADAPTER_ID                       |
++----------------------------------+----------------------------------+
+| SERVICE_INFO_QUERY               | SPATH_NAME                       |
+|                                  | SSTARTED                         |
++----------------------------------+----------------------------------+
+| MO_AP_NAP_QUERY                  | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_AP_NAPB_QUERY                 | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_AP_NAPD_QUERY                 | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_AP_NAPN_QUERY                 | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_AP_PX_QUERY                   | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_AP_PXA_QUERY                  | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_AP_PXD_QUERY                  | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_AP_PXN_QUERY                  | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_AP_PXNO_QUERY                 | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_AP_PXP_QUERY                  | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+| MO_DS_DB_QUERY                   | DEVICE_ID                        |
++----------------------------------+----------------------------------+
+
+
+Defect 245830
+         In Chapter 4. Queries add the following queries to the table
+         contained in the section named "Subscription queries":
+         *  LINUX_PPC_SUBSCRIPTION
+         *  DIGITAL_UNIX_SUBSCRIPTION
+         *  RELIANT_UNIX_SUBSCRIPTION
+         *  SCO_UNIXWARE_SUBSCRIPTION
+         *  WIN_2003_SUBSCRIPTION
+         *  SOLARIS_x86_SUBSCRIPTION
+         *  SGI_SUBSCRIPTION
+         *  SEQUENT_SUBSCRIPTION
+
+
+Defect 245830
+         In Chapter 5. Configuration repository tables add the following
+         columns to the following tables: 
+
+Table 19. Columns added to tables
++----------------------------------+----------------------------------+
+| Configuration repository table   | Columns added to the table       |
++----------------------------------+----------------------------------+
+| COMPUTER                         | OS_ARCH                          |
++----------------------------------+----------------------------------+
+| FILE_DESC                        | FILE_SIZE_KB                     |
++----------------------------------+----------------------------------+
+| INST_SERVICE_INFO                | DNAME                            |
+|                                  | SDESC                            |
+|                                  | SPATH_NAME                       |
+|                                  | STYPE                            |
+|                                  | SSTARTED                         |
+|                                  | SSTART_MODE                      |
+|                                  | SDISPLAY_NAME                    |
+|                                  | SSTATE                           |
+|                                  | SSTATUS                          |
++----------------------------------+----------------------------------+
+| INST_SMBIOS_DATA                 | POWERON_PASSWORD                 |
++----------------------------------+----------------------------------+
+| IP_ADDR                          | PERM_MAC_ADDRESS                 |
++----------------------------------+----------------------------------+
+| LPAR                             | PHYS_SHAREDPC                    |
+|                                  | PHYS_SHAREDPC_CORES              |
+|                                  | LPAR_ONLINE_VP_COUNT             |
+|                                  | LPAR_IS_SHARED_TYPE              |
+|                                  | LPAR_IS_CAPPED                   |
+|                                  | LPAR_ENTITLEMENT                 |
+|                                  | LPAR_MIN_VP_COUNT                |
+|                                  | LPAR_MAX_VP_COUNT                |
+|                                  | LPAR_MIN_CAPACITY                |
+|                                  | LPAR_MAX_CAPACITY                |
+|                                  | LPAR_IDLE_CP_WEIGHT              |
+|                                  | SMT_IS_ENABLED                   |
+|                                  | NODE_ACT_PROC_COUNT              |
++----------------------------------+----------------------------------+
+| MATCHED_SWARE                    | MD5_ID                           |
++----------------------------------+----------------------------------+
+| PM_PATCH_INFO                    | GUID                             |
+|                                  | UPDATEID                         |
+|                                  | REBOOTBEHAVIOR                   |
++----------------------------------+----------------------------------+
+| PM_PATCH_PKG                     | GUID                             |
++----------------------------------+----------------------------------+
+| SYNCDM_DMACC                     | ADDR                             |
++----------------------------------+----------------------------------+
+
+
+Defect 245830
+         In Chapter 5. Configuration repository tables remove the
+         following columns from the following tables: 
+
+Table 20. Columns removed from tables
++----------------------------------+----------------------------------+
+| Configuration repository table   | Columns removed from the table   |
++----------------------------------+----------------------------------+
+| PM_PATCH_PKG                     | PROD_MAJOR_VER                   |
+|                                  | PROD_MINOR_VER                   |
+|                                  | PROD_LANG                        |
+|                                  | OS_BASE_NAME                     |
+|                                  | OS_ARCHITECTURE                  |
+|                                  | OS_TYPE                          |
+|                                  | OS_SUBTYPE                       |
+|                                  | OS_SP_MAJOR_VER                  |
+|                                  | OS_SP_MINOR_VER                  |
++----------------------------------+----------------------------------+
+| SYNCDM_DMACC                     | ADDRESS                          |
+|                                  | NAME                             |
++----------------------------------+----------------------------------+
+
+
+Defect 245830
+         In Chapter 3. Configuration repository views remove the
+         following views from the chapter:
+         *  MO_TARM_LOCK_VIEW
+         *  MIGR_SWARE_VIEW
+
+
+Defect 245830
+         In Chapter 5. Configuration repository tables remove the
+         following tables from the chapter:
+         *  SERVICE_INFO
+         *  MO_TARM_LOCK
+
+
+Feature 235414
+         In Chapter 2. History tracking in section "Modifying history
+         tracking for efficiency" replace the first bullet of the
+         section with the following text:
+
+         
+         *  Exclude any history tables for which you do not want to
+            gather data.
+
+            By default, the h_database_schema.sql scripts create a table
+            to correspond to every inventory table in the
+            inv_database_schema.sql script that contains the attribute
+            COMPUTER_SYS_ID. If there are tables for which you do not
+            want to keep history tables, perform the following steps: 
+            1. Create the table EXCLUDED_H_TABLES.
+            2. Insert the name of the table to be disabled into the
+               EXCLUDED_H_TABLES table.
+
+             
+
+            You can find the SQL statements for performing these
+            operations in the h_inv_*_schema_431_FP01.sql script file.
+
+
+APAR IZ48308
+         In Chapter 3. Configuration repository views in section
+         "PHYSICAL_PROCESSOR_VIEW" add the following columns to the
+         current table: 
+
+Table 21. Columns added to Physical Processor View
++----------------------------------+----------------------------------+
+| Column Name                      | Description                      |
++----------------------------------+----------------------------------+
+| MANUFACTURER                     | Processor manufacturer.          |
+|                                  | Examples: Intel, AMD, IBM, SUN,  |
+|                                  | HP. If the manufacturer is not   |
+|                                  | recognized (is not in the list   |
+|                                  | of families supported by Common  |
+|                                  | Inventory Technology) then this  |
+|                                  | field has value of "Unknown".    |
++----------------------------------+----------------------------------+
+| FAMILY                           | Processor family. Examples:      |
+|                                  | Pentium 4, Xeon, Athlon 64,      |
+|                                  | POWER5, UltraSparc-T1, PA-RISC.  |
+|                                  | If the family is not recognized  |
+|                                  | (not in the list of families     |
+|                                  | supported by Common Inventory    |
+|                                  | Technology) then this field has  |
+|                                  | value of "Unknown".              |
++----------------------------------+----------------------------------+
+| TYPE                             | Processor type. Examples: 170    |
+|                                  | for AMD Opteron 150, 670 for     |
+|                                  | Intel Pentium 4 670. If Common   |
+|                                  | Inventory Technology does not    |
+|                                  | support type identification for  |
+|                                  | the family of processors then    |
+|                                  | this field has value of an empty |
+|                                  | string. If Common Inventory      |
+|                                  | Technology supports type         |
+|                                  | identification for the family of |
+|                                  | processors but the type of       |
+|                                  | processor is not recognized then |
+|                                  | this field has value of          |
+|                                  | "Unknown".                       |
++----------------------------------+----------------------------------+
+| CPU_FREQ                         | Processor frequency in MHz. This |
+|                                  | field is optional and vendor     |
+|                                  | specific. Depending on the       |
+|                                  | processor family it might be     |
+|                                  | nominal or current CPU           |
+|                                  | frequency. CPU frequency might   |
+|                                  | be interpreted differently       |
+|                                  | across processor architectures   |
+|                                  | and families. If not valid this  |
+|                                  | field is 0.                      |
++----------------------------------+----------------------------------+
+| L2_CACHE_SIZE                    | Size of L2 cache in Kilobytes.   |
+|                                  | This field is optional, 0 if not |
+|                                  | valid.                           |
++----------------------------------+----------------------------------+
+| L3_CACHE_SIZE                    | Size of L3 cache in Kilobytes.   |
+|                                  | This field is optional, 0 if not |
+|                                  | valid or there is no L3 cache.   |
++----------------------------------+----------------------------------+
+| SIGNATURE                        | Processor signature. This field  |
+|                                  | is optional and platform- and    |
+|                                  | vendor-specific. The value of    |
+|                                  | this field might be taken from   |
+|                                  | different sources on each        |
+|                                  | platform and even for different  |
+|                                  | processor families. If available |
+|                                  | this is the processor model      |
+|                                  | identifier reported by CPUID     |
+|                                  | instruction, BIOS or OS. This    |
+|                                  | field is for internal Common     |
+|                                  | Inventory Technology purposes    |
+|                                  | only; the exploiter should make  |
+|                                  | no assumption on contents or     |
+|                                  | format of this field.            |
++----------------------------------+----------------------------------+
+
+
+APAR IZ51439
+         In Chapter 3. Configuration repository views, in the
+         "NET_CARD_VIEW" section, modify the following information:
+
+         
+         *  In the PERM_MAC_ADDR row, check the operating system column
+            for Linux (S/390).
+         *  In the CURRENT_ADDR row, check the operating system column
+            for Linux (S/390).
+         *  In the MANUFACTURER row, uncheck the operating system
+            columns for OS/2 and Solaris.
+
+
+APAR IZ53642
+         In Chapter 3. Configuration repository views, in the
+         "PRINTER_VIEW" section, replace the current description for the
+         PRINTER_IS_LOCAL column with the following description:
+
+         Whether the printer is a local printer or a network printer,
+         and is the default printer or not. This column can assume one
+         of the following values:
+
+         Y        The printer is not the default printer and is local.
+
+         N        The printer is not the default printer and is not
+                  local.
+
+         Z        The printer is the default printer and is local.
+
+         O        The printer is the default printer and is not local.
+
+2.3.1.3 Patch Management Guide
+
+This section contains new and updated information for IBM Tivoli
+Configuration Manager Patch Management Guide: 
+
+Defect 66832
+         In Chapter 1. Introduction, section "Operating systems and
+         applications managed with this solution" add the following
+         operating systems to the current list:
+         *  Windows 7
+         *  Windows 2008 r2
+
+         and add the following note at the end of the list: 
+
+         Note: To enable WSUS 3.0 to manage Windows 7 and Windows 2008
+               r2 endpoints for Patch Management operations, you must
+               download the Windows Server Update Services 3.0 SP2 from
+               the following Microsoft Web site:
+
+               http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=a206ae20-2695-436c-9578-3403a7d46e40
+
+
+Defect 66531
+         In Chapter 5. Patch installation, section "Managing emergency
+         patches", replace the current description for the os_base_name
+         variable with the following text:
+
+         
+
+         os_base_name 
+                  Identifies the name of the operating system (winxp,
+                  win2k, win2k3, win2k8, vista).
+
+
+APAR IZ41238
+         In Chapter 7. Troubleshooting, section "Problems with the
+         Tivoli Configuration Manager Automation Server silent
+         installation", subsection named "Checks run during
+         installation", replace the current step 4 of the procedure: 
+
+         Before starting the Tivoli Configuration Manager Automation
+         Server installation, checks the correctness of the directories
+         for the configuration files and that Windows Instrumentation
+         Service is not running to prevent the failure of the MQ Series
+         component.
+
+         with the following text:
+
+         Before starting the Tivoli Configuration Manager Automation
+         Server installation, checks the correctness of the directories
+         for the configuration files.
+
+
+APAR IZ41238
+         In Chapter 2. Installing the automated patch management
+         solution, section "Installing and configuring Cygwin", add at
+         the end of the current step 4 the following text: 
+
+         The new output of the mount -m command will be:
+
+         mount -f -s -b "C:/cygwin/bin" "/usr/bin" mount -f -s -b
+         "C:/cygwin/lib" "/usr/lib" mount -f -s -b "C:/cygwin" "/"
+
+
+APAR IZ41238
+         In Chapter 2. Installing the automated patch management
+         solution, section "Installing and configuring Cygwin", add at
+         the end of the current section the following new steps: 
+         *  Create a copy of the tpm_install folder. When you have
+            locally copied the installation CD and customized the
+            tpm_install.req file, create a copy of the subdirectory:
+            tpm_images\cd2\tpm_install.
+         *  Remove the ^M character. Under the
+            tpm_images\cd2\tpm_install folder, run the dos2unix command
+            against all files to remove all the ^M characters.
+         *  If you are running on Windows 2003 Standard with SP1, verify
+            that the Windows Firewall/Internet Connection Sharing (ICS)
+            service is started.
+
+2.3.1.4 Planning and Installation Guide
+
+This section contains new and updated information for IBM Tivoli
+Configuration Manager Planning and Installation Guide: 
+
+Defect 66291
+         In Chapter 5. IBM Tivoli Configuration Manager Installation and
+         Upgrade, section "Custom Server Installation", in step 11 of
+         the procedure, add after the following bullet: 
+         *  Activity Planner requires a user name and password
+
+         the following information:
+
+         If you are using a Windows workstation and the password policy
+         rules are enabled, the password that you specify for the new
+         tivapm user must meet the operating system password
+         requirements. Otherwise the Activity Planner installation
+         completes successfully, but the user is not created.
+
+
+APAR IZ40233
+         In Chapter 3. Component Installation Prerequisites, section
+         "Installation Options", subsection "Software Package Editor"
+         add the following note at the end of the section: 
+
+         Note: For Red Hat Enterprise Linux 5.0 platforms, before you
+               start using Software Package Editor, ensure that you have
+               the following required packages installed: 
+               *  libXp.so.6 (included in libXp-1.0.0-8.i386.rpm)
+               *  libXmu.so.6 (included in libXmu-1.0.2-5.i386.rpm)
+
+
+APAR IZ46662
+         In Chapter 3. Component Installation Prerequisites in section
+         "Components Installed From Software Package Blocks" subsection
+         "Software Packages for the IBM Tivoli Configuration Manager
+         Administrative Interfaces", remove the following row from Table
+         9. Software Packages for Installing the Administrative
+         Interfaces:
+
+         
+
+Table 22. Software Packages for Installing the Administrative Interfaces
++----------------------------------+----------------------------------+
+| Tivoli_MD2GUI_L10N               | The language support packages    |
+|                                  | for the Distribution Status      |
+|                                  | console, version 4.3.1. The      |
+|                                  | prerequisite for this package is |
+|                                  | Tivoli_MD2GUI.                   |
++----------------------------------+----------------------------------+
+
+
+APAR IZ51452
+         In Chapter 7. Maintaining and Troubleshooting a Configuration
+         Management Environment, add the following section after the
+         section named "Troubleshooting a Tivoli Management Framework
+         installation":
+
+         Troubleshooting a Tivoli Management Framework silent
+         installation
+
+         When you install IBM Tivoli Configuration Manager on Windows
+         2008 platforms in Japanese language using a silent
+         installation, the Tivoli Management Framework installation
+         might hang. As a workaround, proceed first with the Tivoli
+         Management Framework installation using Tivoli Management
+         Framework CD 1. When this installation is complete, launch the
+         usual IBM Tivoli Configuration Manager installation using the
+         product CD 5.
+
+
+APAR IZ44183
+         In Chapter 4 "Working With Repositories and Queries", remove
+         the current section named "Upgrade and migration
+         considerations".
+
+APAR IZ44183
+         Between Appendix A and Appendix B add the following new
+         Appendix named "Upgrade and migration considerations".
+
+2.3.1.4.1 Upgrade and migration considerations
+
+This chapter describes how to upgrade Tivoli Management Framework and
+the IBM Tivoli Configuration Manager components.
+
+Tivoli Management Framework backward compatibility rules
+
+The upgrade is based on the following Tivoli Management Framework
+version 4.3.1 backward compatibility rules: 
+*  Tivoli Management Framework can be upgraded from the following Tivoli
+   Management Framework versions: 
+   *  3.7
+   *  3.7.1
+   *  4.1
+   *  4.1.1
+
+*  Any application built with the following Tivoli Management Framework
+   versions: 
+   *  3.7
+   *  3.7.1
+   *  4.1
+   *  4.1.1
+
+   will continue to work on an upgraded platform, if Tivoli Management
+   Framework version 4.3.1 is supported on that platform.
+*  A 4.3.1 Tivoli region will support back level (3.7, 3.7.1, 4.1,
+   4.1.1) managed nodes, gateways, and endpoints.
+*  A 4.3.1 Tivoli region can be interconnected to a Tivoli region at
+   3.7, 3.7.1, 4.1 and 4.1.1 levels. 
+
+   Note: In these cases the new feature will not be available on the
+         back level managed nodes and gateways, and on the endpoints
+         attached to back level managed nodes and gateways.
+
+Tivoli Configuration Manager backward compatibility rules
+
+The upgrade is also based on the following IBM Tivoli Configuration
+Manager 4.3.1 backward compatibility rules: 
+*  You can upgrade to IBM Tivoli Configuration Manager version 4.3.1,
+   starting from IBM Tivoli Configuration Manager version 4.2.2 or IBM
+   Tivoli Configuration Manager version 4.2.3.
+*  If you upgrade from earlier IBM Tivoli Configuration Manager
+   versions, you must perform additional steps to migrate from the
+   starting release to version 4.2.3 or 4.2.2.
+
+The upgrade can be performed using the classical procedure based on
+Tivoli Management Framework, the InstallShield MultiPlatform (ISMP)
+installation on the supported platforms, or the Tivoli Software
+Installation Service (SIS) on the supported platforms.
+
+The IBM Tivoli Configuration Manager version 4.3.1 release does not
+contain enhancements that require changes in the Inventory schema. The
+Inventory schema upgrade modifies only the schema from the starting IBM
+Tivoli Configuration Manager release to the latest 4.2.3 maintenance
+level.
+
+To upgrade the Inventory schema, apply the same procedure used when
+installing a IBM Tivoli Configuration Manager fix pack.
+
+The images of IBM Tivoli Configuration Manager version 4.3.1 contain all
+the SQL scripts released with any 4.2.2 and 4.2.3 fix pack, up to
+4.2.2-TIV-TCM-FP0006. You must run a subset of these scripts depending
+on the database vendor and the starting IBM Tivoli Configuration Manager
+release or fix pack.
+
+2.3.1.4.1.1 Recommended steps for migrating large environments
+
+To migrate large environments, it is recommended that you first upgrade
+to Tivoli Management Framework 4.3.1, and then start upgrading to IBM
+Tivoli Configuration Manager 4.3.1.
+
+2.3.1.4.1.1.1 Upgrading Tivoli Management Framework
+
+To upgrade Tivoli Management Framework, it is recommended that you use
+the following order (top-down approach): 
+1. Hubs (First the Tivoli server, then the managed nodes and the
+   gateways)
+2. Spokes (First the Tivoli server, then the managed nodes and the
+   gateways)
+3. Endpoints
+
+At the end of this phase you will have the Tivoli Management Framework
+infrastructure upgraded to 4.3.1 and IBM Tivoli Configuration Manager
+still working at 4.2.x level.
+
+2.3.1.4.1.1.2 Upgrading IBM Tivoli Configuration Manager
+
+To upgrade IBM Tivoli Configuration Manager, it is recommended that you
+use the following order (bottom-up approach): 
+1. Spokes Tivoli Configuration Manager gateways
+2. Hubs Tivoli Configuration Manager gateways
+3. Spokes Tivoli Configuration Manager server
+4. Hubs Tivoli Configuration Manager server
+5. Database schema
+
+If during the upgrade phase you want to run an Inventory scan from a
+back level Configuration Manager server to 4.3.1 endpoints attached to
+gateways on which IBM Tivoli Configuration Manager has already been
+upgraded to 4.3.1, run the following command against each gateway that
+has already been upgraded to Tivoli Management Framework 4.3.1: 
+
+wlevlmeth -a gateway_name (| all) 
+
+ The wlevlmeth utility is located under the /utils folder of the IBM
+Tivoli Configuration Manager version 4.3.1 CD. Use the wlevlmeth command
+to force the endpoints already upgraded to Tivoli Management Framework
+4.3.1 to download binaries starting from the gateway bundles older than
+the 4.3.1 ones.
+
+To upgrade IBM Tivoli Configuration Manager, perform these steps:
+1. Keep the Configuration Manager server components at back level.
+2. If needed, run the commands wlevmeth -a gateway_name or wlevmeth -a
+   all, depending on if you want to issue the command against a specific
+   gateway or against each gateway in the Tivoli region.
+3. Upgrade the Configuration Manager gateway components in your
+   environment. During this phase, you can perform any Configuration
+   Manager action against all the endpoints in your environment.
+4. When all the gateways are upgraded, and all the endpoints are
+   upgraded to Tivoli Management Framework 4.3.1, ensure that no
+   Configuration Manager distributions are running.
+5. Upgrade the Configuration Manager server components and the schema.
+6. If you issued the wlevmeth command, run now the commands wlevmeth -r
+   gateway_name or wlevmeth -r all to reset the dependency download
+   mechanism. After performing these commands, the 4.3.1 endpoints are
+   allowed to download binaries starting from 4.3.1 gateway bundles.
+7. Check that the back level method flag has been restored by running
+   wgateway gw_name get backlevel_methods. The command should return for
+   each gateway the following output: 
+   backlevel_methods: NULL
+
+8. Start to perform any Configuration Manager action in the upgraded
+   environment.
+
+Notes: 
+1. After upgrading the Configuration Manager server components and
+   schema to 4.3.1, within a Tivoli region boundary, the 4.3.1 Inventory
+   component might no longer support back level endpoints (for example
+   at 3.7.x or 4.1.x level) because the database schema and scanner are
+   no longer synchronized. For this reason some information, such as the
+   signature software scan related data, cannot be collected, or there
+   is a performance issue when trying to insert data to no longer
+   existing or modified tables, such as service_info, matched_sware.
+   Because these issues occur for all Configuration Manager schemas
+   older than 4.2.3 Fix Pack 4, it is strongly recommended that you
+   migrate all the endpoints to 4.3.1 before upgrading the Configuration
+   Manager server and schema to 4.3.1.
+2. Configuration Manager 4.3.1 server components change the dependency
+   set. A new 3.7.x or 4.1.x endpoint, that never received an Inventory
+   scan or a Software Distribution action before the Configuration
+   Manager upgrade to 4.3.1, might not be able to download from the
+   gateway all the necessary binaries. For this reason it is strongly
+   recommended to have all new endpoints, installed after the
+   Configuration Manager upgrade to 4.3.1, at Tivoli Management
+   Framework 4.3.1 level. 
+
+   You cannot perform a Fresh Install of 4.2.3 Configuration Manager
+   gateway components, after upgrading to 4.3.1 Tivoli Management
+   Framework on the managed nodes of your environment.
+
+   If you cannot exclude the possibility that an old 3.7.x or 4.1.x
+   endpoint connects to a Configuration Manager environment already
+   migrated to 4.3.1, to minimize the impact caused by a mismatch
+   between the Configuration Manager 4.3.1 schema and the 4.3.1 scanners
+   we suggest that you:
+   *  Disable the software signature software scan if you have a schema
+      older than 4.2.3 Fix Pack 4.
+   *  Disable the Service Info from the PC hardware scan section.
+   *  Set to 1 the number of retries when a failure occurs when
+      inserting data into the database using the wsetinvdh -r 1 command.
+
+3. If you upgrade Configuration Manager starting from one of the
+   following versions: 
+   *  4.2.2
+   *  4.2.3 GA level
+   *  4.2.3 Fix Pack 1
+
+   take into account that the Configuration Manager scan is performed,
+   after 4.2.3 Fix Pack 2, by the Common Inventory Technology (CIT)
+   component. This is a component of Tivoli Configuration Manager, which
+   can be installed from the Software Distribution disconnected command
+   line using SPB files. The Software Distribution disconnected command
+   line and the SPB files for installing Common Inventory Technology are
+   downloaded to the endpoint when the first Inventory scan is
+   performed, after the upgrade of the Configuration Manager server and
+   gateways to 4.3.1. During this Inventory scan, the first action that
+   occurs is the Common Inventory Technology installation.
+
+   For more details about disk space requirements, refer to IBM Tivoli
+   Configuration Manager: Release Notes version 4.3.1.
+
+    Common Inventory Technology is installed using the following default
+   paths: 
+
+   UNIX     /opt/tivoli/cit /etc/cit
+
+   Windows  C:\Program Files\Tivoli\cit and C:\Windows\cit
+
+   You can change the default installation path and also plan to install
+   Common Inventory Technology in a more controlled way by using
+   Software Distribution from the Configuration Manager server. 
+
+   For more details about how to install Common Inventory Technology,
+   refer to IBM Tivoli Configuration Manager: User's Guide for Inventory
+   version 4.3.1
+
+    Common Inventory Technology does not interact with a Tivoli
+   Configuration Manager Inventory component installed before 4.2.3 Fix
+   Pack 2, until it is upgraded to 4.3.1. Ensure that you plan to
+   install Common Inventory Technology in a controlled way before
+   upgrading to 4.3.1.
+4. If you upgrade Configuration Manager starting from a version older
+   than 4.2.3 Fix Pack 2, the first scan you perform on the endpoints
+   fails because of a number of mismatches in the MIF file attribute,
+   because the MIF file structure changed after 4.2.3 Fix Pack 2. To
+   work around this problem, delete the previous *.bk* and *.mif files
+   from the inv/SCAN directory before running a new scan. You can
+   perform this operation by inserting the delete statements (for
+   example, "rm *.bk*" or "del *.bk*") in the before scan script section
+   of the InventoryConfig profile.
+
+2.3.1.5 Reference Manual for Software Distribution
+
+This section contains new and updated information for IBM Tivoli
+Configuration Manager Reference Manual for Software Distribution: 
+
+APAR IZ53412
+         In Chapter 1. Editing the Software Package Definition File,
+         section "Structure of the SPD File", before the paragraph:
+
+         The sections where these stanzas are described show the
+         structure in which you should define each stanza and provide
+         examples.
+
+         add the following paragraph:
+
+         At installation time, the installation of a software package
+         starts only if, during the check of the conditions specified in
+         all software package stanzas, all these conditions are
+         verified.
+
+
+APAR IZ57893
+         In Chapter 1. Editing the Software Package Definition File,
+         section "Attributes in the File System Stanzas" table "SPD File
+         attributes in file system stanzas" in the row for the
+         descend_dirs attribute:
+
+         add the following note:
+
+         On UNIX platforms if you set this attribute to y when creating
+         software packages, to which a directory is added containing
+         backward slashes, performing the winstsp command on the
+         software package fails. To successfully install the software
+         package on UNIX platforms, do not add to the package a
+         directory containing backward slashes.
+
+2.3.1.6 User's Guide for Deployment Services
+
+This section contains new and updated information for IBM Tivoli
+Configuration Manager User's Guide for Deployment Services: 
+
+         In Chapter 4. Troubleshooting, before the "Activity Planner
+         Logs and Traces" section:
+
+         add the following information:
+
+         Symptom catalog and log files adapters
+
+         Starting from the Autonomic Computing AC Log and Trace 4.5.0.3
+         fix pack, adapters are supported for the apmlog0 log file.
+
+         From this fix pack also the symptom catalogs for Tivoli
+         Configuration Manager 4.3.1. are available.
+
+2.3.1.7 Release Notes
+
+This section contains new and updated information for IBM Tivoli
+Configuration Manager Release Notes: 
+
+Defect 66684
+         In Chapter 3. Software limitations, problems, and workarounds,
+         section "Software limitations", subsection "Activity Planner"
+         replace the current bullet:
+         *  Activity Planner might not start on HP-UX 11. This is due to
+            a limitation of the HP-UX platform.
+
+         with the following text: 
+         *  Activity Planner might not start on HP-UX 11i. This is due
+            to a limitation of the HP-UX platform.
+
+
+Defect 66684
+         In Chapter 2. Installation and upgrade notes, section
+         "Installation program requirements", subsection "General
+         prerequisites for installation programs" remove the following
+         information:
+         *  For HP-UX 11, Quality Pack QPK1100.
+
+         and replace the URL:
+         *  http://www.software.hp.com/SUPPORT_PLUS/qpk.html
+
+          with the following URL: 
+         *  http://www13.itrc.hp.com/service/patch/mainPage.do
+
+
+APAR IZ40926
+         In Chapter 2. Installation and upgrade notes, section
+         "Application Prerequisites" replace the current bullet: 
+         *  Red Hat Linux Enterprise Server, version 5 requires the
+            libstdc++.so.5 compatibility pack
+
+         with the following text: 
+         *  Red Hat Linux Enterprise Server, version 5 requires the
+            libstdc++.so.5 compatibility pack which is included in the
+            libstdc++-296-2.96-138.i386.rpm package.
+
+
+Defect 66322
+         In Chapter 2. Installation and upgrade notes, section
+         "Application Prerequisites" replace the current bullet: 
+         *  Red Hat Linux Enterprise Server, version 5 requires the
+            libstdc++.so.5 compatibility pack which is included in the
+            libstdc++-296-2.96-138.i386.rpm package.
+
+         with the following text: 
+
+         On Red Hat Linux Enterprise Server, version 5 32-bit operating
+         systems, the following packages are required:
+         *  compat-libstdc++-296-2.96-138.i386.rpm
+         *  libXmu-1.0.2-5.i386.rpm
+         *  libXp-1.0.0-8.1.el5.i386.rpm
+
+         On Red Hat Linux Enterprise Server, version 5 64-bit operating
+         systems, the following packages are required:
+         *  compat-libstdc++-296-2.96-138.i386.rpm
+         *  libXmu-1.0.2-5.i386.rpm
+         *  libXp-1.0.0-8.1.el5.i386.rpm
+         *  libXp-1.0.0-8.1.el5.x86_64.rpm
+         *  libXpm-3.5.5-3.x86_64.rpm
+
+
+APAR IZ44669
+         In Chapter 3. Software limitations, problems, and workarounds
+         in section "Software problems and workarounds" in subsection
+         named "Installation", add the following text to the current
+         list: 
+
+         APAR IZ44669
+
+         Problem: When installing Tivoli Configuration Manager version
+         431 on Red Hat Linux Enterprise Server version 5 in Japanese
+         language, the installation wizard panels display garbled
+         characters because some language font files are missing.
+
+         Workaround: Before installing Tivoli Configuration Manager
+         version 431, perform the following steps:
+         1. Download tnrwt_j.ttf, which is the Japanese language font
+            file for IBM World Type Font, from official IBM Web sites
+            such as: 
+            ftp://submit.boulder.ibm.com/download/typography/fonts/worldtype/
+            archive/wt__/2002-02-13/
+
+         2. Copy the tnrwt_j.ttf file to the JRE_HOME/lib/fonts
+            directory on the server where you want to install Tivoli
+            Configuration Manager version 431.
+         3. Move to the JRE_HOME/lib/fonts directory.
+         4. Run the command:
+            ttmkfdir > fonts.dir
+
+         5. Run the command:
+            chkfontpath --add JRE_HOME/lib/fonts
+
+         Note: An example for the JRE_HOME/lib/fonts directory is: 
+               /opt/IBMJava2-131/jre/lib/fonts
+
+
+APAR IZ51452
+         In Chapter 3. Software limitations, problems, and workarounds,
+         section "Software problems and workarounds" subsection
+         "Installation", add the following bullet: 
+         *  APAR IZ51452: Silent installation of Tivoli Management
+            Framework might hang on Windows 2008 platforms in Japanese
+            language
+
+            When you install IBM Tivoli Configuration Manager on Windows
+            2008 platforms in Japanese language using a silent
+            installation, the Tivoli Management Framework installation
+            might hang.
+
+            Workaround: Proceed first with the Tivoli Management
+            Framework installation using Tivoli Management Framework CD
+            1. When this installation is complete, launch the usual IBM
+            Tivoli Configuration Manager installation using the product
+            CD 5.
+
+2.3.1.8 License Management with License Compliance Manager Version 2.3 
+        Fix Pack 4
+
+This section contains new and updated information for IBM Tivoli
+Configuration Manager License Management with License Compliance Manager
+Version 2.3 Fix Pack 4: 
+
+Defect 65890
+         In Chapter 5. Deploying and configuring agents, section
+         "Reassigning agents to divisions", in the sample XML input file
+         described in the section, replace the line:
+         <!DOCTYPE agentRemappings SYSTEM "agtRemappings.dtd">
+
+         with the following line:
+         <!DOCTYPE agentRemappings SYSTEM "AgentRemappings.dtd">
+
+
+Defect 65890
+         In Chapter 11. Command reference, section "agtremap" replace
+         the xml_file description:
+
+         The absolute path to the XML file containing the list of agent
+         IDs and Tivoli OIDs to be remapped to different divisions. This
+         file must be located in the same folder as the document type
+         definition (DTD) file. The DTD file is copied to the path 
+
+         $INSTALL_DIR/admin/SLM_Admin_Application.ear\slm_admin.war\webdoc\xml\
+         import\agentRemappings.dtd
+
+         with the installation of the License Compliance Manager
+         administration server infrastructure element.
+
+         with the following text:
+
+         The absolute path to the XML file containing the list of agent
+         IDs and Tivoli OIDs to be remapped to different divisions. Add
+         to the XML file a DOCTYPE line containing the full path to the
+         document type definition (DTD) file as shown in the following
+         example:
+
+         <!DOCTYPE agentRemappings SYSTEM "C:\Program Files\IBM\TLM\admin\
+         SLM_Admin_Application.ear\slm_admin.war\
+         webdoc\xml\import\AgentRemappings.dtd">
+
+3.0 Notices
+
+This information was developed for products and services offered in the
+U.S.A. IBM may not offer the products, services, or features discussed
+in this document in other countries. Consult your local IBM
+representative for information on the products and services currently
+available in your area. Any reference to an IBM product, program, or
+service is not intended to state or imply that only that IBM product,
+program, or service may be used. Any functionally equivalent product,
+program, or service that does not infringe any IBM intellectual property
+right may be used instead. However, it is the user's responsibility to
+evaluate and verify the operation of any non-IBM product, program, or
+service.
+
+IBM may have patents or pending patent applications covering subject
+matter described in this document. The furnishing of this document does
+not give you any license to these patents. You can send license
+inquiries, in writing, to: 
+
+IBM Director of Licensing
+IBM Corporation
+North Castle Drive
+Armonk, NY 10504-1785 U.S.A.
+
+For license inquiries regarding double-byte (DBCS) information, contact
+the IBM Intellectual Property Department in your country or send
+inquiries, in writing, to: 
+
+IBM World Trade Asia Corporation
+Licensing
+1623-14, Shimotsuruma, Yamato-shi
+Kanagawa 242-8502 Japan
+
+The following paragraph does not apply to the United Kingdom or any
+other country where such provisions are inconsistent with local law:
+
+INTERNATIONAL BUSINESS MACHINES CORPORATION PROVIDES THIS PUBLICATION
+"AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+Some states do not allow disclaimer of express or implied warranties in
+certain transactions, therefore, this statement might not apply to you.
+
+This information could include technical inaccuracies or typographical
+errors. Changes are periodically made to the information herein; these
+changes will be incorporated in new editions of the publication. IBM may
+make improvements and/or changes in the product(s) and/or the program(s)
+described in this publication at any time without notice.
+
+Any references in this information to non-IBM Web sites are provided for
+convenience only and do not in any manner serve as an endorsement of
+those Web sites. The materials at those Web sites are not part of the
+materials for this IBM product and use of those Web sites is at your own
+risk.
+
+IBM may use or distribute any of the information you supply in any way
+it believes appropriate without incurring any obligation to you.
+
+Licensees of this program who wish to have information about it for the
+purpose of enabling: (i) the exchange of information between
+independently created programs and other programs (including this one)
+and (ii) the mutual use of the information which has been exchanged,
+should contact: 
+
+IBM Corporation
+2Z4A/101
+11400 Burnet Road
+Austin, TX  78758     U.S.A. 
+
+Such information may be available, subject to appropriate terms and
+conditions, including in some cases payment of a fee.
+
+The licensed program described in this document and all licensed
+material available for it are provided by IBM under terms of the IBM
+Customer Agreement, IBM International Program License Agreement or any
+equivalent agreement between us.
+
+Any performance data contained herein was determined in a controlled
+environment. Therefore, the results obtained in other operating
+environments may vary significantly. Some measurements may have been
+made on development-level systems and there is no guarantee that these
+measurements will be the same on generally available systems.
+Furthermore, some measurement may have been estimated through
+extrapolation. Actual results may vary. Users of this document should
+verify the applicable data for their specific environment.
+
+Information concerning non-IBM products was obtained from the suppliers
+of those products, their published announcements or other publicly
+available sources. IBM has not tested those products and cannot confirm
+the accuracy of performance, compatibility or any other claims related
+to non-IBM products. Questions on the capabilities of non-IBM products
+should be addressed to the suppliers of those products.
+
+This information contains examples of data and reports used in daily
+business operations. To illustrate them as completely as possible, the
+examples include the names of individuals, companies, brands, and
+products. All of these names are fictitious and any similarity to the
+names and addresses used by an actual business enterprise is entirely
+coincidental.
+
+If you are viewing this information in softcopy form, the photographs
+and color illustrations might not display.
+
+3.1 Trademarks
+
+IBM, the IBM logo, AIX, DB2, IBMLink, Informix, OS/2, OS/400, Tivoli,
+the Tivoli logo, and, the Tivoli Enterprise Console are trademarks or
+registered trademarks of International Business Machines Corporation in
+the United States, other countries, or both.
+
+Lotus and Lotus Notes are trademarks of International Business Machines
+Corporation and Lotus Development Corporation in the United States,
+other countries, or both.
+
+Intel, the Intel Inside logos, MMX, and Pentium are trademarks of Intel
+Corporation in the United States, other countries, or both.
+
+Microsoft and Windows NT are registered trademarks of Microsoft
+Corporation in the United States, other countries, or both.
+
+   
+           | Java and all Java-based trademarks and logos are          
+           | trademarks or registered trademarks of Sun Microsystems,  
+           | Inc. in the United States, other countries, or both.      
+
+UNIX is a registered trademark of The Open Group in the United States
+and other countries.
+
+Linux is a trademark of Linus Torvalds in the United States, other
+countries, or both.
+
+Other company, product, and service names may be trademarks or service
+marks of others.
+
