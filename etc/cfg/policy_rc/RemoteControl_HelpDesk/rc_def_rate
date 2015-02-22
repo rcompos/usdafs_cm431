@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Refresh Rate Option 
+#
+#  This method sets the default value for the Refreh Rate editable field. 
+#
+#  Possible values are:
+#	50 ms or greather                    suggested value if you use LAN  		
+#	500 ms or greather                    suggested value if you use MODEM          	
+#			 
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <rate value>-locked
+#  (eg: echo "50-locked")
+
+echo "300"
+
+exit 0

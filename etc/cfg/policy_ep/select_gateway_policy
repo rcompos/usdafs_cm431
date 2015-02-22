@@ -1,0 +1,252 @@
+#!/etc/Tivoli/bin/perl
+#
+# $Header: /work/RCS/select_gateway_policy,v 1.1 2005/04/05 01:08:07 rcompos Exp $
+#
+# -----------------------------------------------------------------------
+#  FILENAME: select_gateway_policy
+#  PURPOSE: select gateways for endpoint
+#  DESCRIPTION: 
+#      Using epmgr.cfg, select_gateway_policy locates subnet(s) that match
+#      the endpoints subnet.  
+# 
+#  INPUT PARAMETERS: data from endpoint manager
+#  INPUT FILES: epmgr.cfg
+#  OUTPUT FILES: select_gateway.lst select_gateway.debug
+#  RETURNS: gateway oids 
+# 
+# -----------------------------------------------------------------------
+#
+# The following are the command line arguments passed to this script
+# from the Endpoint Manager.
+#
+# $1 - The label of the endpoint machine
+# $2 - The object reference of the endpoint machine
+# $3 - The architecture type of the endpoint machine
+# $4 - The object reference of the gateway that the endpoint logged into
+# $5 - The ip/ipx address of the endpoint logging in (refer to parameter 
+#      $10 to determine the protocol of the endpoint).
+# $6 - region
+# $7 - dispatcher
+# $8 - version
+# $9 - The inventory id of the endpoint logging in.
+#
+# The following command line argument will be passed to this script
+# from the Endpoint Manager, when compiled with the MULTIPROTO flag turned on
+#
+# $10 - The protocol of the endpoint logging in.
+#         TCPIP   -> TCP/IP
+#         IPX     -> IPX/SPX
+#
+# The environment variable LCF_LOGIN_STATUS is also set by the epmgr.
+# A value of 2 indicates the endpoint is isolated. That is, it was unable
+# to contact its assigned gateway. Isolated endpoints are automatically
+# migrated to another gateway unless the select_gateway_policy terminates
+# with a non-zero exit status. Other LCF_LOGIN_STATUS values are:
+# 0  Initial login   (allow_install_policy, select_gateway_policy, after_install_policy)
+# 2  Isolated login  (select_gateway_policy)
+# 3  Migratory login (select_gateway_policy)
+# 7  Orphaned login  (allow_install_policy, select_gateway_policy, after_install_policy)
+#
+# Also note that during the execution of allow_install and select_gateway
+# policy scripts, the endpoint does not yet formally exist. For this reason,
+# the endpoint object reference will have a value of OBJECT_NIL and the
+# object dispatcher number will be 0. The endpoint label will have the value
+# suggested by the endpoint (or the user value lcfd -n) but is not guaranteed
+# to become the final endpoint label. It will become the final endpoint label
+# if this value is not already taken by another endpoint.
+#
+# NB: That the version in $8 is not defined when the sgp is called during a 
+# migratory completion by login or upcall.
+# -----------------------------------------------------------------------
+#
+
+# CONFIGURATION PARAMETERS 
+
+$DEBUG       = 1;
+$LOG         = 1;
+
+$ultv        = "/usr/local/Tivoli/var";
+$dir_log     = "$ultv/log/policy_ep";
+$file_cfg    = "/usr/local/Tivoli/etc/cfg/epmgr.cfg";
+$file_gw     = "$ultv/tmp/gateway.list";
+$age_max     = 3600;
+$file_log    = "$dir_log/select_gateway.log";
+$file_debug  = "$dir_log/select_gateway.debug";
+$exit_status = 0;
+$exit_msg    = 0;
+@gateway     = ();
+@gw_uniq     = ();
+@gw_lookup   = ();
+%seen        = ();
+$bindir      = "/usr/local/Tivoli/bin/aix4-r1/bin";
+
+
+if( $DEBUG || $LOG ) { 
+    if( ! -d $dir_log ) { `mkdir -p -m775 $dir_log` }
+    $date = `date +%Y%m%d-%H%M%S`;
+    chop $date;
+}
+
+if( $DEBUG ) { 
+    open( DBG, ">>$file_debug" );
+    print DBG "=" x 15, " $date ", "=" x 15, "\n";
+}
+
+
+# Assign command line args to more readable variables
+( $epname, $epoid, $eparch, $gatewayoid, $epipaddr, $epregion, $epdispatch, $epversion, $epinvid, $epprotocol ) = @ARGV;
+
+
+# Get the assigned gateways for the endpoints IP address
+@all_gw = ();
+@EpIpSplit = split( /[\.,+]/, $epipaddr );
+open( CFG, "<$file_cfg" );
+while( <CFG> ) {
+    next if( /^#/ || /^\s+$/ );
+    ( $subnet, $gateway, $instflag, @comments ) = split( /\s+/ );
+    $subnet =~ /\s*([^\.\s]*)\.([^\.\s]*)\.([^\.\s]*)\.([^\.\s]*)/;
+    @gateway_field = split( /,/, $gateway );
+    if( &match_octet( $1, $EpIpSplit[0] ) ) {
+        if( &match_octet( $2, $EpIpSplit[1] ) ) {
+            if( &match_octet( $3, $EpIpSplit[2] ) ) {
+                if( &match_octet( $4, $EpIpSplit[3] ) ) {
+                    push( @all_gw, @gateway_field );
+                }
+            }
+        }
+    }
+}
+close( CFG );
+
+for( @all_gw ) { push( @assigned_gateways, $_ ) unless $seen{ $_ }++ }
+
+
+# If no gateways found, set exit status to 90
+# If gateways assigned, print oids
+if( ! @assigned_gateways ) {
+    $exit_msg    = "no gateway";
+    $exit_status = 90;
+} else {
+
+    # Perform mapping of gateway label to gateway OID
+    # Instead of running 'wlookup -ar Gateway',
+    # read file for performance benefit
+    # File contents are not more than $age_max
+    # otherwise, run the wlookup
+    # The file must be readable to user nobody
+    $age_file = -M $file_gw;
+    $age_file *= 86400;
+    print DBG "DBG: GW File: $file_gw\n" if $DEBUG;
+    print DBG "DBG: Age: $age_file s\n" if $DEBUG;
+    if( ! $age_file || $age_file > $age_max ) { `$bindir/wlookup -ar Gateway >$file_gw` }
+    system( "chmod 644 $file_gw" );
+    open( GW, "$file_gw" );
+    while( <GW> ) { print DBG "DBG: GW: $_"; push( @gw_lookup, $_ ) }
+    close( GW );
+    chop @gw_lookup;
+
+    for $label ( @assigned_gateways ) {
+        for( @gw_lookup ) {
+            if( /^$label\s+(\S+)/ ) {
+                $oid = $1;
+                print DBG "DBG: OID: $oid\n" if $DEBUG;
+                push( @gateway, $oid );
+                last;
+            }
+        }
+    }
+    %seen = ();
+    for( @gateway ) { print "$_\n" }  ### GW OID ###
+
+}
+
+
+# Check to see if the install flag for the gateway is turned on
+# If it is procced normally, if in is set to n, or turned off
+# set the exit status to 89
+if( $instflag =~ /n/i ) {
+    $exit_msg    = "install_flag";
+    $exit_status = 89;
+}
+
+
+# Check the duplicate environment variables.
+# to allow the duplicate to be created with a unique
+# name, label.dispatcher, set exit_status to 6 to ignore
+# the login if needed in the future
+if( $ENV{'LCF_DUPL_OBJECT'} ) {
+    $exit_msg    = "duplicate";
+    $exit_status = 10;
+}
+
+
+# Set login_status
+if( $ENV{'LCF_LOGIN_STATUS'} == 0 ) {
+    $login_status = "initial";
+} elsif( $ENV{'LCF_LOGIN_STATUS'} == 2 ) {
+    $login_status = "isolated";
+} elsif( $ENV{'LCF_LOGIN_STATUS'} == 3 ) {
+    $login_status = "migration";
+} elsif( $ENV{'LCF_LOGIN_STATUS'} == 7 ) {
+    $login_status = "orphaned";
+} else {
+    $login_status = "undefined";
+}
+
+$gw_assigned = join( ",", @assigned_gateways );
+
+if( $LOG ) {  # Write all info on one line
+    @gateway_short = @gateway;
+    for( @gateway_short ) { s/(\S+)#\S+#/$1/ }
+    $gateway_short = join( ",", @gateway_short );
+    $epoid_short = $epoid;
+    $epoid_short =~ s/(\S+)#\S+#/$1/;
+    $gwoid_short = $gatewayoid;
+    $gwoid_short =~ s/(\S+)#\S+#/$1/;
+    open( LOGGER, ">>$file_log");
+    print LOGGER "$date $epname $epoid_short $eparch $gwoid_short $epipaddr $epregion $epdispatch $epversion $epinvid $epprotocol $login_status $exit_status $exit_msg $gw_assigned $gateway_short\n";
+    close LOGGER;
+}  # end LOG
+
+if( $DEBUG ) {  # More verbose
+    $gw_oids     = join( ",", @gateway );
+    print DBG <<"DBUG_OUT";
+
+ENDPOINT PARAMETERS
+      epname: $epname
+       epoid: $epoid
+      eparch: $eparch
+  gatewayoid: $gatewayoid
+    epipaddr: $epipaddr
+    epregion: $epregion
+  epdispatch: $epdispatch
+   epversion: $epversion
+     epinvid: $epinvid
+  epprotocol: $epprotocol
+
+STATUS
+Login status: $login_status
+   Exit code: $exit_status
+Exit message: $exit_msg
+ GW assigned: $gw_assigned
+GW OIDs uniq: $gw_oids
+
+DBUG_OUT
+    close DBG;
+}  # end DEBUG
+
+
+# Return status to endpoint manager
+exit( $exit_status );
+
+
+sub match_octet{
+# sub routine to compare ip addresses
+    local($pattern, $octet) = @_;
+    $pattern eq $octet && return 1;
+    $pattern eq "*" && return 1;
+    $pattern =~ /(\d*)-(\d*)/;
+    $1 <= $octet && $octet <= $2 && return 1;
+    return 0;
+}
+

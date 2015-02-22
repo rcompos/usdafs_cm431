@@ -1,0 +1,30 @@
+#!/bin/sh
+###########################################################################
+#
+#  Licensed Materials - Property of IBM
+#
+#  (C) Copyright IBM Corp. 1996,2004.  All Rights Reserved.
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with
+#  IBM Corp.
+#
+############################################################################
+#           IBM Tivoli Remote Control Version 3.8.1 (5724-C21)
+############################################################################
+#
+#  Default policy method for Remote Control Policy Region 
+#
+#  This policy method optimizes the remote control session performance 
+#  when you are using a slow link. 
+#
+#  Possible values are:
+#	ENABLED	    The performance optimization is enabled.	
+#	DISABLED    The performance optimization is disabled.
+#  
+#  Default value: Disabled
+#  
+
+echo "DISABLED"
+
+exit 0

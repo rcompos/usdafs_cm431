@@ -1,0 +1,241 @@
+#!/usr/bin/perl
+# $Header: /work/in/../cm431fp1rcs/insttiv,v 1.3 2010/02/25 13:25:33 rcompos Exp $
+#
+# IBM USDA Forest Service CM431 TMR
+# Description : Install Framework v4.3.1 TMR server
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2010-01-11
+#
+# Run this script only to create the initial TMR 
+# server.  Will error out if TMR server $DBDIR exists.
+#
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+########################
+
+my %opt;
+getopts( 'dfhlp:r:', \%opt );
+usage()     if $opt{ h };
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $force    = $opt{ f } ? 1 : 0;
+my $reg      = $opt{ r } ? $opt{ r } : 0;
+my $pw       = $opt{ p } ? $opt{ p } : 0;
+usage( "Must supply -r <region_label>" ) unless $opt{ r };
+my $list     = $opt{ l } ? 1 : 0;
+my $action   = $opt{ l } ? "LIST" : "INSTALL";
+my $_x_      = $opt{ l } ? 4      : 0;
+$main::xs    = 0;
+my $disp     = 1;
+
+title( "DEBUG", 40, 5 ) if $dbug;
+chomp( my $host = vhx( "hostname", 3, 1 ) );
+chomp( my $fqdn = vhx( "hostnew $host", 3, 1 ) );
+$fqdn =~ s/^(\S+)\s.*$/$1/;
+
+my $ult       = "/usr/local/Tivoli";
+my $ultv      = "$ult/var";
+my $ults      = "$ult/src";
+my $ulte      = "$ult/etc";
+my $ultes     = "$ulte/script";
+my $ultec     = "$ulte/cfg";
+my $dir_depot = "$ult/depot";
+
+my $dir_fw431_1    = "$ults/fwk431inst1of2";  # FW431 CD1
+
+my $dir_wpreinst   = "$ulte/wpreinst";
+my $dir_tmp        = "$ultv/tmp";
+my $dir_log        = "$ultv/log";
+my $cfg_tmr        = "$ultec/inst/tmr.cfg";
+my $dir_db         = "$ult/db/${host}.db";
+my $file_ep_tmr    = "$dir_tmp/ep_tmr.cfg";
+my $file_env       = "/etc/Tivoli/setup_env.sh";
+   $reg            = get_region( $reg );
+my $gw             = "$host-gw";
+my $reg_name       = "$reg.pr";
+
+########################
+
+my $set_env = 1;
+
+print "***  $action MODE  ***\n" if $list;
+title( "USDA Forest Service TMR Install/Upgrade", 10, 0 );
+print "    Host : $host\n";
+print "  Region : $reg\n";
+confirm( $force ) unless $list;
+$pw = get_pass( $pw );
+print "\n";
+
+my $start_time = time;
+print "    Start_Time : ", scalar localtime, "\n";
+
+$ENV{DOGUI} = "no";
+print "    reg : $reg\n\n";
+
+print "Install TMR server.\n";
+install_tmr();
+
+if( -f $file_env ) { setup_tivoli_env(); $set_env = 0; }
+#setup_tivoli_env() if $set_env;
+#print "\n\nEnvironment:\n"; for ( sort keys %ENV ) { print "$_ : '$ENV{$_}'\n" }; print "\n\n";
+
+my @mn_info = get_mn();
+my( $mn, $mn_oid, $obj_no ) = ( $mn_info[0], $mn_info[1], $mn_info[2] );
+
+print "\nInstalling products/patches:\n";
+vhx( "$ultes/loadtiv -f -c $ultec/inst/tmr.cfg $mn", $_x_, 0 );
+
+print "Set root administrator roles.\n";
+vhx( "$ultes/set-admin_roles -f", $_x_, 0 );
+
+print "\nCreating TMR gateway:\n";
+vhx( "wcrtgate -h $mn -n ${mn}-gw", $_x_, 0 );
+
+print "\nCreating TMR endpoint:\n";
+vhx( "$ultes/inst-ep -j -f -p $pw $fqdn", $_x_, 0 );
+
+print "\n$0 complete.\n\n";
+
+############################
+#        end corpus        #
+############################
+
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhl] -p <password> -r <region_label>
+
+Desc:  Install Tivoli Framework TMR server, products
+       and patches.  Create gateway.  Create endpoint.
+
+       This custom USDA FS script runs the Tivoli WPREINST.SH
+       and wserver scripts. 
+
+       -f  force
+       -h  help
+       -l  list
+       -p  password 
+       -r  region 
+
+  -f : Option to force execution by skipping the confirmation
+       step.
+
+  -h : Show help message.
+
+  -l : Option to list the commands to be run, but NOT perform 
+       the installation. This option is useful for problem 
+       determination.
+
+  -p : Password to be used to create endpoint.
+
+  -r : Supply argument to be used as the region label.
+       This is the value wtmrname command will return.
+ 
+USAGE
+exit 0;
+}   # end sub usage
+
+
+sub setup_tivoli_env {
+    my @Value = `. $file_env; env`;
+    chomp @Value;
+    for my $Element ( @Value ) {
+        my( $ElementKey, $ElementVal ) = split ( /=/, $Element );
+        $ENV{$ElementKey} = $ElementVal;
+    }
+}  # end sub setup_tivoli_env
+
+
+
+sub install_tmr {
+# Install TMR server (unless already installed)
+    if( -d $dir_db ) {
+
+        print "Tivoli database directory exists! $dir_db\n" if $dbug;
+        vhx( "objcall 0.0.0 self 2>&1", 3, 2 );
+
+        if( $main::xs ) {
+            print "\nWARNING: Tivoli object dispatcher not responding.\n";
+            print "The Tivoli oserv process must be started\n";
+            print "To perform a clean install, remove the db dirctory:\n";
+            print "    $dir_db\n\n";
+            exit 1;
+        } else {
+            print "\nWARNING: Tivoli TMR server previously installed!\n";
+            print "Skipping TMR installation.\n\n";
+            return 1;
+        }
+
+    }
+
+    my $start_dir = getcwd();
+    print "Dir : $start_dir\n" if $dbug;
+
+    # WPREINST.SH
+
+    my $run_wpreinst = 1;
+    if( -d $dir_wpreinst ) {
+        print "Directory exists: $dir_wpreinst\n";
+        print "Removing and re-creating directory: $dir_wpreinst\n";
+        vhx( "/usr/bin/rm -rf $dir_wpreinst", $_x_, 1 );
+    } else {
+        print "Creating temp directory: $dir_wpreinst\n";
+    }
+    mkdir $dir_wpreinst;
+
+    chdir $dir_wpreinst or die "Couldnt change dir: $!";
+    my $now_dir = getcwd();
+    print "Dir : $now_dir\n" if $dbug;
+
+    print "Running pre-installation program\n";
+    vhx( "$dir_fw431_1/WPREINST.SH", $_x_, 1 ) if $run_wpreinst;
+
+    my $alibd       = "$ult/db";      # Database
+    my $autostart   = 1;                  # Make Oserv start at boot
+    my $createpaths = 1;                  # Create dirs if they dont exist
+    my $setport     = 1;                  # Allow remote start of Oserv
+    my $bin         = "$ult/bin";     # Binaries
+    my $lib         = "$ult/lib";     # Libraries
+    my $man         = "$ult/man";     # Man pages
+    my $appd        = "/usr/lib/X11/app-defaults";   # X11
+    my $cat         = "$ult/msg_cat"; # Message catalogs
+    my $el          = "Simple";           # Encryption level (None|Simple|DES)
+    my $ip          = "";                # Installation password
+    #my $lk = "J8B9L2CVP2WBHWPD0Q00CXS80BXPPPPP99627"; # Tivoli License Key (deprecated)
+
+    # TMR Server Install
+
+    $ENV{DOGUI} = "no";
+    print "\nInstalling TMR server\n";
+
+    vhx( qq{ ./wserver -y -c $dir_fw431_1 BIN=$bin LIB=$lib ALIDB=$alibd MAN=$man APPD=$appd CAT=$cat EL=$el AutoStart=$autostart CreatePaths=$createpaths RN=$reg_name SetPort=$setport }, $_x_, 1 );
+    print "\n\n";
+
+    chdir $start_dir or die "Couldnt change dir: $!";
+    $now_dir = getcwd();
+    print "Dir : $now_dir\n" if $dbug;
+
+    # Clean up wpreinst temporary dir
+    # vhx( "/usr/bin/rm -rf $dir_wpreinst", $_x_, 1 );
+
+    unless( $list ) { sleepy( 5 ); print "\n"; }
+
+    return 0;
+
+}   # end sub install_tmr
+
+

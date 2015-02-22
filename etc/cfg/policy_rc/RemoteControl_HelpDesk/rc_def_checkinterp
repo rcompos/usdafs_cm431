@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control  
+#
+#  This method allows to set another GUI Performance tuning :
+#  you can choose if avoid or not from the Endpoint list the UNIX ManagedNode  
+#  Possible modes are:
+#           Yes  the check on each ManagedNode interp is done
+#           No   no check is executed
+#
+
+echo "Yes"
+
+exit 0

@@ -1,0 +1,140 @@
+--
+--
+-- Licensed Materials - Property of IBM
+--
+-- 5698-INV
+--
+-- (C) Copyright IBM Corp. 2002, 2005 All Rights Reserved
+--
+-- US Government Users Restricted Rights - Use, duplication or
+-- disclosure restricted by GSA ADP Schedule Contract with
+-- IBM Corp
+--
+--
+-- inv_ora_schema_423_FP05.sql
+--
+-- This script is to upgrade a CM 4.2.3 installation.
+-- Use inv_ora_schema.sql script for a fresh install.
+--
+
+---------------------------------------------------------------------
+
+-- spool inv_ora_schema_423_FP05.log;
+spool fs_inv_ora_schema_423_FP05.log;
+
+-- DROP TABLE INST_MOUNT_POINT;
+CREATE TABLE INST_MOUNT_POINT (
+       COMPUTER_SYS_ID      VARCHAR2(64)  NOT NULL,
+       FS_ACCESS_POINT      VARCHAR2(191) NOT NULL,
+       DEV_NAME             VARCHAR2(64),
+       PARTITION_TYPE       VARCHAR2(32),
+       MEDIA_TYPE           VARCHAR2(32),
+       PHYSICAL_SIZE_KB     INTEGER,
+       FS_TYPE              VARCHAR2(32),
+       FS_MOUNT_POINT       VARCHAR2(254) NOT NULL,
+       FS_TOTAL_SIZE_KB     INTEGER,
+       FS_FREE_SIZE_KB      INTEGER,
+       RECORD_TIME          DATE          DEFAULT SYSDATE,
+         CONSTRAINT INSTMOUNTPOINT_PK PRIMARY KEY(COMPUTER_SYS_ID,FS_ACCESS_POINT,FS_MOUNT_POINT),
+         CONSTRAINT INSTMOUNTPOINT_FK FOREIGN KEY(COMPUTER_SYS_ID)
+           REFERENCES COMPUTER(COMPUTER_SYS_ID))
+;
+CREATE OR REPLACE TRIGGER INSTMOUNTPOINT_TR
+       BEFORE UPDATE ON INST_MOUNT_POINT
+       FOR EACH ROW
+       BEGIN
+         :NEW.RECORD_TIME := SYSDATE;
+       END;
+/
+
+
+-- no mvs db vendor flag
+insert into LAST_SIG_UPDATE (UPDATE_TABLE,LAST_UPDATE) values ('d',1)
+;
+
+insert into INVENTORY_TABLES(TABLE_NAME) values ('INST_MOUNT_POINT')
+;
+
+create or replace view MOUNT_POINT_VIEW
+as
+select
+    COMPUTER.TME_OBJECT_LABEL,
+    COMPUTER.TME_OBJECT_ID,
+    INST_MOUNT_POINT.COMPUTER_SYS_ID,
+    INST_MOUNT_POINT.FS_ACCESS_POINT,
+    INST_MOUNT_POINT.DEV_NAME,
+    INST_MOUNT_POINT.PARTITION_TYPE,
+    INST_MOUNT_POINT.MEDIA_TYPE,
+    INST_MOUNT_POINT.PHYSICAL_SIZE_KB,
+    INST_MOUNT_POINT.FS_TYPE,
+    INST_MOUNT_POINT.FS_MOUNT_POINT,
+    INST_MOUNT_POINT.FS_TOTAL_SIZE_KB,
+    INST_MOUNT_POINT.FS_FREE_SIZE_KB,
+    to_char(INST_MOUNT_POINT.RECORD_TIME,'YYYY.MM.DD HH24:MI:SS') as RECORD_TIME
+from
+    INST_MOUNT_POINT,COMPUTER
+where
+    INST_MOUNT_POINT.COMPUTER_SYS_ID = COMPUTER.COMPUTER_SYS_ID
+;
+
+insert into QUERY_VIEWS (VIEW_NAME) values ('MOUNT_POINT_VIEW')
+;
+
+-- DROP TABLE ALL_NET_ADAPTER;
+CREATE TABLE ALL_NET_ADAPTER (
+       COMPUTER_SYS_ID      VARCHAR2(64)  NOT NULL,
+       ADAPTER_ID           VARCHAR2(16)  NOT NULL,
+       PERM_MAC_ADDR        VARCHAR2(64),
+       CURRENT_ADDR         VARCHAR2(64),
+       ADAPTER_TYPE         VARCHAR2(16),
+       ADAPTER_MODEL        VARCHAR2(64),
+       MANUFACTURER         VARCHAR2(64),
+       INST_DATE            VARCHAR2(32),
+       RECORD_TIME          DATE          DEFAULT SYSDATE,
+         CONSTRAINT ALLNETAD_PK PRIMARY KEY(COMPUTER_SYS_ID,ADAPTER_ID),
+         CONSTRAINT ALLNETAD_FK FOREIGN KEY(COMPUTER_SYS_ID)
+           REFERENCES COMPUTER(COMPUTER_SYS_ID))
+;
+CREATE OR REPLACE TRIGGER ALLNETAD_TR
+       BEFORE UPDATE ON ALL_NET_ADAPTER
+       FOR EACH ROW
+       BEGIN
+         :NEW.RECORD_TIME := SYSDATE;
+       END;
+/
+
+insert into INVENTORY_TABLES(TABLE_NAME) values ('ALL_NET_ADAPTER')
+;
+
+create or replace view ALL_NET_CARD_VIEW
+as
+select
+    COMPUTER.TME_OBJECT_LABEL,
+    COMPUTER.TME_OBJECT_ID,
+    ALL_NET_ADAPTER.COMPUTER_SYS_ID,
+    ALL_NET_ADAPTER.ADAPTER_ID,
+    ALL_NET_ADAPTER.PERM_MAC_ADDR,
+    ALL_NET_ADAPTER.CURRENT_ADDR,
+    ALL_NET_ADAPTER.ADAPTER_TYPE,
+    ALL_NET_ADAPTER.ADAPTER_MODEL,
+    ALL_NET_ADAPTER.MANUFACTURER,
+    ALL_NET_ADAPTER.INST_DATE,
+    to_char(ALL_NET_ADAPTER.RECORD_TIME,'YYYY.MM.DD HH24:MI:SS') as RECORD_TIME
+from
+    ALL_NET_ADAPTER,COMPUTER
+where
+    COMPUTER.COMPUTER_SYS_ID = ALL_NET_ADAPTER.COMPUTER_SYS_ID
+;
+
+insert into QUERY_VIEWS (VIEW_NAME) values ('ALL_NET_CARD_VIEW')
+;
+
+
+insert into SCHEMA_VERS values ('CM 4.2.3', SYSDATE, 'PATCH',
+'inv_ora_schema_423_FP05.sql', 'FP05 applied to existing installation')
+;
+
+spool off;
+
+exit;
+

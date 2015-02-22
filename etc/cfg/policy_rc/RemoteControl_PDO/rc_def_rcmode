@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Mode
+#
+#  The choices are:
+#
+#	"control"	
+#	"monitor"
+#
+#
+
+echo "control"
+
+exit 0

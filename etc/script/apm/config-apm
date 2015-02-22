@@ -1,0 +1,147 @@
+#!/usr/bin/perl
+# $Header: /work/cm431tmp/cm431fp1rcs/config-apm,v 1.2 2010/02/01 19:27:09 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Configure Tivoli CM423 Activity Plan Manager (APM)
+#               and Change Configuration Manager (CCM).
+#               Register APM and CCM plugins
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'dfhl', \%opt );
+usage()        if $opt{ h };
+$main::dbug     = $opt{ d } ? 1         : 0;
+my $dbug        = $main::dbug;
+my $force       = $opt{ f } ? 1         : 0;
+$main::xs       = 0; print $main::xs if $dbug;
+my $list        = $opt{ l } ? 1 : 0;
+my $_x_         = $opt{ l } ? 4      : 0;
+my $action      = $opt{ l } ? "LIST" : "INSTALL";
+
+my $bindir         = "/usr/local/Tivoli/bin/aix4-r1";
+my $ult            = "/usr/local/Tivoli";
+my $ults           = "$ult/src";
+my $ulte           = "$ult/etc";
+my $ultes          = "$ulte/script";
+my $ultec          = "$ulte/cfg";
+my $reg            = get_region();
+
+title( "Register Tivoli CM423 APM & CCM plugins", 10, 0 );
+confirm( $force ) unless $list;
+print "\n";
+
+title( "DEBUG", 40, 5 ) if $dbug;
+
+# Disable any Scheduled Jobs
+#$Scripts/DisableScheduledJobs
+
+# Cancel any Inventory distributions
+#wcancelscan -a 2>&1;
+
+# Cancel All Mdist2 Distributions
+#$Scripts/CancelActiveDistributions
+
+# Activity Planner requires the Account tivapm to be a valid login account,
+# check for the account and create if needed
+unless( vhx( "grep \"^tivapm\" /etc/passwd 2>/dev/null" ) ) {
+    vhx( "mkuser tivapm" );
+} else {
+    print "User exists: tivapm\n";
+}
+
+# try to start activity planner so all pluggins can be registered
+# if apm won't start this will be done by hand, the tivapm account
+# probably has problems
+
+print "Starting ActivityPlanner Server\n";
+vhx( "wstartapm", 3, 1 );
+
+sleep 5;
+
+vhx( "wmonpln -l", 3, 1 ); # wstartapm always returns 0
+
+unless( $main::xs ) {
+    my @plug;
+
+    
+    print "\nRemoving existing APM plugins\n";
+    @plug = vhx( "wapmplugin -l | grep \"^-\" | awk '{print \$2}'" );
+    for( @plug ) { vhx( "wapmplugin -r $_", $_x_, 1 ) }
+
+    print "\nRemoving existing CCM plugins\n";
+    @plug = vhx( "wccmplugin -l | grep \"^-\" | awk '{print \$2}'" );
+    for( @plug ) { vhx( "wccmplugin -r $_", $_x_, 1  ) }
+
+    print "\nRegistering APM plugins\n";
+    vhx( "$bindir/TME/APM/SCRIPTS/reg_inv_plugin.sh", $_x_, 0 );
+    vhx( "$bindir/TME/APM/SCRIPTS/reg_swd_plugin.sh", $_x_, 0 );
+    vhx( "$bindir/TME/APM/SCRIPTS/reg_tl_plugin.sh", $_x_, 0 );
+    vhx( "$bindir/TME/APM/SCRIPTS/reg_pristine_apm_plugin.sh", $_x_, 0 );
+
+    print "\nRegistering CCM plugins\n";
+    vhx( "$bindir/TME/CCM/SCRIPTS/reg_invscan_plugin.sh", $_x_, 0 );
+    vhx( "$bindir/TME/CCM/SCRIPTS/reg_swd_plugin.sh", $_x_, 0 );
+    vhx( "$bindir/TME/CCM/SCRIPTS/reg_pristine_ccm_plugin.sh", $_x_, 0 );
+    print "\n";
+
+} else {
+    print "Unable to start ActivityPlanner, Check tivapm account and password\n";
+    exit 1;
+}
+
+
+# Copy SQL stuff to inventory Server
+
+#if( my $RIM = vhx( "wlookup -r RIM mdist2" ) ) {
+#    chomp $RIM;
+#    my $TargetMNOid = vhx( "idlcall $RIM get_resource_host" );
+#    my $RIMMNLabel = vhx( "idlcall $TargetMNOid _get_label" );
+#    #$RIMMNLabel = vhx( "echo $RIMMNLabel | sed 's/\"//g'" );
+#    $RIMMNLabel =~ s/"(\S+)"/$1/;
+#    print "RIM MN Label : $RIMMNLabel\n";
+#}
+#
+#    idlcall $MnOid files_transfer FALSE $TargetMNOid '"/usr/local/Tivoli/scripts/cm421" "/usr/local/Tivoli/scripts" {1 "SQL.tar"}'
+#    wbkupdb  -d /var/backup/${FsRegion}_PostCM421_%t
+
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-hfl]
+
+Desc:  Register Tivoli CM423 Activity Plan Manager and
+       Change Configuration Manager plugins
+
+       -h  help
+       -f  force
+       -l  list commands to be run without execution
+
+USAGE
+exit 0;
+}   # end sub usage
+
+

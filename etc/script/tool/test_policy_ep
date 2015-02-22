@@ -1,0 +1,118 @@
+#!/usr/bin/perl
+# $Header: /work/RCS/test_policy_ep,v 1.1 2005/04/06 03:26:09 rcompos Exp $
+
+use diagnostics;
+use strict;
+use Getopt::Std;
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my( %opt );
+getopts( 'b:dfhl', \%opt );
+if( $opt{ h } ) { usage() };
+if( $ARGV[1] )  { usage( "Too many arguments" ) }
+$main::dbug     = $opt{ d } ? 1 : 0;
+my $list        = $opt{ l } ? 1 : 0;
+my $dir_pol     = $opt{ b } ? $opt{ b } : 0;
+my $force       = $opt{ f } ? 1 : 0;
+my $dbug        = $main::dbug;
+$main::xs       = 0; print "$main::xs\n" if $dbug;
+
+my $pol         = $ARGV[0]  ? $ARGV[0] : 0;
+my $spc;
+
+my $dir_tiv     = "/usr/local/Tivoli";
+my $dir_etc     = "$dir_tiv/etc";
+my $dir_var     = "$dir_tiv/var";
+my $dir_cfg     = "$dir_etc/cfg";
+my $pol_allow   = "allow_install_policy";
+my $pol_after   = "after_install_policy";
+my $pol_login   = "login_policy";
+my $pol_select  = "select_gateway_policy";
+unless( $dir_pol ) { $dir_pol = "$dir_cfg/policy_ep" }
+
+
+unless( -d $dir_pol ) { mkdir $dir_pol or die "Couldnt mkdir: $!" }
+
+#confirm( $force, "Set endpoint policies" );
+
+my $date_stamp = vhx( "date '+%Y%m%d-%H%M%S'", 3, 1 );
+chomp $date_stamp;
+
+# The following are the command line arguments passed to this script
+# from the Endpoint Manager (but not this time).
+#
+# $1 - The label of the endpoint machine
+# $2 - The object reference of the endpoint machine
+# $3 - The architecture type of the endpoint machine
+# $4 - The object reference of the gateway that the endpoint logged into
+# $5 - The ip/ipx address of the endpoint logging in (refer to parameter
+#      $10 to determine the protocol of the endpoint).
+# $6 - region
+# $7 - dispatcher
+# $8 - version
+# $9 - The inventory id of the endpoint logging in.
+# $10 - The protocol of the endpoint logging in.
+
+
+# Dummy args
+#my $args = "svdevtgw1.wo.fs.fed.us 1472963107.9.522+#TMF_Endpoint::Endpoint# aix4-r1 1472963107.6.19#TMF_Gateway::Gateway# 199.131.12.85+9495 1472963107 9 41108 99D61ED2-1DD1-11B2-B925-872B3286E8A8 TCPIP";
+
+my $args = "wotmr1.wo.fs.fed.us 1734919988.5.522+#TMF_Endpoint::Endpoint# aix4-r1 1734919988.4.19#TMF_Gateway::Gateway# 199.131.13.31+9495 1734919988 5 41108 99D61ED2-1DD1-11B2-B925-872B3286E8A8 TCPIP";
+
+if( $dbug ) {
+    print "\n";
+    print "Test for false condition\n";
+    vhx( "false" );
+    print "Exit status: $main::xs\n";
+    print "\n";
+}
+
+
+if( $pol_allow =~ /^$pol/ || ! $pol ) { 
+    print "$dir_pol/$pol_allow $args\n" if $list;
+    vhx( "$dir_pol/$pol_allow $args" ) unless $list;
+    print "Exit status: $main::xs\n";
+    print "\n";
+}
+
+if( $pol_after =~ /^$pol/ || ! $pol) { 
+    print "$dir_pol/after_install_policy $args\n" if $list;
+    vhx( "$dir_pol/after_install_policy $args" ) unless $list;
+    print "Exit status: $main::xs\n";
+    print "\n";
+}
+
+if( $pol_login =~ /^$pol/ || ! $pol) { 
+    print "$dir_pol/login_policy $args\n" if $list;
+    vhx( "$dir_pol/login_policy $args" ) unless $list;
+    print "Exit status: $main::xs\n";
+    print "\n";
+}
+
+if( $pol_select =~ /^$pol/ || ! $pol) { 
+    print "$dir_pol/select_gateway_policy $args\n" if $list;
+    vhx( "$dir_pol/select_gateway_policy $args" ) unless $list;
+    print "Exit status: $main::xs\n";
+    print "\n";
+}
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-bh] 
+
+Desc:  Test ep_policy scripts using dummy input args
+
+       -b  Base directory where policy scripts reside
+       -h  help
+
+USAGE
+exit;
+}  # end sub usage
+

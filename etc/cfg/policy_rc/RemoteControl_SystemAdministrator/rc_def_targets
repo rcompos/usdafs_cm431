@@ -1,0 +1,7 @@
+#!/bin/sh 
+# This method is to set a list of the possible RemoteControl targets  
+# Input values: i.e. echo "endpoint-label" list or  
+# echo "default-list" if you want to display all the machines.
+
+echo "default-list"
+exit 0

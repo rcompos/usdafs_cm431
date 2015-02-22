@@ -1,0 +1,44 @@
+#!/bin/sh
+###########################################################################
+#
+#  Licensed Materials - Property of IBM
+#
+#  (C) Copyright IBM Corp. 1996,2004.  All Rights Reserved.
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with
+#  IBM Corp.
+#
+############################################################################
+#           IBM Tivoli Remote Control Version 3.8.1 (5724-C21)
+############################################################################
+#
+#  Default policy method for Remote Control Policy Region 
+#
+#  This policy method enables or disables either the standby mode of the target
+#  monitor or the replacement of the target screen with a user-defined bitmap.
+#  If it is set to "STANDBY" or "BITMAP", the following start-up
+#  parameters are automatically considered (remote control action only):
+#  rc_def_grace_time = "0-locked"
+#  rc_def_timeout_op = "ENABLED-locked"
+#  rc_def_initstate  = "active-locked"
+#  rc_def_alt_t      = "DISABLED-locked"
+#  rc_def_optimize   = "DISABLED-locked" (only if you set rc_def_screenmode to BITMAP)
+#
+#
+#  Possible values are:
+#     STANDBY    The target monitor standby mode is enabled.
+#     BITMAP     The target screen replacement is enabled. (This option is not supported
+#                on Windows NT.) To change the bitmap, overwrite the
+#                <lcf>\PCREMOTE\w32-ix86\bitmaps\rc_default.bmp file, where <lcf> is the
+#                the Tivoli management agent installation directory. Before setting this
+#                policy method ensure that you have installed the IBM Tivoli Filter 
+#                Display Driver with the wrcinstep command.
+#     DISABLED   The target display standby mode and the screen replacement are disabled.
+#
+#  Default value: DISABLED
+#
+
+echo "DISABLED"
+
+exit 0

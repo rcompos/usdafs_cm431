@@ -1,0 +1,99 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/tune-rpt,v 1.2 2009/08/20 19:57:18 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Set gateway repeater tuning parameters.
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'dfhl', \%opt );
+if( $opt{ h } ) { usage() }
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $force    = $opt{ f } ? 1 : 0;
+$main::xs    = 0; print $main::xs if $dbug;
+my $list        = $opt{ l } ? "-l"   : "";
+my $action      = $opt{ l } ? "LIST" : "CONFIGURE";
+my $_x_         = $opt{ l } ? 4      : 0;
+#my $reg      = get_region();
+
+my $ultec    = "/usr/local/Tivoli/etc/cfg";
+my $file_cfg = "$ultec/mdist.cfg";
+
+title( "Configure wrpt settings", 10, 0 );
+print "   Config file: $file_cfg\n";
+confirm( $force ) unless $list;
+print "\n***  Listing actions only - no changes will be made  ***\n" if $list;
+print "\n";
+
+open( FH1, $file_cfg ) or die "Couldn't read file: $file_cfg";
+
+while( my $line = <FH1> ) {
+
+    chomp($line);
+    if( $line =~ /^\s*#/ or $line =~ /^\s*$/ ) { print "# $line\n" if $dbug; next };
+
+    my( $MN,$OID,$DEF,$CLNT,$MEMM,$DISKM,$DISKH,$DISKT,$DISKD,$NETL,$MAXC,$STATI,$RPTD,$PERMS,$MAXSH,$MAXSM,$MAXSL,$DMAX,$MMAX,$SENDT,$EXET,$NOTFI,$CONR,$RETRYC,$NETLOAD,$PACKS,$TARGETN,$DEBUGL ) = split(/,/, $line);
+
+
+    my $mn_oid = vhx( "wlookup -r ManagedNode $MN" );
+
+    if( $mn_oid =~ /^\d+\.1\.\d+/ ) {
+
+        $CLNT =~ s/:/,/g;
+        print "Configuring TMR Server gateway: $MN\n";
+        vhx( "wrpt -n $MN wan default", $_x_, 1 );
+        vhx( "wrpt -n $MN range=$CLNT", $_x_, 1 );
+        vhx( "wrpt -t $MN mem_max=$MEMM disk_max=$DISKM disk_hiwat=$DISKH disk_time=$DISKT disk_dir=$DISKD net_load=$NETL max_conn=$MAXC stat_intv=$STATI", $_x_, 1 );
+
+    } else {
+
+        $CLNT =~ s/:/,/g;
+        print "Configuring gateway: $MN\n";
+        vhx( "wrpt -n $MN range=$CLNT", $_x_, 1 ) if $CLNT;
+        vhx( "wrpt -t $MN mem_max=$MEMM disk_max=$DISKM disk_hiwat=$DISKH disk_time=$DISKT disk_dir=$DISKD net_load=$NETL max_conn=$MAXC stat_intv=$STATI", $_x_, 1 );
+
+    }
+    print "\n";
+
+}
+close( FH1 );
+
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-hfl]
+
+Desc:  Set wrpt repeater tuning parameters
+
+       -h  help
+       -f  force
+       -l  List commands to be run without execution.
+
+USAGE
+    exit 0;
+}   # end sub usage
+

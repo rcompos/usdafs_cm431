@@ -1,0 +1,176 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/set-admin_roles,v 1.3 2009/08/20 19:54:32 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Set Tivoli administrator authorization roles.
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'a:dfhl', \%opt );
+if( $opt{ h } ) { usage() }
+$main::dbug     = $opt{ d } ? 1 : 0;
+my $dbug        = $main::dbug;
+my $list        = $opt{ l } ? 1 : 0;
+my $action      = $opt{ l } ? "LIST" : "CONFIGURE";
+my $force       = $opt{ f } ? 1 : 0;
+$main::xs       = 0;  print $main::xs if $dbug;
+my $reg         = get_region();
+my $_x_         = $opt{ l } ? 4      : 0;
+my $admin       = $opt{ a } ? $opt{ a } : ""; 
+my $term_cols   = vhx( "tput cols", 3, 2 );
+chomp $term_cols;
+print ">> $term_cols <<\n" if $dbug;
+
+unless( $term_cols ) { $term_cols = 40 }
+
+my $ult         = "/usr/local/Tivoli";
+my $ulte        = "/usr/local/Tivoli/etc";
+my $ultec       = "$ulte/cfg";
+
+title( "DEBUG", 40, 5 ) if $dbug;
+
+my $whoami = vhx( "whoami", 3, 1 );
+chomp $whoami;
+unless( $whoami eq "root" ) { print "Must be as root.\n"; exit 2; }
+
+title( "$action authorization roles for Tivoli administrator", 10, 0 );
+
+# AVAILABLE TMR global roles
+
+my $oid = vhx( "wlookup -r AdministratorCollection Administrators", 3, 1 );
+chomp $oid;
+my $tmr_roles = vhx( "idlcall $oid _get_supported_tmr_roles", 3, 1 );
+print "\n";
+$tmr_roles =~ s/^\{\s+\d+\s+//;
+$tmr_roles =~ s/\s+\}$//;
+$tmr_roles =~ s/"//g;
+print "\n\$tmr_roles: $tmr_roles\n" if $dbug;
+my @tmr_roles_avail = split( " ", $tmr_roles );
+
+##pop( @tmr_roles_avail ); pop( @tmr_roles_avail ); # TESTING ONLY: Remove last couple roles from available
+##push( @tmr_roles_avail, "Pluto", "Uranus" ); # TESTING ONLY: Add a few roles to available
+my $count_avail = $#tmr_roles_avail + 1;
+
+print "\nAvailable TMR global roles ($count_avail):\n\n";
+sort @tmr_roles_avail;
+for ( @tmr_roles_avail ) { print "\t$_\n" }
+print "\n";
+
+# CURRENT TMR global roles
+
+my $admin_current = "";
+my @roles_current = vhx( "wgetadmin $admin", 3, 1 );
+for my $line ( @roles_current ) {
+    chomp $line;
+    print "-----> '$line'\n" if $dbug;
+    if( $line =~ /^Administrator:\s+(\S+)/ ) {
+         $admin_current = $1;
+         print "\nAdministrator: $admin_current\n\n";
+    }
+}
+unless( $admin_current ) {
+    print "\nERROR: Can't determine Tivoli administrator!\n\n";
+    exit 4;
+}
+
+my $tmr_roles_current = vhx( "wgetadmin $admin_current | grep roles: ", 3, 1 );
+chomp $tmr_roles_current;
+$tmr_roles_current =~ s/^roles:\s+global\s+//;
+my @tmr_roles_current = split( ", ", $tmr_roles_current );
+
+##pop( @tmr_roles_current ); pop( @tmr_roles_current ); # TESTING ONLY: Remove the last couple roles from current 
+if( $dbug ) {
+    my $count_current = $#tmr_roles_current + 1;
+    print "\nCurrent TMR global roles ($count_current):\n\n";
+    sort @tmr_roles_current;
+    for( @tmr_roles_current) { print "\t'$_'\n" }
+    print "\n";
+}
+
+my %seen = ();
+my @tmr_roles_missing = ();
+for my $item ( @tmr_roles_current ) { $seen{$item} = 1 }
+for my $item ( @tmr_roles_avail ) {
+    unless( $seen{$item} ) {
+       # its not in %seen, so add to @tmr_roles_missing
+       push( @tmr_roles_missing, $item );
+    }
+}
+
+my $count_missing = $#tmr_roles_missing + 1;
+if( $count_missing ) {
+    print "Missing TMR global roles ($count_missing):\n\n";
+    for( @tmr_roles_missing ) { print "\t'$_'\n" }
+    print "\n";
+} else {
+    print "All TMR global roles already assigned!  Nothing to do.\n";
+    exit 0 unless $list;
+}
+
+# Minimal check for super and senior which are required to run wsetadmin
+unless( grep( /super/i, @tmr_roles_avail ) ) { print "ERROR: required role not available: super\n"; exit 12; } 
+unless( grep( /senior/i, @tmr_roles_avail ) ) { print "ERROR: required role not available: senior\n"; exit 13; }
+
+print "Preparing to grant Tivoli root administrator ALL global roles.\n" unless $list;
+confirm( $force ) unless $list;
+print "\n***  Listing actions only - no changes will be made  ***\n" if $list;
+print "\n";
+
+
+my $cmd_wsetadmin = "wsetadmin -r global,";
+for( @tmr_roles_avail ) {
+    next if( /^\s*#/ || /^\s*$/ );
+    $cmd_wsetadmin .= "$_:";
+}
+
+#if( $admin )
+#my $suffix = 
+
+#$cmd_wsetadmin .= " Root_${reg}.pr";
+$cmd_wsetadmin .= " $admin_current";
+
+print "_" x $term_cols, "\n\n";
+vhx( "$cmd_wsetadmin", $_x_, 1 );
+print "_" x $term_cols, "\n";
+
+print "\n***  Listing actions only - no changes will be made  ***\n" if $list;
+
+print "\n$0 complete.\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhl] [-a <administorator>]
+
+Desc:  Set authorization roles for Tivoli administrator.
+       The current administrator is used if no administrator is
+       specified with -a option.
+
+       -a  administrator to grant roles to 
+           if not specified, current administrator is used
+       -f  force, no prompt
+       -h  help
+       -l  list authorization roles
+
+USAGE
+exit 0;
+}   # end sub usage
+

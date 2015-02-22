@@ -1,0 +1,284 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/out/../b272rcs/realign,v 1.2 2005/09/06 04:49:00 rcompos Exp $ 
+#
+# Migrate endpoints to assigned gateways
+
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my( %opt );
+getopts( 'adhlg:', \%opt );
+if( $opt{ h } ) { usage() };
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $force    = $opt{ f } ? 1 : 0;
+$main::xs    = 0; print $main::xs if $dbug;
+my $list     = $opt{ l } ? 1 : 0;
+my $all      = $opt{ a } ? 1 : 0;
+my $tgt_gw   = $opt{ g } ? $opt{ g } : "";
+if( $all && $tgt_gw ) { print "Specify either -a or -g <gateway>\n\n"; usage() };
+if( @ARGV && $all || @ARGV && $tgt_gw ) {
+    print "Cannot specify -a or -g option with list of endoints\n\n";
+    usage();
+}
+my $config_file = "/usr/local/Tivoli/etc/cfg/epmgr.cfg";
+
+chomp( my $host = vhx( "hostname", 3, 1 ) );
+my $self = vhx( "objcall 0.0.0 self", 3, 1 );
+$self =~ /^(\S+)\.(\S+)\.\S+$/;
+my $num_reg = $1;
+my $disp = $2;
+unless( $disp == 1 ) { print "Must be on TMR server!\n"; exit 1 }
+
+my( $cmd, $tmr_gw_oid, $tmr_gw_dummy, @eplist );
+
+for( vhx( "objcall $num_reg.$disp.2 boot_method list", $dbug ? 0 : 3, 1 ) ) {
+    if( s/^(\S+)#TMF_Gateway::Gateway#.*$/$1/ ) { $tmr_gw_oid = $_; last; }
+}
+
+if( ! $tmr_gw_oid ){
+    print "ERROR: TMR Server not running gateway service.\n";
+    print "ERROR: Unexpected condition. Exiting.\n";
+    exit 1;
+}
+
+chomp( $tmr_gw_oid );
+my $tmr_gw = vhx( "idlcall $tmr_gw_oid _get_label",  $dbug ? 0 : 3, 1 );
+$tmr_gw =~ s/^"(\S+)"$/$1/;
+
+print "  TMR_GatewayOID : $tmr_gw_oid\n" if $dbug;
+print "TMR_GatewayLabel : $tmr_gw\n" if $dbug;
+print "     Config file : $config_file\n\n" if $dbug;
+
+print "\n";
+if( $list ) {
+    print "   LIST MODE : List actions to be taken\n";
+    print " *** NO MIGRATION WILL BE PERFORMED ***\n\n";
+}
+
+open( CFG, $config_file ) or die "Couldn't open $config_file:\n   $!";
+
+my( $default_gw, @cfg );
+my $i = 0;
+print "=" x 40, "\n\n" if $dbug;
+print "PARSING CONFIG FILE\n\n" if $dbug;
+while( <CFG> ) {
+    next if /^\s*#.*$/;
+    next if /^\s*$/;
+    #print ">> $_\n";
+    my( $subnet, $gw, $instflag ) = split;
+
+    $subnet =~ m{^\s*
+                     (\d{1,3}|\[?\d{1,3}(?:,\d{1,3})*\]?|\[?\d{1,3}-\d{1,3}\]?|\*)
+                   \.(\d{1,3}|\[?\d{1,3}(?:,\d{1,3})*\]?|\[?\d{1,3}-\d{1,3}\]?|\*)
+                   \.(\d{1,3}|\[?\d{1,3}(?:,\d{1,3})*\]?|\[?\d{1,3}-\d{1,3}\]?|\*)
+                   \.(\d{1,3}|\[?\d{1,3}(?:,\d{1,3})*\]?|\[?\d{1,3}-\d{1,3}\]?|\*)
+               \s*$}x or next;
+
+    if( "$1.$2.$3.$4" eq "*.*.*.*" ) { $default_gw = $gw };
+
+    $cfg[$i][0] = $gw;
+    $cfg[$i][1] = $1;
+    $cfg[$i][2] = $2;
+    $cfg[$i][3] = $3;
+    $cfg[$i][4] = $4;
+    $cfg[$i][5] = $instflag;
+
+    if( $dbug ) {
+        #print ">   subnet : $subnet\n";
+        print ">   parsed : $cfg[$i][1].$cfg[$i][2].$cfg[$i][3].$cfg[$i][4]\n";
+        print ">  gateway : $gw\n";
+        print "> instflag : $instflag\n";
+        print "\n";
+    }
+    $i++;
+}
+
+unless( $default_gw ) { $default_gw = $tmr_gw };
+
+close( CFG );
+print "=" x 40, "\n\n" if $dbug;
+
+print "Migrating endpoints to assigned gateways\n";
+if( $all ) {
+    print "Source gateway : ALL\n";
+    @eplist = grep { s/^$num_reg\S+#TMF_Endpoint::Endpoint#,(\S+)$/$1/ } vhx( "wep ls -i object,label", 3, 1 );
+    chomp @eplist;
+} elsif( $tgt_gw ) {
+    print "Source gateway: $tgt_gw\n";
+    @eplist = vhx( "wep ls -i label -g $tgt_gw", 3, 1 );
+    chomp @eplist;
+} elsif( @ARGV ){
+    print "Endpoints specified on command line\n";
+    @eplist = @ARGV;
+} else {
+    print "Source gateway: $default_gw\n";
+    @eplist = vhx( "wep ls -i label -g $default_gw", 3, 1 );
+    chomp @eplist;
+}
+print "\n";
+
+my( $num_total, $num_attempt, $failed, $mig_default ) = ( 0, 0, 0, 0 );
+my( $oct1, $oct2, $oct3, $oct4 );
+for my $ep ( @eplist ) {
+    my %EpInfo = ();
+    my( $gw_oid, $address ) = split /,/, vhx( "wep $ep get gateway,address", 3, 1 );
+    chomp( $gw_oid, $address );
+    $gw_oid =~ s/^(\S+)#TMF_Gateway::Gateway#$/$1/;
+    print "> '$gw_oid'\n";  ### TEST ###
+    ( my $gw = vhx( "idlcall $gw_oid _get_label", 3, 1 ) ) =~ s/^"(\S+)"$/$1/;
+
+    $address =~ /^\s*(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})(?:\+\d+).*$/;
+    ( $oct1, $oct2, $oct3, $oct4 ) = ( $1, $2, $3, $4 );
+
+    my( $assigned_gw, $match_subnet );
+    for my $i ( 0 .. $#cfg ) { 
+        if( $cfg[$i][5] ne "y" && $cfg[$i][5] ne "Y" ) { next } 
+        my $sub1 = $cfg[$i][1];
+        my $sub2 = $cfg[$i][2];
+        my $sub3 = $cfg[$i][3];
+        my $sub4 = $cfg[$i][4];
+        if( match( $cfg[$i][1], $oct1 ) ) {
+            if( match( $cfg[$i][2], $oct2 ) ) {
+                if( match( $cfg[$i][3], $oct3 ) ) {
+                    if( match( $cfg[$i][4], $oct4 ) ) {
+                        $assigned_gw = $cfg[$i][0]; 
+                        # If multiple comma-separated gw's are defined
+                        # in epmgr.cfg, then use only the first gw
+                        $assigned_gw =~ s/^([^,]+)\,\S+$/$1/;  # there can be only 1
+                        $match_subnet = "$sub1.$sub2.$sub3.$sub4";
+                        last;
+                    }
+                } 
+            } 
+        } 
+    }
+
+    my $ep_ip = "$oct1.$oct2.$oct3.$oct4"; 
+    if( ! $assigned_gw ) {
+        print "$ep [$ep_ip]\n";
+        unless( $list ) { 
+            print "    $gw !> $default_gw []\n";
+            vhx( "wep $ep migrate $default_gw", 3, 1 );
+            if( $main::xs ) { $failed++ } else { $mig_default++ }
+        } else { print "    $gw !> $default_gw []\n" }
+        $num_attempt++;
+        print "\n";
+    } elsif( $match_subnet eq "*.*.*.*" ) {
+        if( $gw ne $assigned_gw ) {
+            print "$ep [$ep_ip]\n";
+            unless( $list ) { 
+                print "    $gw *> $default_gw [$match_subnet]\n";
+                vhx( "wep $ep migrate $default_gw", 3, 1 );
+                if( $main::xs ) { $failed++ } else { $mig_default++ }
+            } else { print "    $gw *> $default_gw [$match_subnet]\n" }
+            $num_attempt++;
+            print "\n";
+        }
+    } elsif( $gw ne $assigned_gw ) {
+        print "$ep [$ep_ip]\n";
+        unless( $list ) { 
+            print "    $gw => $assigned_gw [$match_subnet]\n";
+            vhx( "wep $ep migrate $assigned_gw", 3, 1 );
+            if( $main::xs ) { 
+                $failed++;
+                if( $assigned_gw ne $default_gw ) {
+                    print " " x 8, "$gw -> $default_gw\n";
+                    vhx( "wep $ep migrate $default_gw", 3, 1 );
+                    $mig_default++ if $main::xs;
+                }
+            }
+            vhx( "wep $ep set preferred_gateway $assigned_gw", 3, 1 );
+        } else { print "    $gw => $assigned_gw [$match_subnet]\n" }
+        $num_attempt++;
+        print "\n";
+    }
+    $num_total++;
+}
+
+print "=" x 30, "\n";
+print "    MIGRATION SUMMARY\n";
+print "   Endpoints_Examined : $num_total\n";
+print "   Migration_Attempts : $num_attempt\n" unless( $list );
+print "    Needed_Migrations : $num_attempt\n" if( $list );
+print "               Failed : $failed\n";
+print "  Moved_To_Default_GW : $mig_default\n";
+print "=" x 30, "\n";
+
+print "\n$0 complete.\n\n";
+
+exit $failed;
+
+############################
+#        end corpus        #
+############################
+
+
+sub match {
+    my( $cfg_octet, $ep_octet ) = @_;
+    if( $cfg_octet eq "*" ) {
+        return $cfg_octet;
+    } elsif( $cfg_octet =~ /\[?(\d{1,3})-(\d{1,3})\]?/ ) {
+        if( $1 <= $ep_octet && $ep_octet <= $2 ) {
+            return $cfg_octet;
+        }
+    } elsif( $cfg_octet =~ /\[?\d{1,3}(?:,\d{1,3})*\]?/ ) {
+        $cfg_octet =~ /\[?(\S+)\]?/;
+        my @vals = split /,/, $1;
+        for( @vals ) {
+            if( $_ == $ep_octet ) { return $cfg_octet }
+        } 
+    } elsif( $cfg_octet == $ep_octet ) {
+        return $cfg_octet;
+    }
+    return 0;
+}
+
+
+sub usage {
+   print STDERR <<"USAGE";
+Usage: realign [-adhl] [ -g <gateway_label> ] [ endpoint_1 .. endpoint_N ]
+
+Desc:  Migrates endpoints to assigned gateway as defined
+       in epmgr.cfg file.  If endpoint is already assigned
+       to proper gateway no action is taken.  If endpoint
+       cannot be migrated to assigned gateway, it is migrated
+       to the default gateway.  TMR server is typically
+       the default gateway.
+
+       If no options are given, only endpoints assigned to
+       default gateway are migrated.
+
+       Endpoints to be migrated may be specified as
+       arguments.
+
+       A specific gateway may be supplied with -g option.
+       Only those endpoints assigned to gateway are migrated.
+
+       In epmgr.cfg file, subnet for default gateway is
+       represented by '*.*.*.*', and must be last line in
+       file.  If no default gateway is specified in
+       epmgr.cfg, then TMR server gateway is the default.
+       If multiple gateways are specified in epmgr.cfg as a
+       comma-separated string, then only the first gateway
+       will be recognized.
+
+       -a  Migrate ALL endpoints in TMR to their assigned gateway
+           Use the -a option with caution
+       -d  Debuggin mode
+       -g  Migrate endpoints only from the specified gateway
+       -l  List endpoints not logged into assigned gateway
+           No migrations are performed
+       -h  Help
+
+USAGE
+   exit 0;
+}
+

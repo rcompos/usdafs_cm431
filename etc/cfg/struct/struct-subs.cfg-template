@@ -1,0 +1,63 @@
+# $Header: $
+# IBM USDA FS FW411 CM423 
+#
+# Subscriber hierarchy
+# Config file for TMR build process
+# Defines Tivoli region structure
+#
+# Use this file as an example
+# Two parameters, space separated
+# <region> is the region label as output by wtmrname
+# Optional: child parent [+ Resource]
+#
+# <region>.pr  # root-level policy region
+# child parent
+#
+
+<region>.subs.pr  <region>.pr
+
+	<region>.subs.Hatch.pr  <region>.subs.pr  [+ Endpoint]
+		<region>.subs.Hatch.svr-aix-all.pm  <region>.subs.Hatch.pr
+			<region>.subs.Hatch.RPE.svr-aix.dpm  <region>.subs.Hatch.svr-aix-all.pm
+			<region>.subs.Hatch.RPC.svr-aix.dpm  <region>.subs.Hatch.svr-aix-all.pm
+			<region>.subs.Hatch.Rockville.svr-aix.dpm  <region>.subs.Hatch.svr-aix-all.pm
+			<region>.subs.Hatch.FranklinCourt.svr-aix.dpm  <region>.subs.Hatch.svr-aix-all.pm
+			<region>.subs.Hatch.Yates.svr-aix.dpm  <region>.subs.Hatch.svr-aix-all.pm
+		<region>.subs.Hatch.dsk-wnt-all.pm <region>.subs.Hatch.pr
+			<region>.subs.Hatch.RPE.dsk-wnt.dpm  <region>.subs.Hatch.dsk-wnt-all.pm
+			<region>.subs.Hatch.RPC.dsk-wnt.dpm  <region>.subs.Hatch.dsk-wnt-all.pm
+			<region>.subs.Hatch.Yates.dsk-wnt.dpm  <region>.subs.Hatch.dsk-wnt-all.pm
+			<region>.subs.Hatch.Rockville.dsk-wnt.dpm  <region>.subs.Hatch.dsk-wnt-all.pm
+			<region>.subs.Hatch.FranklinCourt.dsk-wnt.dpm  <region>.subs.Hatch.dsk-wnt-all.pm
+		<region>.subs.Hatch.lt-wnt-all.pm <region>.subs.Hatch.pr
+			<region>.subs.Hatch.RPE.lt-wnt.dpm  <region>.subs.Hatch.lt-wnt-all.pm
+			<region>.subs.Hatch.Yates.lt-wnt.dpm  <region>.subs.Hatch.lt-wnt-all.pm
+		<region>.subs.Hatch.svr-linux-all.pm  <region>.subs.Hatch.pr
+			<region>.subs.Hatch.RPE.svr-linux.dpm  <region>.subs.Hatch.svr-linux-all.pm
+			<region>.subs.Hatch.RPC.svr-linux.dpm  <region>.subs.Hatch.svr-linux-all.pm
+			<region>.subs.Hatch.Rockville.svr-linux.dpm  <region>.subs.Hatch.svr-linux-all.pm
+			<region>.subs.Hatch.FranklinCourt.svr-linux.dpm  <region>.subs.Hatch.svr-linux-all.pm
+			<region>.subs.Hatch.Yates.svr-linux.dpm  <region>.subs.Hatch.svr-linux-all.pm
+		<region>.subs.Hatch.UnscannedEPs.dpm  <region>.subs.Hatch.pr
+
+	<region>.subs.FPL.pr   <region>.subs.pr  [+ Endpoint]
+		<region>.subs.FPL.svr-aix-all.pm  <region>.subs.FPL.pr
+			<region>.subs.FPL.svr-aix.dpm  <region>.subs.FPL.svr-aix-all.pm
+		<region>.subs.FPL.dsk-wnt-all.pm  <region>.subs.FPL.pr
+			<region>.subs.FPL.dsk-wnt.dpm  <region>.subs.FPL.dsk-wnt-all.pm
+		<region>.subs.FPL.lt-wnt-all.pm  <region>.subs.FPL.pr
+			<region>.subs.FPL.lt-wnt.dpm  <region>.subs.FPL.lt-wnt-all.pm
+		<region>.subs.FPL.svr-linux-all.pm  <region>.subs.FPL.pr
+			<region>.subs.FPL.svr-linux.dpm  <region>.subs.FPL.svr-linux-all.pm
+
+	<region>.subs.NIFC.pr  <region>.subs.pr [+ Endpoint]
+		<region>.subs.NIFC.svr-aix-all.pm  <region>.subs.NIFC.pr 
+			<region>.subs.NIFC.svr-aix.dpm  <region>.subs.NIFC.svr-aix-all.pm
+		<region>.subs.NIFC.dsk-w95-all.pm  <region>.subs.NIFC.pr
+			<region>.subs.NIFC.dsk-w95.dpm  <region>.subs.NIFC.dsk-w95-all.pm
+		<region>.subs.NIFC.dsk-wnt-all.pm  <region>.subs.NIFC.pr 
+			<region>.subs.NIFC.dsk-wnt.dpm  <region>.subs.NIFC.dsk-wnt-all.pm
+		<region>.subs.NIFC.lt-wnt-all.pm  <region>.subs.NIFC.pr
+			<region>.subs.NIFC.lt-wnt.dpm  <region>.subs.NIFC.lt-wnt-all.pm
+		<region>.subs.NIFC.svr-linux-all.pm  <region>.subs.NIFC.pr
+			<region>.subs.NIFC.svr-linux.dpm  <region>.subs.NIFC.svr-linux-all.pm

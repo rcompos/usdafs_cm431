@@ -1,0 +1,386 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/loadreg,v 1.3 2009/08/20 19:48:43 rcompos Exp $
+
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my( %opt );
+getopts( 'c:dfhlu', \%opt );
+if( $opt{ h } ) { usage() };
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $list     = $opt{ l } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $uninst   = $opt{ u } ? 1 : 0;
+#my $force    = $opt{ f } ? 1 : 0;
+my $force    = $opt{ f } ?  $uninst ? 0 : 1 : 0;
+my $action   = $uninst ? "UNINSTALL" : "INSTALL";
+$main::xs    = 0; print $main::xs if $dbug;
+my $file_cfg = $opt{ c } ? $opt{ c } : usage( "Specify configuration file with -c option" );
+my $_x_         = $opt{ l } ? 4      : 0;
+
+my $self = vhx( "objcall 0.0.0 self", 3, 1 );
+$self =~ /^(\S+)\.(\S+)\.\S+$/;
+my $num_reg = $1;
+my $disp = $2;
+unless( $disp == 1 ) { print "Must be on TMR server!\n"; exit 1 }
+
+my $oid = vhx( "objcall $self get_host_location", 3, 1 );
+my $mn = vhx( "idlcall $oid _get_label", 3, 1 );
+$mn =~ s/^"(\S+)"$/$1/;
+
+my $dir_script      = "/usr/local/Tivoli/etc/script";
+my $dir_script_task = "$dir_script/inst";
+my $dir_log         = "/usr/local/Tivoli/var/install";
+my $dir_cfg         = "/usr/local/Tivoli/etc/cfg";
+my $date_stamp      = vhx( "date '+%m/%d/%Y'", 3, 1 );  chomp $date_stamp;
+my $reg             = get_region();
+my $pr_top          = "$reg.pr";
+my $pr_fw           = "$reg.framework.pr";
+my $pr_app          = "$reg.apps.pr";
+
+title( "$action policy regions", 10, 0 );
+print "LISTING mode - No changes will be made\n" if $list;
+print "   Config file : $file_cfg\n";
+confirm( $force );
+print "\n";
+
+title( "DEBUGGIN!" ) if $dbug;
+
+my $chg_reg = $uninst ? \&delete_reg : \&create_reg;
+my $chg_pm = $uninst ? \&delete_pm : \&create_pm;
+
+# Top-level policy region is created by initial TMR server install (wserver)
+# Managed resources: SoftwarePackage QueryLibrary PcManagedNode ManagedNode ProfileManager TaskLibrary
+my( $region, $reg_up, @resource );
+
+open( SUB, "<$file_cfg" ) or die "Couldn't open $file_cfg: $!";
+my @subs = <SUB>;
+@subs = reverse @subs if $uninst;
+close SUB;
+
+my $num = 0;
+my $pr_last = 0;
+
+for( @subs ) {
+
+    #if( $num < 20 ) { $num++; next }; last if $num > 5;  ### TEST ###
+
+    chomp;
+    next if( /^\s*#/ || /^\s*$/ );
+    $num++;
+
+    my( $child, $parent, $res );
+
+    if( /^\s*(\S+)\s+(\S+)(\s+\[.*\])?/ ) {  # 3 args
+        # must be arranged in this order: $child, $parent, $res
+        $child = $1;
+        $parent = $2;
+        $res = $3 ? $3 : 0;
+        #$child  =~ s/rX\./$reg\./g;
+        #$parent =~ s/rX\./$reg\./g;
+        $child  =~ s/<region>\./$reg\./g;
+        $parent =~ s/<region>\./$reg\./g;
+        $res =~ s/^.*\[\s*(.*)\s*\].*$/$1/g;
+    } elsif( /^\s*(\S+)(\s*\[.*\])?/ ) {  # 2 args
+        print "> Top-level\n" if $dbug;
+        $child = $1;
+        $parent = $1;
+        $res = $3 ? $3 : 0;
+        #$child  =~ s/rX\./$reg\./g;
+        #$parent =~ s/rX\./$reg\./g;
+        $child  =~ s/<region>\./$reg\./g;
+        $parent =~ s/<region>\./$reg\./g;
+        $res =~ s/^.*\[\s*(.*)\s*\].*$/$1/g;
+    } else {
+        print "Bad entry! $_\n";
+        next;
+    }
+
+    $child =~ s/__/ /g;  # If names have spaces,
+    $parent =~ s/__/ /g; # the cfg file entry should use __ instead
+
+    #print " CHILD: $child\n"; print "PARENT: $parent\n"; print "   RES: $res\n\n";
+
+    if( $uninst ) {  # Uninstall
+
+        if( "$child" eq "$parent" ) {
+            print "Skipping top-level policy region : $child\n";
+        } elsif( $child =~ /\.pm$/ ) {
+            if( $parent =~ /\.pm$/ ) {
+                vhx( "wunsub \@ProfileManager:$parent \@ProfileManager:$child", $_x_, 1 );
+            }
+            &$chg_pm( $child, $parent );
+        } elsif( $child =~ /\.dpm$/ ) {
+            if( $parent =~ /\.pm$/ ) {
+                vhx( "wunsub \@ProfileManager:$parent \@ProfileManager:$child", $_x_, 1 );
+            }
+            &$chg_pm( $child, $pr_last );
+        } elsif( $child =~ /\.pr$/ ) {
+            &$chg_reg( $child, $parent );
+        } else {
+            print "Unknown policy region or profile manager!\n";
+            print ">:> '$child' '$parent'\n";
+        }
+
+    } else {         # Install
+
+        if( "$child" eq "$parent" ) {
+            print "Top-level policy region : $child\n";
+        } elsif( $child =~ /\.pm$/ ) {
+            &$chg_pm( $child, $parent );
+            if( $parent =~ /\.pm$/ ) {
+                my @subs = vhx( "wgetsub \@ProfileManager:$parent", 3, 1 );
+                #print "SUBS: @subs\n";
+                unless( grep { /$child/ } @subs ) {
+                    vhx( "wsub \@ProfileManager:$parent \@ProfileManager:$child", $_x_, 1 );
+                }
+            }
+        } elsif( $child =~ /\.dpm$/ && $pr_last ) {
+            &$chg_pm( $child, $pr_last );
+            if( $parent =~ /\.pm$/ ) {
+                my @subs = vhx( "wgetsub \@ProfileManager:$parent", 3, 1 );
+                #print "SUBS: @subs\n";
+                unless( grep { /$child/ } @subs ) {
+                    vhx( "wsub \@ProfileManager:$parent \@ProfileManager:$child", $_x_, 1 );
+                }
+            }
+        } elsif( $child =~ /\.pr$/ ) {
+            if( $res ) { 
+                &$chg_reg( $child, $parent, $res );
+            } else {
+                &$chg_reg( $child, $parent );
+            }
+            $pr_last = $child;
+        } else {
+            print "Unknown policy region or profile manager!\n";
+            print ">:> '$child' '$parent'\n";
+        } 
+
+    }   # end if uninst
+    print "\n" if $dbug;
+
+}
+
+print "\n$0 complete.\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub delete_pm {
+# Deletes profile manager
+    my $pm_name     = shift;
+    my $reg_parent  = shift;
+    my $me          = (caller(0))[3];
+    $me             =~ s/^main:://g;
+
+    if( $dbug ) {
+        print "${me}() Profile_Manager : $pm_name\n";
+        print "${me}()  Region_Parent  : $reg_parent\n\n";
+    }
+
+    my $resouce;
+    if( $reg_parent =~ /\.pr$/ ) { 
+        $resouce = "\@PolicyRegion";
+    } elsif ( $reg_parent =~ /\.pm$/ ) {
+        $resouce = "\@ProfileManager";
+    }
+
+    my $pm_oid = 0;
+    if( $pm_oid = vhx( "wlookup -or ProfileManager $pm_name", 3, 2 ) ) {
+        vhx( "wunsub -a \@ProfileManager:$pm_name", $_x_, 1 );
+        vhx( "wdel \@ProfileManager:$pm_name", $_x_, 0 );
+    } else {
+        print "Profile manager not found: $pm_name\n"; 
+    }
+
+}   # end sub delete_pm
+
+
+sub create_pm {
+# Create profile manager
+
+    my $pm_name     = shift;
+    my $reg_parent  = shift;
+    my $me          = (caller(0))[3];
+    $me             =~ s/^main:://g;
+
+    if( $dbug ) {
+        print "${me}() Profile_Manager : $pm_name\n";
+        print "${me}()  Region_Parent  : $reg_parent\n\n";
+    }
+
+    my $resouce;
+    if( $reg_parent =~ /\.pr$/ ) { 
+        $resouce = "\@PolicyRegion";
+    } elsif ( $reg_parent =~ /\.pm$/ ) {
+        $resouce = "\@ProfileManager";
+    }
+
+    my $pm_oid = 0;
+    if( $pm_oid = vhx( "wlookup -or ProfileManager $pm_name", 3, 2 ) ) {
+        chomp $pm_oid;
+        print "Found: $pm_name\n"; 
+    } else {
+        vhx( "wcrtprfmgr $resouce:$reg_parent $pm_name", $_x_, 1 );
+    }
+
+    if( $pm_name =~ /\.dpm$/ ) {
+
+        my $set_dataless = 1; 
+        if( $pm_oid ) { # PM exists
+            chomp( my $state_pm = vhx( "objcall $pm_oid _get_state", 3, 0 ) );
+            if( $state_pm =~ /ataless$/ ) { $set_dataless = 0 } # Already dataless
+        }
+
+        if( $set_dataless )  {
+            vhx( "wsetpm -d \@ProfileManager:$pm_name", $_x_, 1 );
+        }
+
+    }
+
+}   # end sub create_pm
+
+
+sub create_reg {
+#
+# Create region 
+# usage: create_reg( <region>, <parent region>, <managed resources> )
+# managed resources will be added/removed as needed
+#
+    my $reg         = shift;
+    my $reg_parent  = shift;
+    my $resource    = shift;
+    my $me          = (caller(0))[3];
+    $me             =~ s/^main:://g;
+    my @resource;
+
+    if( $dbug ) {
+        print "${me}()         Region : $reg\n";
+        print "${me}()  Region_Parent : $reg_parent\n";
+        #for( @$resource ) { print "${me}()       Resource : $_\n"; }
+        print "\n";
+    }
+
+    my @resource_current;
+    my @resource_managed;
+    my $check_flag = 1;
+
+    unless( defined $resource ) {
+        print "${me}() No resources given, leaving default resources intact\n" if $dbug;
+        $check_flag = 0;
+    } else {
+        @resource = split( / /, $resource );
+    }
+
+    if( $dbug ) { for( @resource ) { print "RESOURCE: $_\n" } }
+
+    chomp( @resource_managed = vhx( "wgetpr \@PolicyRegion:$reg", 3, 2 ) );
+
+    if( $main::xs ) {  # Exit status from wgetpr
+
+        print "\n" if $dbug;
+
+        if( "$reg" eq "$reg_parent" ) {  # Top-level region
+            print "Upper-level policy region does not exist! $reg: $main::xs\n"; 
+            print "Create top-level policy region: $reg\n" if $list;
+            vhx( "wcrtpr $reg", $_x_, 1 );
+            chomp( @resource_managed = vhx( "wgetpr \@PolicyRegion:$reg", 3, 2 ) );
+        } else {  # Sub-region
+            vhx( "wcrtpr -s \@PolicyRegion:$reg_parent $reg", $_x_, 1 );
+            chomp( @resource_managed = vhx( "wgetpr \@PolicyRegion:$reg", 3, 2 ) );
+        } 
+
+    } else { print "Found: $reg_parent $reg \n" }
+    print "\n" if $dbug;
+
+    if( $check_flag ) {
+
+        print "\nChecking managed resources for policy region: $reg\n";
+        print "\n" if $dbug;
+
+        my( $res_del, $res_add, @vals );
+        if( "$resource[0]" eq "+" ) { $res_add = 1; shift @resource; }
+        if( "$resource[0]" eq "-" ) { $res_del = 1; shift @resource; }
+
+        # Explicitly specified resources 
+        unless( $res_add || $res_del ) {
+            # Unwanted resources 
+            @vals = compare_list( \@resource_managed, \@resource );
+            for( @vals ) { 
+                print "${me}() extra: $_\n" if $dbug;
+                vhx( "wsetpr -r $_ \@PolicyRegion:$reg", $_x_, 1 ); # remove resource
+            }
+            print "\n" if $dbug;
+
+            @vals = compare_list( \@resource, \@resource_managed );
+            for( @vals ) {
+                print "${me}() missing: $_\n" if $dbug;
+                vhx( "wsetpr $_ \@PolicyRegion:$reg", $_x_, 1 ); # add resource
+            }
+            print "\n" if $dbug;
+
+        }
+
+        # Remove managed resources 
+        if( $res_del ) {
+            for( @resource ) { 
+                print "${me}() removing resource: $_\n" if $dbug;
+                vhx( "wsetpr -r $_ \@PolicyRegion:$reg", $_x_, 1 );  # remove resource
+            }
+            print "\n" if $dbug;
+        }
+
+        # Add managed resources
+        if( $res_add ) {
+            @vals = compare_list( \@resource, \@resource_managed );
+            for( @vals ) { 
+                print "${me}() missing: $_\n" if $dbug;
+                vhx( "wsetpr $_ \@PolicyRegion:$reg", $_x_, 1 ); # add resource
+            }
+            print "\n" if $dbug;
+        }
+
+    }
+    
+}   # end sub create_reg
+
+
+sub delete_reg {
+
+    my $reg        = shift;
+    if( vhx( "wlookup -r PolicyRegion $reg", 3, 2 ) ) {
+        vhx( "wdelpr \@PolicyRegion:$reg", $_x_, 1 );
+    } else {
+        print "Policy region not found: $reg\n\n";
+    }
+
+}   # end sub delete_reg
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+Usage: $0 [-dhflu]
+
+Desc:  Create regions
+
+       -c  config file
+       -f  Force
+       -d  Debuggin mode
+       -u  Uninstall all
+       -h  Help
+
+USAGE
+   exit 0;
+}
+

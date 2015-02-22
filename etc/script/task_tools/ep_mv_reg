@@ -1,0 +1,14 @@
+:: Windows batch script
+:: Move endpoint to new TMR
+
+net stop lcfd
+echo
+echo
+echo
+
+del /F lcf.dat
+del /F lcfd.log
+move last.cfg last.cfg~
+echo lcs.login_interfaces=r2tmr1.r2.fs.fed.us+9495 > last.cfg
+
+net start lcfd

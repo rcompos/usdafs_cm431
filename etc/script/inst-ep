@@ -1,0 +1,158 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/inst-ep,v 1.4 2009/08/20 19:44:45 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Install Tivoli endpoint on specified
+#               host.
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my $gw_port     = "9494";
+my $ep_port     = "9495";
+
+my %opt;
+getopts( 'dfhjlp:', \%opt );
+if( $opt{ h } ) { usage() }
+$main::dbug  = $opt{ d } ? 1         : 0;
+my $force    = $opt{ f } ? 1         : 0;
+my $list        = $opt{ l } ? 1 : 0;
+my $action      = $list     ? "LIST" : "CREATE";
+my $dbug        = $main::dbug;
+my $ssh         = $opt{ j } ? "-j" : "";
+my $pw          = $opt{ p } ? $opt{ p } : 0;
+my $ep_fqdn     = $ARGV[0]  ? $ARGV[0]  : 0;
+my $ep_label    = $ARGV[1]  ? $ARGV[1]  : $ep_fqdn;
+my $_x_         = $opt{ l } ? 4      : 0;
+usage( "Must specify host to install endpoint on!" ) unless $ep_fqdn;
+
+my $self = vhx( "objcall 0.0.0 self", 3, 1 );
+$self =~ /^(\S+)\.(\S+)\.\S+$/;
+my $num_reg = $1;
+my $disp    = $2;
+
+chomp( my $host = vhx( "hostname", 3, 1 ) );
+chomp( my $fqdn_tmr = vhx( "hostnew $host", 3, 1 ) );
+$fqdn_tmr =~ s/^(\S+)\s+.*$/$1/;
+
+my $ult            = "/usr/local/Tivoli";
+my $ulte           = "$ult/etc";
+my $ultv           = "$ult/var";
+my $dir_tmp        = "$ultv/tmp";
+my $file_ep        = "$dir_tmp/ep_tmp.cfg";  # EP config file for winstlcf
+my $user           = "root";  # User account
+my $reg_ep         = "\"\"";  # Blank
+
+
+title( "$action Tivoli endpoint: $ep_fqdn", 10, 0 );
+print "\n  Endpoint FQDN: $ep_fqdn\n";
+print " Endpoint label: $ep_label\n";
+print "\n Installation connection method: ";
+print "SSH\n" if $ssh;
+print "rexec\n" unless $ssh;
+confirm( $force ) unless $list;
+$pw = get_pass( $pw );
+print "\n";
+
+if( defined $pw ) {
+    print " Creating endpoint config file\n" if $dbug;
+    open( OUT, ">$file_ep" );
+    print OUT "$ep_fqdn $user $pw $reg_ep $ep_label\n";
+    close( OUT );
+
+    #use ip addr instead of hostname for -g?
+    #Create ep in pr?
+
+    if( vhx( "wlookup -r Endpoint $ep_label", 3, 2  ) ) {
+        # Exit if endpoint label already exists in TMR
+        print " Endpoint exists: $ep_fqdn\n\n";
+        exit 1 unless $list;
+    } 
+
+    if( -f $file_ep ) {
+        print "***  LIST MODE : No action will be taken.  ***\n" if $list;
+        print "\nListing endpoint creation command:\n\n" if $list;
+        print "\nCreating endpoint:\n\n" unless $list;
+        vhx( "winstlcf $ssh -Yv -d $ult/lcf -g $fqdn_tmr+$gw_port -L '-D bcast_disable=1' -f $file_ep", $_x_, 0 );
+        #unlink( $file_ep ) unless $list;
+    } else {
+        print "WARNING: Config file doesn\'t exist: $file_ep\n";
+        print "WARNING: Endpoint not created! Must create endpoint manually.\n";
+        return 0;
+    }
+
+}
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhjl] [-p <password>] <ep_fqdn> [<ep_label>]
+
+Desc:  Install Tivoli endpoint on specified server.
+       This script is a USDA FS wrapper for the Tivoli 
+       winstlcf command.  See winstlcf man page.
+
+       -f  force
+       -h  help
+       -j  use SSH instead of rexec
+       -l  list 
+       -p  password
+
+       Supply the fully qualified domain name as <ep_fqdn>.
+       If the endpoint label is specified (<ep_label), then
+       the endpoint is created with this label.  If the
+       endpoint label is not specified, then the FQDN will
+       be used as the endpoint label.
+
+       Specify the -f option to force execution by skipping
+       the confirmation step.
+
+       During installation, connect to host using
+       rexec service by default.  If the -j option is
+       specified, an encrypted secure shell connection
+       is made instead.  If the connection attempt fails,
+       confirm that the user account is valid for logon.
+       Manually login to target host using the ssh
+       command and supply the password for root user.
+
+       Specify the -l option to list the endpoint creation
+       command but NOT perform the installation. This option
+       is useful for problem determination.
+
+       Specify the -p option to supply the password for the
+       root user on the target host.  Otherwise the root
+       password must be typed twice at the password prompt.
+
+       The default gateway port is ${gw_port}.
+       The default endpoint port is ${ep_port}.
+
+       If the endpoint label already exists in the TMR
+       endpoint manager database, the endpoint creation
+       will not proceed.  The endpoint must first be removed
+       using the wdelep command.  
+
+USAGE
+exit 0;
+}   # end sub usage
+
+

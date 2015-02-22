@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Policy Region 
+#
+#  This method prints the filtering mode for the list of possible targets.
+#
+#  Possible modes are:
+#	node		(show only managed nodes)
+#	pcnode		(show only PC managed nodes)
+#	nwnode      	(show only netware clients) 
+#	epnode      	(show only LCF Endpoints)   
+#	all		(show all)
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <value>-locked
+#  (eg: echo "epnode-locked")
+
+echo "epnode-locked"
+
+exit 0

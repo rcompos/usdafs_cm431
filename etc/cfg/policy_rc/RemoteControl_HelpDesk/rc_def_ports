@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+#  Default policy method for Tivoli Remote Control  
+#
+#  This policy method determines the ports that controllers and 
+#  targets use to communicate.
+#  
+#  Possible values:
+#  rc TIP:<target TCP/IP port> 
+#     CIP:<controller TCP/IP port> 
+#  filexfer TIP:<target TCP/IP port>
+#           CIP:<controller TCP/IP port> 
+#  chat TIP:<target TCP/IP port> 
+#       CIP:<controller TCP/IP port> 
+#  where:
+#  rc                         Sets the ports for the remote control action.
+#  filexfer                   Sets the ports for the file transfer action.
+#  chat                       Sets the ports for the chat action.
+#  <target TCP/IP port>       Is the target TCP/IP port used to listen for the 
+#                             connection. 
+#                             The possible values are:
+#                             <port>   Port number
+#                             0        Default port (2501 for remote control, 
+#                                      2502 for file transfer, 2503 for chat)
+#  <controller TCP/IP port>   Is the controller TCP/IP port used to initiate 
+#                             the connection. 
+#                             The possible values are:
+#                             <port>   Port number
+#                             0        Port is assigned by the communication stack.
+#  <\n>                       Is the new line character.
+#  
+#  Default values: 
+#  rc TIP:0 CIP:0<\n>
+#  filexfer TIP:0 CIP:0<\n>
+#  chat TIP:0 CIP:0<\n>
+#       	
+
+echo "rc TIP:0 CIP:0 TXP:0 CXP:0"
+echo "filexfer TIP:0 CIP:0 TXP:0 CXP:0"
+echo "chat TIP:0 CIP:0 TXP:0 CXP:0"
+
+exit 0

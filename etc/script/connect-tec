@@ -1,0 +1,127 @@
+#!/usr/bin/perl
+# $Header: /work/RCS/connect-tec,v 1.1 2005/04/05 07:42:50 rcompos Exp $
+#
+# Description : Connect TMR server to TEC server
+#
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'dfhp:', \%opt );
+if( $opt{ h } ) { usage() }
+$main::dbug  = $opt{ d } ? 1         : 0;
+my $force    = $opt{ f } ? 1         : 0;
+my $pw       = $opt{ p } ? $opt{ p } : 0;
+my $dbug     = $main::dbug;
+$main::xs    = 0; print $main::xs if $dbug;
+my $tec      = $ARGV[0]  ? $ARGV[0]  : 0;
+usage( "Must specify TEC host" ) unless $tec;
+
+my $self = vhx( "objcall 0.0.0 self", 3, 1 );
+$self =~ /^(\S+)\.(\S+)\.\S+$/;
+my $num_reg    = $1;
+my $disp       = $2;
+
+
+chomp( my $host = vhx( "hostname", 3, 1 ) );
+chomp( my $fqdn_tmr = vhx( "hostnew $host", 3, 1 ) );
+$fqdn_tmr =~ s/^(\S+)\s+.*$/$1/;
+
+my $dir_tiv        = "/usr/local/Tivoli";     # Tivoli base dir
+my $dir_etc        = "$dir_tiv/etc";          # Custom configuration
+my $dir_var        = "$dir_tiv/var";
+my $dir_tmp        = "$dir_var/tmp";          # tmp dir
+print "Create two-way inter-region connection\n";
+print "    $host <----> $tec\n";
+
+my $user       = "root";
+my $sleeptime  = 5;
+
+confirm( $force );
+print "\n";
+
+my $tec_wtmrname = 0;
+
+print "Checking inter-region connections\n";
+check_conn();
+
+if( $tec_wtmrname ) {
+    print "Connection found: $tec ($tec_wtmrname)\n";
+} else { 
+    print "Supply password for user $user on $tec:\n";
+    $pw = get_pass( $pw );
+    print "Connecting\n";
+    print "wconnect -m Two-way -l $user $tec\n";
+    my $wconnect = "wconnect -m Two-way -l $user $tec";
+    vhx( "$wconnect <<DONE\n$pw\n\n\nDONE", 3, 1 );
+    print "sleep $sleeptime\n";  sleep $sleeptime;
+    check_conn();
+    unless( $tec_wtmrname ) { print "Failed! $wconnect\n"; exit 1; }
+}
+print "\n";
+
+
+print "Checking resource EventServer\n";
+
+if( my $eventserver = vhx( "wlookup -ar EventServer", 3, 2 ) ) {
+    chomp $eventserver;
+    print "Found: $eventserver\n";
+} else {
+    print "wregister -ir EventServer\n";
+    vhx( "wregister -ir EventServer", 3, 1 );
+    print "sleep $sleeptime\n";  sleep $sleeptime;
+
+    print "wupdate -r EventServer $tec_wtmrname\n";
+    vhx( "wupdate -r EventServer $tec_wtmrname", 3, 1 );
+}
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub check_conn {
+# Check for inter-region connections
+    chomp( my $oid_interreg= vhx( "wlookup InterRegion", 3, 1 ) );
+    my $conn = vhx( "idlattr -tg $oid_interreg TMRs imp_TMF_InterRegion::Connection::InfoList", 3, 1 );
+    print "CONN: $conn\n\n" if $dbug;
+    if( $conn =~ /\"(\S+)\" (\d+) (?:\S+) \"$tec\" \2/ ) {
+        $tec_wtmrname = $1;
+        #$reg_num_remote = $2;
+        print "Found: $tec\n" if $dbug;
+        print "Remote region: $tec_wtmrname\n" if $dbug;
+    }
+    print "\n" if $dbug;
+}   # end sub check_conn
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fh] [-p <password>] <TEC_host>
+
+Desc:  Connect TMR to TEC server
+
+       -h  Help
+       -f  Force
+       -p  Password on TEC server
+
+USAGE
+exit 0;
+}   # end sub usage
+
+

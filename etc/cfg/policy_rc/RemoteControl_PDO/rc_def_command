@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+#  Default policy method for Tivoli Remote Control Commands
+#
+#  This policy method determines whether or not an action is available.
+#  
+#  Possible values:
+#  Any combination of the following tags, separated by a semicolon (;).
+#  rc         remote control
+#  reboot     reboot
+#  filexfer   file transfer
+#  chat       chat
+#  
+#  Default value: 
+#  reboot;chat;filexfer;rc;
+#  The tag specified last becomes the default action.
+
+echo "reboot;chat;filexfer;rc"
+
+exit 0

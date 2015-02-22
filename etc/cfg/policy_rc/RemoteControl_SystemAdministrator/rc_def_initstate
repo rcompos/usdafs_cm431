@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Control Initial State
+#
+#  The choices are:
+#
+#	"active"	
+#	"monitor"
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <value>-locked
+#  (eg: echo "monitor-locked")
+#
+
+echo "monitor"
+
+exit 0

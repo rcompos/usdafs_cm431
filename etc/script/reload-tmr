@@ -1,0 +1,142 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/reload-tmr,v 1.4 2009/08/20 19:53:54 rcompos Exp $
+# IBM USDA Forest Service CM423 TMR
+# Description : Reload TMR server products and patches
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'a:c:dfhl', \%opt );
+usage()     if $opt{ h };
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $force    = $opt{ f } ? 1 : 0;
+my $list     = $opt{ l } ? "-l" : "";
+my $action   = $list     ? "LIST" : "INSTALL";
+my $reload   = $opt{ a } ? "-a $opt{ a }" : "";
+my $cfg_file = $opt{ c } ? $opt{ c } : 0;
+my $dbug     = $main::dbug;
+$main::xs    = 0; print "$main::xs\n" if $dbug;
+my $_x_      = $opt{ l } ? 4      : 0;
+my $disp     = 1;
+my $reg      = get_region();
+
+my $ult            = "/usr/local/Tivoli";
+my $ults           = "$ult/src";
+my $ulte           = "$ult/etc";
+my $ultes          = "$ulte/script";
+my $ultec          = "$ulte/cfg";
+my $cfg_tmr        = "$ultec/inst/tmr.cfg";
+
+chomp( my $host = vhx( "hostname", 3, 1 ) );
+my @mn_info = get_mn();
+my( $mn, $mn_oid, $obj_no ) = ( $mn_info[0], $mn_info[1], $mn_info[2] );
+unless( $obj_no =~ /\d+\.1\.0/ ) { usage ("Must be run from TMR server" ) }
+
+unless( $cfg_file ) { $cfg_file = $cfg_tmr; }
+$cfg_file =~ /^(.*)\/\S+$/;
+my $cfg_dir = $1;
+unless( -d $cfg_dir ) { print "Dir not found: $cfg_dir\n"; exit 1; }
+print "  Config dir : $cfg_dir\n";
+
+#my @files = ();
+#open( CFG, "<$cfg_file" ) or die "Couldnt open file: $cfg_file: $!\n";
+#while( <CFG> ) {  # Read file 
+#    chomp;
+#    if( /^\s*#/ || /^\s*$/ ) { next }  # Skip comments and blank lines
+#    my $file = "$cfg_dir/$_";
+#    unless( -f $file ) { print "File not found: $file\n"; exit 1; }
+#    print " Config file : $file\n";
+#    push( @files, $file );
+#}
+#close( CFG );
+
+#for my $cfile ( @files ) {
+#    my $type = 0;
+#    open( CFG, "<$cfile" ) or die "Couldnt open file: $!";
+#    while( <CFG> ) { if( /^\s*#\s*TYPE\s*:\s*(\S+)/ ) { $type = $1; last; } }
+#    close( CFG );
+#    unless( $type ) { print "Config file missing type definition!\n"; exit 2; }
+#    unless( $type =~ /TMR/ ) {
+#        print "ERROR: Wrong config file type!\n";
+#        print "$type\n";
+#        exit 3;
+#    }
+#}
+
+my $type = 0;
+open( CFG, "<$cfg_file" ) or die "Couldnt open file: $!";
+while( <CFG> ) { if( /^\s*#\s*TYPE\s*:\s*(\S+)/ ) { $type = $1; last; } }
+close( CFG );
+#print "TYPE : $type\n";
+unless( $type ) { print "Config file missing type definition!\n"; exit 2; }
+unless( $type =~ /TMR/i ) {
+    print "ERROR: Wrong config file type!\n";
+    print "$type\n";
+    exit 4;
+}
+
+vhx( "wlookup -r ManagedNode $mn", 3, 1  );
+
+title( "$action TMR server products and patches", 10, 0 );
+confirm( $force ) unless $list;
+print "\n";
+
+my $start_time = time;
+print "    Start_Time : ", scalar localtime, "\n\n" unless $list;
+
+vhx( "$ultes/loadtiv -f $list $reload -c $cfg_file -s $ults $mn", 0, 1 ); 
+
+unless( $list ) {
+    my( $hour, $min, $sec ) = runtime( $start_time );
+    print  "\n";
+    #print  "          Host : $host\n";
+    print  "  Managed Node : $mn\n";
+    print  "        Region : $reg\n";
+    print  "      End_Time : ", scalar localtime, "\n";
+    printf "      Run_Time : %02d h %02d m %02d s\n",$hour, $min, $sec;
+    print "\n$0 complete.\n\n";
+
+    print "The managed node needs to be restarted\n";
+}
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhl] [-a <args>] [-c <config_file>]
+
+Desc:  Re-load/install TMR server products and patches.
+       May be re-run if necessary.
+       The default config file (TMR.cfg) will be used if no 
+       config file is specified.  Config file contains a list 
+       of product/patch configuration files, one per line.
+
+       -a  args for overwrite ( "BIN=! LIB=! LCF=! MAN=! CAT=!" )
+           All dirs will be overwritten if only "!" is supplied
+       -c  configuration file
+       -f  force, no prompt
+       -h  help
+       -l  list config file without performing install
+
+USAGE
+exit 0;
+}   # end sub usage
+

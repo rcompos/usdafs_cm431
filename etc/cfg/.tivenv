@@ -1,0 +1,15 @@
+#
+# environment variables for Tivoli admins
+#
+
+export ult=/usr/local/Tivoli
+export ultv=/usr/local/Tivoli/var
+export ults=/usr/local/Tivoli/src
+export ulte=/usr/local/Tivoli/etc
+export ultes=/usr/local/Tivoli/etc/script
+export ultec=/usr/local/Tivoli/etc/cfg
+export lcfdir=/usr/local/Tivoli/lcf/dat/1
+export logdir=/usr/local/Tivoli/var/log
+
+export PATH="${PATH}:$ultes"
+

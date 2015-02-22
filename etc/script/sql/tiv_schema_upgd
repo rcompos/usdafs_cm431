@@ -1,0 +1,189 @@
+#!/usr/bin/perl
+# $Header: /work/in/../cm431fp1rcs/tiv_schema_upgd,v 1.1 2010/01/20 20:18:46 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Create Inventory database schema
+#      Author : Ron Compos, Consulting Science LLC
+#     Created : 2008-09-09
+#
+# Run this script to create the initial TMR
+# Inventory database schema and apply
+# subsequent fix pack schema updates
+#
+
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'adfhlp:s:', \%opt );
+usage()     if $opt{ h };
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $force    = $opt{ f } ? 1 : 0;
+my $list     = $opt{ l } ? 1 : 0;
+my $all      = $opt{ a } ? 1 : 0;
+my $set      = $opt{ s } ? $opt{ s } : 0;
+my $set_max  = 3;
+my $dbug     = $main::dbug;
+my $_x_      = $opt{ l } ? 4      : 0;
+my $r_shift  = 4;
+my $pw       = $opt{ p } ? $opt{ p } : 0;
+#my $db       = $ARGV[0] ? $ARGV[0]   : usage( "No database supplied" );
+my $db       = $ARGV[0] ? $ARGV[0] : 0;
+
+my $db_str   = $db ? "\@$db" : "";
+#my $db_str;
+#if( $db ) { $db_str = "\@$db" } else { $db_str = "" }
+#if( $db ) { print "###  \$DB  ###"; $db_str = "\@$db" }
+
+my $pw_invtiv    = "tivoli";
+my $pw_tivoli    = "tivoli";
+my $pw_mdstatus  = "mdstatus";
+my $pw_planner   = "planner";
+my $pw_pristine  = "pristine";
+
+my $term_cols   = vhx( "tput cols", 3, 2 );
+chomp $term_cols;
+unless( $term_cols ) { $term_cols = 40 }
+print ">> $term_cols <<\n" if $dbug;
+
+my $ulte      = "/usr/local/Tivoli/etc";
+my $ultes     = "$ulte/script";
+my $dir_sql   = "$ultes/sql";
+
+my $path_admin   = "$ultes/sql/SQL/admin";
+my $path_schema  = "$ultes/sql/SQL/schema";
+my $path_fixpack = "$ultes/sql/RDBMS";
+
+if( $all && $set ) { usage( "Cannot use -s and -a together" ) }
+if( $set ) { unless( $set =~ /^[123]$/ ) { usage( "-s takes args 1, 2, or 3" ) } }
+if( ! $all && ! $set ) { $all = 1 }
+if( $set == 1 || $all ) { usage( "Must supply option -p <sys password>" ) unless $pw }
+
+print "\nUSDA FS Tivoli Inventory Database Schema Configuration\n";
+print "\nRun SQL scripts to install required db administrators and schema.\n\n";
+
+print "***  LIST MODE - NO ACTION WILL BE TAKEN  ***\n" if $list; 
+
+
+chdir( "$dir_sql" ) or die "Can't chdir to: $dir_sql: $!";
+#my $dir_curr = getcwd(); print "\n> $dir_curr\n";
+
+print "\n" unless $list;
+confirm( $force ) unless $list;
+print "\n" unless $list;
+
+# SQL set 1
+my @admin= ( 
+    [ "fs_inv_ora_admin",       "sys/$pw" ],
+    [ "fs_ccm_ora_admin",       "sys/$pw" ],
+    [ "fs_mdist_ora_admin",     "sys/$pw" ],
+    [ "fs_plans_ora_admin",     "sys/$pw" ],
+    [ "fs_pristine_ora_admin",  "sys/$pw" ],
+);
+
+if( $set == 1 || $all ) {
+    print "\n";
+    print "_" x $term_cols, "\n\n";
+    print "ADMIN\n\n";
+    for my $i ( 0 .. $#admin ) {
+        #my $cmd = "sqlplus \"$admin[$i][1]\@$db as sysdba\" \@$path_admin/$admin[$i][0]";
+        my $cmd = "sqlplus \"$admin[$i][1]${db_str} as sysdba\" \@$path_admin/$admin[$i][0]";
+        vhx( $cmd, $_x_, 1 );
+    }
+}
+
+# SQL set 2
+my @schema = ( 
+    [ "fs_inv_ora_schema",       "invtiv/$pw_invtiv" ],
+    [ "fs_ccm_ora_schema",       "tivoli/$pw_tivoli" ],
+    [ "fs_mdist_ora_schema",     "mdstatus/$pw_mdstatus" ],
+    [ "fs_plans_ora_schema",     "planner/$pw_planner" ],
+    [ "fs_pristine_ora_schema",  "pristine/$pw_pristine" ],
+);
+
+if( $set == 2 || $all ) {
+    print "\n";
+    print "_" x $term_cols, "\n\n";
+    print "SCHEMA\n\n";
+    for my $i ( 0 .. $#schema ) {
+        #my $cmd = "sqlplus \"$schema[$i][1]\@$db\" \@$path_schema/$schema[$i][0]";
+        my $cmd = "sqlplus \"$schema[$i][1]${db_str}\" \@$path_schema/$schema[$i][0]";
+        vhx( $cmd, $_x_, 1 );
+    }
+}
+
+# SQL set 3
+my @fixpack = ( 
+    [ "fs_inv_ora_schema_423_FP01", "invtiv/$pw_invtiv" ],
+    [ "fs_inv_ora_schema_423_FP02", "invtiv/$pw_invtiv" ],
+    [ "fs_inv_ora_schema_423_FP03", "invtiv/$pw_invtiv" ],
+    [ "fs_inv_ora_schema_423_FP04", "invtiv/$pw_invtiv" ],
+    [ "fs_inv_ora_schema_423_FP05", "invtiv/$pw_invtiv" ],
+    [ "fs_inv_ora_schema_423_FP06", "invtiv/$pw_invtiv" ],
+    [ "fs_inv_ora_schema_423_FP07", "invtiv/$pw_invtiv" ],
+    [ "fs_inv_ora_schema_423_FP08", "invtiv/$pw_invtiv" ],
+    [ "fs_inv_ora_schema_423_FP09", "invtiv/$pw_invtiv" ],
+    [ "fs_inv_ora_schema_431_FP01", "invtiv/$pw_invtiv" ],
+);
+
+if( $set == 3 || $all ) {
+    print "\n";
+    print "_" x $term_cols, "\n\n";
+    print "SCHEMA FIX PACKS\n\n";
+    for my $i ( 0 .. $#fixpack ) {
+        #my $cmd = "sqlplus \"$fixpack[$i][1]\@$db\" \@$path_fixpack/$fixpack[$i][0]";
+        my $cmd = "sqlplus \"$fixpack[$i][1]${db_str}\" \@$path_fixpack/$fixpack[$i][0]";
+        vhx( $cmd, $_x_, 1 );
+    }
+}
+
+print "_" x $term_cols, "\n";
+print "\n";
+print "\n$0 complete\n";
+
+
+##################
+#   end corpus   #
+##################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-afhl] [-s <SQL_set_num>] [-p <sys_password>] [<database_id>]
+Desc:  Configure Tivoli Inventory database schema.
+       The default action is to run all SQL script
+       sets with user prompt before each script
+       is run.  Use the -l option to get a full
+       listing of SQL scripts.
+
+       <database_id> is only required for remote database
+       <sys_password> is only required for Admin scripts
+
+       Specify SQL set to be run using -s option.
+       Set list:
+           1   Admin 
+           2   Schema 
+           3   Schema fixpack
+
+       -a  All SQL scripts will be run
+       -f  force
+       -h  help
+       -l  list actions without performing
+       -p  password for Oracle user sys
+           only needed for Admin scripts 
+       -s  SQL set to be run [1-3]
+
+USAGE
+    exit;
+}   # end usage
+

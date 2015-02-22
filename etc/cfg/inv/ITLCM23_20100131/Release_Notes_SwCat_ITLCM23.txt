@@ -1,0 +1,1677 @@
+=================================================================================================================
+
+Readme File for: 
+
+ Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software)
+ IBM Corp.
+ 31 January 2010
+
+Copyright International Business Machines Corporation 2010.
+US Government Users Restricted Rights -- Use, duplication or disclosure
+restricted by GSA ADP Schedule Contract with IBM Corp.
+
+=================================================================================================================
+
+Summary of changes for January 2010 release:
+
+This section summarizes the general changes that have been made to Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), January 2010 release.
+
+The following fixes to signature definitions have been introduced:
+
+
+The following products have been added:
+
+* BP Telelogic Statemate 4.5
+* Bloomberg Communication Server 3.9
+* Bloomberg Finance L.P. Wintrv 2009.12
+* Business Service Manager Base 4.2
+* Business Service Manager Tier 1 4.2
+* Business Service Manager Tier 2 4.2
+* DB2 Connect Unlimited Edition for zSeries 9.7
+* FENICS FX 12.0
+* Firefox 1.9
+* Horizon Derivative Trader 1.0
+* IBM CICS Transaction Gateway 8.0
+* IBM Content Manager Authorized 8.3
+* IBM Content Manager OnDemand AFP2WEB Transform 8.4
+* IBM Content Manager OnDemand Employee 8.3
+* IBM Content Manager OnDemand Employee 8.4
+* IBM Content Manager OnDemand Enhanced Retention Manager 8.4
+* IBM Content Manager OnDemand External User 8.3
+* IBM Content Manager OnDemand External User 8.4
+* IBM Content Manager OnDemand PDF Indexer 8.3
+* IBM Content Manager OnDemand PDF Indexer 8.4
+* IBM Content Manager OnDemand Report Distribution 8.3
+* IBM Content Manager OnDemand Report Distribution 8.4
+* IBM DB2 Content Manager VideoCharger 8.3
+* IBM DB2 Express Edition FTL 9.5
+* IBM DB2 Recovery Expert 2.1
+* IBM DB2 pureScale Feature ESE 9.8
+* IBM Developer Kit, JavaTM 2 Technology Edition 1.4
+* IBM Developer Kit, JavaTM 2 Technology Edition 5.0
+* IBM FileNet Business Process Manager Authorized 3.5
+* IBM FileNet Business Process Manager Authorized 4.0
+* IBM FileNet Business Process Manager Authorized 4.5
+* IBM FileNet Business Process Manager 3.5
+* IBM FileNet Business Process Manager 4.0
+* IBM FileNet Image Services OneApp 4.1
+* IBM FileNet Image Services Toolkit 4.1
+* IBM FileNet Image Services 4.1
+* IBM FileNet Image Svcs Authorized 4.1
+* IBM FileNet Image Svcs With Oracle Runtime 4.1
+* IBM FormWave for Notes 3.3
+* IBM General Parallel File System Client 3.3
+* IBM General Parallel File System Server 3.3
+* IBM HTTP Server 2.0
+* IBM HTTP Server 6.0
+* IBM HTTP Server 7.0
+* IBM ILOG CPLEX Academic Research Edition 12.1
+* IBM InfoSphere Data Architect 7.0
+* IBM InfoSphere Data Event Publisher Developer Edition 9.7
+* IBM InfoSphere Data Event Publisher 9.7
+* IBM InfoSphere DataStage MVS Edition 8.0
+* IBM InfoSphere DataStage for Non-Production Environments 8.0
+* IBM InfoSphere DataStage 8.0
+* IBM InfoSphere Information Server for Master Data Management Non-Prod Env 8.5
+* IBM InfoSphere Information Server for Master Data Management Non-Prod Env 9.0
+* IBM InfoSphere Information Server for Master Data Management 8.5
+* IBM InfoSphere Information Server for Master Data Management 9.0
+* IBM InfoSphere Master Data Mgmt Server Party Individual Foundation 9.0
+* IBM InfoSphere QualityStage for Non-Production Environments 8.0
+* IBM InfoSphere QualityStage 8.0
+* IBM InfoSphere Replication Server Developer Edition 9.1
+* IBM InfoSphere Replication Server Developer Edition 9.5
+* IBM InfoSphere Replication Server Developer Edition 9.7
+* IBM InfoSphere Replication Server 9.7
+* IBM InfoSphere Warehouse Enterprise Edition 9.5
+* IBM Informix 4GL Compiler Runtime 7.31
+* IBM Informix Connect Runtime 3.0
+* IBM Informix Connect Runtime 3.5
+* IBM Informix Excalibur Text Search DataBlade 1.30
+* IBM Lotus Domino Enterprise Client Access License 7.0
+* IBM Lotus Domino Enterprise Client Access License 8.0
+* IBM Lotus Domino Enterprise Client Access License 8.5
+* IBM Lotus Domino Webmail 6.5
+* IBM Lotus Domino Webmail 7.0
+* IBM Lotus Domino Webmail 8.0
+* IBM Lotus Domino Webmail 8.5
+* IBM Lotus Notes for Messaging Limited Use 6.5
+* IBM Lotus Notes for Messaging Limited Use 7.0
+* IBM Lotus Web Conferencing 7.0
+* IBM Lotus Web Conferencing 7.5
+* IBM Lotus Web Conferencing 8.0
+* IBM Lotus Web Conferencing 8.5
+* IBM Lotus Web Content Management 6.1
+* IBM Lotus iNotes for Collaboration Limited Use 8.5
+* IBM Lotus iNotes for Collaboration 8.5
+* IBM Lotus iNotes for Messaging Limited Use 8.5
+* IBM Lotus iNotes for Messaging 8.5
+* IBM Rational ADA Developer Enterprise Edition 4.2
+* IBM Rational ADA Developer Enterprise Edition 4.4
+* IBM Rational Business Developer 7.1
+* IBM Rational Business Developer 7.5
+* IBM Rational ClearCase Unix 7.0
+* IBM Rational ClearCase Windows 7.0
+* IBM Rational Developer for Power System-RPG and COBOL Dev Tools for i 7.5
+* IBM Rational Functional Tester Extension 7.0
+* IBM Rational Functional Tester Plus 7.0
+* IBM Rational Functional Tester Plus 8.1
+* IBM Rational HIS for 5250 Applications, Internet 7.1
+* IBM Rational HIS for 5250 Applications, Internet 7.5
+* IBM Rational HIS for 5250 Applications, Internet 7.6
+* IBM Rational HIS for 5250 Applications, Intranet 7.1
+* IBM Rational HIS for 5250 Applications, Intranet 7.5
+* IBM Rational HIS for 5250 Applications, Intranet 7.6
+* IBM Rational HIS for Multiplatforms, Internet 7.1
+* IBM Rational HIS for Multiplatforms, Internet 7.5
+* IBM Rational HIS for Multiplatforms, Internet 7.6
+* IBM Rational HIS for Multiplatforms, Intranet 7.1
+* IBM Rational HIS for Multiplatforms, Intranet 7.5
+* IBM Rational HIS for Multiplatforms, Intranet 7.6
+* IBM Rational Lifecycle Package with ClearCase 7.1
+* IBM Rational Professional Bundle 7.0
+* IBM Rational Professional Bundle 8.0
+* IBM Rational Purify UNIX 7.0
+* IBM Rational Purify Windows 7.0
+* IBM Rational Requirements Composer Author Client Access 1.0
+* IBM Rational Requirements Composer Reviewer Client Access 1.0
+* IBM Rational Requirements Composer Server 1.0
+* IBM Rational Rose C++ Pro 7.0
+* IBM Rational Rose J Pro 7.0
+* IBM Rational Rose Modeler 7.0
+* IBM Rational Rose Technical Developer 7.0
+* IBM Rational Team Concert Contributor Client Access 1.0
+* IBM Rational Team Concert Developer Client Access 1.0
+* IBM Rational Team Concert Express Edition Developer Client Access 1.0
+* IBM Rational Team Concert Express Edition Server 1.0
+* IBM Rational Team Concert Floating Contributor Client Access 1.0
+* IBM Rational Team Concert Floating Developer Client Access 1.0
+* IBM Rational Team Concert Standard Edition Developer Client Access 1.0
+* IBM Rational Team Concert Standard Edition Floating Contributor Clnt Access 1.0
+* IBM Rational Team Concert Standard Edition Floating Developer Client Access 1.0
+* IBM Rational Team Concert Standard Edition Server 1.0
+* IBM Rational Team Concert for Power Standard Edition Server 2.0
+* IBM Records Manager Authorized 8.4
+* IBM Records Manager Authorized 8.5
+* IBM Records Manager 4.1
+* IBM Red Brick Enterprise Edition 6.30
+* IBM Tivoli Application Dependency Discovery Manager 7.2
+* IBM Tivoli Continuous Data Protection for Files Starter Edition Single 3.1
+* IBM Tivoli Identity Manager Application Edition 4.6
+* IBM Tivoli Identity Manager Application Edition 5.0
+* IBM Tivoli Identity Manager Application Edition 5.1
+* IBM Tivoli Identity Manager Host Edition 4.6
+* IBM Tivoli Identity Manager Host Edition 5.0
+* IBM Tivoli Identity Manager Host Edition 5.1
+* IBM Tivoli Netcool Business Service Manager Tier 1 4.2
+* IBM Tivoli Netcool Business Service Manager Tier 2 4.2
+* IBM Tivoli Netcool OMNIbus Event Device Tier 7.3
+* IBM Tivoli Netcool OMNIbus Event EMS Tier 7.3
+* IBM Tivoli Netcool OMNIbus Event Q3 Tier 7.3
+* IBM Tivoli Netcool OMNIbus Event Subscriber Tier 7.3
+* IBM Tivoli Netcool Performance Manager Techpacks Tier 2 FCT 1.1
+* IBM Tivoli Netcool Performance Manager Techpacks Tier 2 1.1
+* IBM Tivoli Productivity Center for Data 3.3
+* IBM Tivoli Provisioning Manager for OS Deployment 7.1
+* IBM Tivoli Storage Manager Extended Edition 5.2
+* IBM Tivoli Storage Manager Extended Edition 5.3
+* IBM Tivoli Storage Manager Server 5.3
+* IBM Tivoli Storage Manager Space Management 5.5
+* IBM Tivoli Storage Manager Space Management 6.1
+* IBM Tivoli Storage Manager for Mail 5.5
+* IBM Tivoli Storage Manager 5.2
+* IBM Tivoli Storage Manager 5.3
+* IBM WebSphere Business Integration Server Foundation 5.1
+* IBM WebSphere Business Integration Server 4.3
+* IBM WebSphere Business Modeler Advanced 7.0
+* IBM WebSphere Business Modeler Publishing Server 7.0
+* IBM WebSphere Data Event Publisher Developer Edition 9.5
+* IBM WebSphere DataStage Enterprise Edition 8.1
+* IBM WebSphere DataStage for FCT 8.1
+* IBM WebSphere Process Server 7.0
+* IBM WebSphere Replication Server Developer Edition 9.5
+* IBM WebSphere Replication Server 9.1
+* IBM WebSphere Replication Server 9.5
+* IBM WebSphere Studio Homepage Builder 10.0
+* IBM WebSphere Studio Homepage Builder 11.0
+* IBM WebSphere Studio Homepage Builder 12.0
+* IBM WebSphere Studio Homepage Builder 13.0
+* IBM wIntegrate 6.1
+* Lotus Notes - Admin Client 6.5
+* Lotus Notes - Designer Client 6.5
+* Microsoft BizTalk Server 2004 3.0
+* Microsoft BizTalk Server 2006 3.5
+* Microsoft Script Editor 12.0
+* Modular SoftPhone 2.6
+* Netcool OMNIbus Base 7.3
+* Netcool OMNIbus Event Device Tier 7.3
+* Netcool OMNIbus Event EMS Tier 7.3
+* Netcool OMNIbus Event Q3 Tier 7.3
+* Netcool OMNIbus Event Subscriber Tier 7.3
+* Reuters Messaging Client 8.0
+* SMax4PNP MFC Application 6.0
+* Symantec LiveUpdate 3.2
+* Symantec LiveUpdate 3.3
+* Telelogic DOORS Analyst Add On 4.2
+* Telelogic DOORS Analyst Add On 4.3
+* Telelogic Rhapsody Gateway Add On 7.4
+* Telelogic Rhapsody Interfaces Add On 7.4
+* Telelogic Rhapsody Tools and Utilities Add on 7.4
+* Telelogic Rhapsody for VBA Interface 7.4
+* Telelogic Rhapsody for VBA Interface 7.5
+* Telelogic Rhapsody in C++, C, Java Developer 7.4
+* Telelogic Statemate Code Generator 4.5
+* Telelogic Statemate Developer 4.5
+* Telelogic Statemate Documentor 4.5
+* Telelogic Statemate Entry Module 4.5
+* Telelogic Statemate Simulator 4.5
+* Tivoli Business Service Manager 4.2
+* VMWARE WORKSTATION 6.5
+* Warem32 1.00
+
+
+=================================================================================================================
+=================================================================================================================
+
+Summary of changes for December 2009 release:
+
+This section summarizes the general changes that have been made to Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), December 2009 release.
+
+The following fixes to signature definitions have been introduced:
+* Business Service Manager Base 4.2
+* Business Service Manager Tier 1 4.2
+* Business Service Manager Tier 2 4.2
+* DB2 UDB Data Warehouse Enterprise Edition 8.2
+* IBM Business Process Accelerator and WebSphere Portal Server 6.0
+* IBM Business Process Accelerator and WebSphere Portal Server 6.1
+* IBM Business Process Accelerator 6.0
+* IBM Business Process Accelerator 6.1
+* IBM Cognos Content Analytics Non-Product 2.1
+* IBM Cognos Content Analytics 2.1
+* IBM Cognos TM1 Perspectives 9.5
+* IBM Cognos TM1 Read/Write 9.5
+* IBM Cognos TM1 Turbo Integrator 9.5
+* IBM Cognos TM1 Web 9.5
+* IBM Cognos TM1 9.5
+* IBM Content Collector Discovery Analytics Authorized 2.1
+* IBM Content Collector Discovery Analytics Employee 2.1
+* IBM Content Collector Discovery Analytics External User 2.1
+* IBM Content Collector Discovery Analytics Starter Pack 2.1
+* IBM Content Collector for Email Authorized 2.1
+* IBM Content Collector for File Systems Authorized 2.1
+* IBM Content Manager Authorized 8.3
+* IBM DB2 Connect Enterprise Edition 8.1
+* IBM DB2 Content Manager 8.3
+* IBM DB2 Express Edition Authorized User 9.1
+* IBM DB2 Performance Expert for Content Manager 3.1
+* IBM Health Plan Data Model Enterprise Edition 8.2
+* IBM Health Plan Data Model Project Edition 8.2
+* IBM Host Access Client Package iSeries 7.0
+* IBM Host Access Client Package 7.0
+* IBM InfoSphere Business Glossary Anywhere for Non-Prod Environments 8.0
+* IBM InfoSphere Business Glossary Anywhere for Non-Prod Environments 8.1
+* IBM InfoSphere Business Glossary Pack for Health Plan Enterprise Edition 8.2
+* IBM InfoSphere Business Glossary for Non-Production Environments 8.1
+* IBM InfoSphere Change Data Capture for Information Server for Non-Prod Env 8.1
+* IBM InfoSphere Change Data Capture for Information Server 8.1
+* IBM InfoSphere Classification Module 8.7
+* IBM InfoSphere Content Assessment 2.1
+* IBM InfoSphere DataStage MVS Edition 8.1
+* IBM InfoSphere DataStage Server for Non-Production Environments 7.5
+* IBM InfoSphere DataStage Server for Non-Production Environments 8.1
+* IBM InfoSphere DataStage Server 7.5
+* IBM InfoSphere DataStage Server 8.1
+* IBM InfoSphere DataStage 8.0
+* IBM InfoSphere Information Analyzer Workbench 8.0
+* IBM InfoSphere Information Analyzer Workbench 8.1
+* IBM InfoSphere Master Content for Master Data Management Server 1.0
+* IBM InfoSphere Master Data Management Server Account Foundation 8.0
+* IBM InfoSphere Master Data Management Server Account Transaction Hub 8.0
+* IBM InfoSphere Master Data Management Server Account Transaction Hub 8.5
+* IBM InfoSphere Master Data Management Server Account Transaction Hub 9.0
+* IBM InfoSphere Master Data Management Server Party Individual Foundation 8.0
+* IBM InfoSphere Master Data Management Server Party Org Transaction Hub 8.0
+* IBM InfoSphere Master Data Management Server Party Org Transaction Hub 8.5
+* IBM InfoSphere Master Data Management Server Party Org Transaction Hub 9.0
+* IBM InfoSphere Master Data Management Server Party Organization Foundation 8.0
+* IBM InfoSphere Master Data Management Server Product Foundation 8.0
+* IBM InfoSphere Master Data Management Svr Party Individual Transaction Hub 8.0
+* IBM InfoSphere Master Data Management Svr Party Individual Transaction Hub 8.5
+* IBM InfoSphere Master Data Management Svr Party Individual Transaction Hub 9.0
+* IBM InfoSphere Master Data Mgmt Server Account Foundation 8.5
+* IBM InfoSphere Master Data Mgmt Server Account Foundation 9.0
+* IBM InfoSphere Master Data Mgmt Server Party Individual Foundation 8.5
+* IBM InfoSphere Master Data Mgmt Server Party Individual Foundation 9.0
+* IBM InfoSphere Master Data Mgmt Server Party Organization Foundation 8.5
+* IBM InfoSphere Master Data Mgmt Server Party Organization Foundation 9.0
+* IBM InfoSphere Master Data Mgmt Server Product Foundation 8.5
+* IBM InfoSphere Master Data Mgmt Server Product Foundation 9.0
+* IBM InfoSphere Metadata Workbench FCT 8.0
+* IBM Information Server Business Glossary Anywhere FCT for Non-Prod Env 8.0
+* IBM Information Server Business Glossary Anywhere FCT 8.0
+* IBM Informix 4GL Compiler Development 7.31
+* IBM Informix Client SDK 2.01
+* IBM Informix Client SDK 2.30
+* IBM Informix Client SDK 2.40
+* IBM Informix Client SDK 2.50
+* IBM Informix Client SDK 2.60
+* IBM Informix Client SDK 2.7
+* IBM Informix Client SDK 2.70
+* IBM Informix Client SDK 2.8
+* IBM Informix Client SDK 2.80
+* IBM Informix Client SDK 2.81
+* IBM Informix Client SDK 2.90
+* IBM Informix Client SDK 3.0
+* IBM Informix Client SDK 3.5
+* IBM Informix Client SDK 9.2
+* IBM Informix SQL Development 7.31
+* IBM Informix SQL Runtime 7.31
+* IBM Lotus ActiveInsight Team Edition 6.0
+* IBM Lotus ActiveInsight Team Edition 6.1
+* IBM Lotus Enterprise Integrator 7.0
+* IBM Lotus Notes for Collaboration Limited Use 6.5
+* IBM Lotus Notes for Collaboration Limited Use 7.0
+* IBM Lotus Notes for Collaboration Limited Use 8.0
+* IBM Lotus Notes for Collaboration Limited Use 8.5
+* IBM Lotus Notes for Messaging Limited Use 8.5
+* IBM Lotus Sametime Entry 8.5
+* IBM Lotus Sametime Standard 8.5
+* IBM Maximo Asset Management for IT 6.2
+* IBM Maximo Asset management for IT 7.2
+* IBM Media Extender for WebSphere Process Server 7.0
+* IBM Optim Data Growth Solution - Open Data Manager 7.2
+* IBM Optim Data Growth Solution 7.2
+* IBM Optim Solution for Application Retirement 7.2
+* IBM Optim Test Data Management Privacy Option 7.2
+* IBM Rational AppScan Enterprise Edition (FCT) 5.6
+* IBM Rational AppScan Reporting Console (FCT) 5.6
+* IBM Rational AppScan Standard Edition (FCT) 7.7
+* IBM Rational AppScan Standard Edition (FCT) 7.8
+* IBM Rational AppScan Standard Edition (FCT) 7.9
+* IBM Rational Asset Manager Enterprise Edition Collaborator 7.2
+* IBM Rational Asset Manager Enterprise Edition Publisher 7.2
+* IBM Rational Asset Manager Enterprise Edition 7.2
+* IBM Rational Asset Manager Standard Edition 7.2
+* IBM Rational Asset Manager 7.0
+* IBM Rational Automation Framework for WebSphere Enterprise Edition 7.1
+* IBM Rational Automation Framework for WebSphere Standard Edition 7.1
+* IBM Rational Build Forge Access 7.1
+* IBM Rational Build Forge Adaptor Toolkit Express Edition 7.0
+* IBM Rational Build Forge Express Edition 7.0
+* IBM Rational ClearQuest MultiSite 7.1
+* IBM Rational ClearQuest Multisite 7.0
+* IBM Rational ClearQuest and ClearQuest MultiSite 6.16
+* IBM Rational ClearQuest and ClearQuest MultiSite 7.0
+* IBM Rational ClearQuest and ClearQuest MultiSite 7.1
+* IBM Rational ClearQuest and Functional Testing 6.1
+* IBM Rational ClearQuest and Functional Testing 7.0
+* IBM Rational HIS for Multiplatforms, Intranet 7.1
+* IBM Rational HIS for Multiplatforms, Intranet 7.5
+* IBM Rational Modeler Rhapsody Corporate Edition 7.5
+* IBM Rational Policy Tester Accessibility Edition (FCT) 5.6
+* IBM Rational Policy Tester Privacy Edition (FCT) 5.6
+* IBM Rational Policy Tester Quality Edition (FCT) 5.6
+* IBM Rational RequisitePro 7.1
+* IBM Rational Rhapsody Architect for Software 7.5
+* IBM Rational Rhapsody Architect for Systems Engineers 7.5
+* IBM Rational Rhapsody Automatic Test Generation Add On 7.5
+* IBM Rational Rhapsody Designer for Systems Engineers 7.5
+* IBM Rational Rhapsody Developer Rules Composer Add On 7.5
+* IBM Rational Rhapsody Developer Rules Player Add On 7.5
+* IBM Rational Rhapsody Developer for Ada 7.5
+* IBM Rational Rhapsody Developer for C++, C, and Java 7.5
+* IBM Rational Rhapsody Developer 7.5
+* IBM Rational Rhapsody Gateway Add On 7.5
+* IBM Rational Rhapsody Interfaces Add On 7.5
+* IBM Rational Rhapsody TestConductor Add On 7.5
+* IBM Rational Rhapsody Tools and Utilities Add On 7.5
+* IBM Rational Rhapsody for DoDAF, MODAF, and UPDM Add On 7.5
+* IBM Rational Suite Analyst Studio 7.0
+* IBM Rational Suite Development Studio Windows 7.0
+* IBM Rational Suite Development Studio for Unix 7.0
+* IBM Rational Suite Enterprise 7.0
+* IBM Rational Suite TestStudio 7.0
+* IBM Rational System Architect XT 11.3
+* IBM Rational System Architect 11.3
+* IBM Systems Director Active Energy Manager for Modular 4.2
+* IBM Systems Director Active Energy Manager for Power Systems 4.2
+* IBM Systems Director Active Energy Manager 4.2
+* IBM Systems Director VMControl Manager 2.2
+* IBM Tivoli Access Manager for Enterprise Single Sign-On Remote Access (FCT) 8.0
+* IBM Tivoli Access Manager for e-business Unlimited User Option 4.1
+* IBM Tivoli Access Manager for e-business Unlimited User Option 5.1
+* IBM Tivoli Access Manager for e-business Unlimited User Option 6.0
+* IBM Tivoli Asset Discovery for Distributed FCT 7.2
+* IBM Tivoli Asset Management for IT Desktop Requisition 6.2
+* IBM Tivoli Asset Management for IT Desktop Requisition 7.2
+* IBM Tivoli Asset Management for IT Self Service Requestor 6.2
+* IBM Tivoli Asset Management for IT Self Service Requestor 7.2
+* IBM Tivoli Asset Management for IT 6.2
+* IBM Tivoli Change Management 7.1
+* IBM Tivoli Change and Configuration Management Database for zOS Data 7.1
+* IBM Tivoli Composite Appl Mgr for Transactions Web and Robotic Resp Trcking 7.1
+* IBM Tivoli Composite Appl Mgr for Transactions Web and Robotic Resp Trcking 7.2
+* IBM Tivoli Composite Application Manager for Application Diagnostics on z/OS 7.1
+* IBM Tivoli Composite Application Manager for Application Diagnostics 7.1
+* IBM Tivoli Composite Application Manager for Applications Full Agent Pack 6.2
+* IBM Tivoli Enterprise Console 3.9
+* IBM Tivoli Identity and Access Manager Application Edition 1.0
+* IBM Tivoli Identity and Access Manager Host Edition 1.0
+* IBM Tivoli Identity and Access Manager Unlimited User Option 1.0
+* IBM Tivoli Identity and Access Manager 1.0
+* IBM Tivoli Monitoring Universal Agent 6.1
+* IBM Tivoli Monitoring Universal Agent 6.2
+* IBM Tivoli Monitoring for Databases 6.1
+* IBM Tivoli Monitoring for Microsoft Applications Advanced 6.1
+* IBM Tivoli Monitoring for Microsoft Applications Advanced 6.2
+* IBM Tivoli Monitoring for Microsoft Applications Entry 6.1
+* IBM Tivoli Monitoring 6.1
+* IBM Tivoli Netcool Business Service Manager Tier 1 4.2
+* IBM Tivoli Netcool Business Service Manager Tier 2 4.2
+* IBM Tivoli Netcool OMNIbus Base 7.3
+* IBM Tivoli Netcool Performance Manager FCT 1.2
+* IBM Tivoli Netcool Performance Manager Techpacks Tier 3 FCT 2.4
+* IBM Tivoli Netcool Performance Manager Techpacks Tier 3 2.4
+* IBM Tivoli Netcool Performance Manager 1.2
+* IBM Tivoli Service Automation Manager - Base 7.2
+* IBM Tivoli Service Automation Manager for WAS 7.2
+* IBM Tivoli Service Request Manager 6.2
+* IBM Tivoli Storage Manager FastBack for Bare Machine Recovery 6.1
+* IBM Tivoli Storage Manager FastBack for Workstations 6.1
+* IBM Tivoli Storage Manager FastBack 6.1
+* IBM Tivoli Usage and Accounting Enterprise Collector Pack 7.1
+* IBM Tivoli Usage and Accounting Manager 7.1
+* IBM Tivoli Workload Scheduler 8.5
+* IBM Transformation Extender for Integration Servers 8.3
+* IBM WebSphere Adapter for JD Edwards EnterpriseOne on WAS 7.0
+* IBM WebSphere Adapter for JD Edwards EnterpriseOne 7.0
+* IBM WebSphere Adapter for Oracle E-Business Suite on WAS 7.0
+* IBM WebSphere Adapter for Oracle E-Business Suite 7.0
+* IBM WebSphere Adapter for PeopleSoft Enterprise on WAS 7.0
+* IBM WebSphere Adapter for PeopleSoft Enterprise 7.0
+* IBM WebSphere Adapter for SAP Software on WebSphere Application Server 7.0
+* IBM WebSphere Adapter for SAP Software 7.0
+* IBM WebSphere Adapter for Siebel Business Applications on WAS 7.0
+* IBM WebSphere Adapter for Siebel Business Applications 7.0
+* IBM WebSphere Application Server - Base 5.1
+* IBM WebSphere Application Server Network Deployment 5.1
+* IBM WebSphere Application Server for Developers 6.0
+* IBM WebSphere Application Server-Express Developer 6.0
+* IBM WebSphere Application Server-Express Intranet Option 6.0
+* IBM WebSphere Application Server 5.1
+* IBM WebSphere Business Events 6.1
+* IBM WebSphere Business Events 7.0
+* IBM WebSphere Business Monitor 7.0
+* IBM WebSphere Dashboard Framework 6.0
+* IBM WebSphere Dashboard Framework 6.1
+* IBM WebSphere Portal Enable Limited Use 6.1
+* IBM WebSphere Portal Enable 5.0
+* IBM WebSphere Portal Enable 5.1
+* IBM WebSphere Portal Enable 6.1
+* IBM WebSphere Portal Express 6.1
+* IBM WebSphere Portal Extend Limited Use 6.1
+* IBM WebSphere Portal Extend 5.0
+* IBM WebSphere Portal Extend 5.1
+* IBM WebSphere Portal Extend 6.1
+* IBM WebSphere Portal Server 5.0
+* IBM WebSphere Portal Server 6.1
+* IBM WebSphere Portlet Factory Designer 6.0
+* IBM WebSphere Service Registry and Repository 6.3
+* IBM WebSphere Service Registry and Repository 7.0
+* IBM WebSphere Transformation Extender Design Studio 8.3
+* IBM WebSphere Transformation Extender Launcher Agent 8.3
+* IBM WebSphere Transformation Extender Pack for SAP R/3 8.3
+* IBM WebSphere Transformation Extender SNMP Collection 8.3
+* IBM WebSphere Transformation Extender Secure Adapter Collection 8.3
+* IBM WebSphere Transformation Extender for Application Programming 8.3
+* IBM WebSphere Transformation Extender with Command Server 8.3
+* IBM WebSphere Transformation Extender with Launcher 8.3
+* IBM Workplace Web Content Management Standard Edition 2.5
+* IBM z-centric light agent for Tivoli Workload Scheduler for z/OS end-to-end 8.5
+* Netcool OMNIbus Base 7.3
+* Tivoli Common Agent 1.3
+* Tivoli Identity Manager and Role Management Unlimited User Option 5.1
+* Tivoli Identity Manager and Role Management 5.1
+* Tivoli Netcool/OMNIbus Base 7.3
+
+The following products have been added:
+* ARCserve 12.1
+* CA AllFusion Process Modeler 7.2
+* CA Brightstor ARCServe Backup Agent 11.5
+* CA Erwin AllFusion Data Modeler 7.2
+* CA InoculateIT 6.0
+* CA Jasmine II 2DPlugin 2.5
+* CA Jasmine II 2.5
+* CA License 1.62
+* CA License 1.63
+* CA Licensing 1.52
+* CA Licensing 1.61
+* CA LogWatNT 1.0
+* CA UNICENTER 2.4
+* CA Unicenter Asset Management - Agent 4.0
+* CA Unicenter CA-XCOM Data Transport 11.3
+* CA Unicenter CA-XCOM Data Transport 3.00
+* CA Unicenter Management for Web Servers 5.1
+* CA Unicenter NSM ObjectView 2.4
+* CA Unicenter NSM ObjectView 3.0
+* CA Unicenter NSM Option for VMware Software 3.1
+* CA Unicenter NSM 3.1
+* CA Unicenter Service Desk MULTI-PLATFORM 11.2
+* CA Unicenter TND Agent 3.0
+* CA Workload 2.4
+* CA eTrust Antivirus 7.0
+* CA eTrust Antivirus 7.1
+* CA eTrust Antivirus 8.1
+* CA eTrust PestPatrol Realtime Protection 1.1
+* CA iTechnology iGateway 1.1
+* Cheyenne Unicenter TNG 2.4
+* HOBlink 3270 Emulations 4.2
+* ING STAFFWARE REPORTS 1.999
+* Mergeolf 1.0
+* Microsoft Windows 7 Ultimate Edition 6.1
+* Microsoft Windows Server 2008 Enterprise Edition 6.1
+
+=================================================================================================================
+=================================================================================================================
+
+Summary of changes for November 2009 release:
+
+This section summarizes the general changes that have been made to Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), November 2009 release.
+
+The following fixes to signature definitions have been introduced:
+* IBM WebSphere Front Office Feed Handler for Eurex EBS Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for Pink Sheets Qdist 3.0
+* Netcool/OMNIbus Probes Tier 6 1.0
+* Tivoli Netcool/OMNIbus Probe Tier 4 7.1
+* IBM WebSphere Front Office Feed Handler for CEF ultra+ Eurex Level 1 3.0
+* Tivoli Netcool/OMNIbus Probe Tier 3 7.1
+* Netcool/OMNIbus Probes Tier 5 1.0
+* IBM Systems Director Network Control 1.1
+* IBM WebSphere Front Office Feed Handler for NASDAQ TotalView Aggregated 3.0
+* IBM Rational PurifyPlus for AIX 7.0
+* Netcool/OMNIbus Probes Tier 5 - 3rd Party A 1.0
+* Tivoli Netcool/OMNIbus Probe Tier 3 3rd pty A 7.1
+* IBM Tivoli Monitoring 6.1
+* IBM EasySync Pro 4.2
+* IBM Rational Purify for Linux and UNIX 7.0
+* IBM WebSphere Product Lifecycle Management Content Pack 7.0
+* IBM WebSphere Front Office Feed Handler for CEF Core/Alpha/DataSelect Level 1 3.0
+* IBM Tivoli Access Manager for Enterprise Single Sign-On Suite 8.1
+* IBM Tivoli Access Manager for Enterprise Single Sign-On Standard 8.1
+* IBM WebSphere Front Office Feed Handler for Chi-X MD Canada 3.0
+* IBM Rational PurifyPlus for UNIX 7.0
+* Tivoli Netcool/OMNIbus Probe Tier 5 7.1
+* Netcool/OMNIbus Probes Tier 7 1.0
+* IBM Tivoli Composite Application Manager for Transactions Response Time 7.2
+* Netcool/OMNIbus Probes Tier 7 - 3rd Pary A 1.0
+* Tivoli Netcool/OMNIbus Probe Tier 5 3rd pty A 7.1
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX BX TotalView 3.0
+* Tivoli Netcool/OMNIbus Probe Tier 2 7.1
+* Netcool/OMNIbus Probes Tier 4 1.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ TotalView ITCH 3.0
+* IBM WebSphere Front Office Feed Handler for Turquoise TTS 3.0
+* IBM Netcool/OMNIbus Gateway Tier 2 1.0
+* IBM Netcool/OMNIbus Probes Tier 1 1.0
+* Tivoli Netcool/OMNIbus Probe Tier 1 7.1
+* IBM WebSphere Front Office Consolidated Book for Non-Production Environment 3.0
+* IBM Rational Requirements Composer Author Client Access 2.0
+* Network Manager Transmission Edition (formerly Precision TN) Tier 2 5.6
+* Network Manager Transmission Edition (formerly Precision TN) Asset Tier 2 5.6
+* Network Manager Transmission Edition (formerly Precision TN) Asset Tier 1 5.6
+* Network Manager Transmission Edition (formerly Precision TN) Base 5.6
+* Network Manager Transmission Edition (formerly Precision TN) Tier 1 5.6
+* Tivoli Netcool/OMNIbus Probe Tier 4 3rd pty A 7.1
+* Netcool/OMNIbus Probes Tier 6 - 3rd Party A 1.0
+* IBM Netcool/OMNIbus Gateway Tier 1 1.0
+* Tivoli Netcool/OMNIbus Gateway Tier 1 1.0
+* IBM WebSphere Front Office Feed Handler for Xetra EBS Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMDF 3.0
+* IBM WebSphere Front Office Feed Handler for IDC PlusFeed 3.0
+* IBM WebSphere Front Office Feed Handler for CME ITC 3.0
+* IBM WebSphere Front Office Feed Handler for CME FIX/FAST 3.0
+* IBM WebSphere Front Office Feed Handler for CME FIX/FAST Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for SIAC OPRA 3.0
+* IBM Rational Requirements Composer Server 2.0
+* IBM WebSphere Front Office Feed Handler for BATS PITCH / FAST PITCH 3.0
+* IBM Informix SE Developer 7.24
+* IBM WebSphere Front Office Feed Handler for NYSE Euronext UTP Cash Level 2 3.0
+* IBM Tivoli Monitoring for Virtual Servers 6.2
+* IBM WebSphere Front Office Feed Handler for CEF ultra+ Eurex Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for SIAC CTA 3.0
+* IBM WebSphere Front Office Feed Handler for Bolsa Mexicana de Valores 3.0
+* IBM WebSphere Business Monitor 7.0
+* Informix 9.4
+* IBM Netcool/OMNIbus Probes Tier 2 1.0
+* IBM Tivoli Composite Application Manager for Transactions Client Response 7.2
+* IBM Informix Client Software Development Kit 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX Nordics 3.0
+* IBM WebSphere Front Office Feed Handler for Bloomberg B-Pipe 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ MFDS 3.0
+* IBM WebSphere Front Office Feed Handler for BATS Europe PITCH / FAST PITCH 3.0
+* IBM WebSphere Front Office Feed Handler for TSE FLEX Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX Europe Trade Feed 3.0
+* IBM Optim Data Privacy Solution 2.1
+* IBM Rational Purify for Windows 7.0
+* IBM WebSphere Front Office Feed Handler for ICAP 3.0
+* IBM Tivoli Monitoring for Cluster Managers 6.1
+* IBM WebSphere Front Office Feed Handler for NYSE ArcaBook for Equities 3.0
+* IBM WebSphere Front Office Feed Handler for TSX TL2/CL2 3.0
+* IBM WebSphere Front Office Platform Services 3.0
+* IBM WebSphere Front Office Feed Handler for BATS Multicast PITCH / FAST PITCH 3.0
+* IBM Optim Data Privacy Solution PCI Module 2.1
+* IBM WebSphere Front Office Application Connection for Non-Production Environment 3.0
+* Tivoli Netcool/OMNIbus Base 7.1
+* IBM Netcool/OMNIbus 7.1
+* IBM WebSphere Front Office Feed Handler for NYSE Best Quote 3.0
+* IBM WebSphere Front Office Authorized User Connection 3.0
+* IBM WebSphere Front Office Authorized User Connection for Non-Production Environment 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE Reference Data for Equities 3.0
+* IBM WebSphere Front Office Feed Handler for Chi-X MD Europe 3.0
+* IBM WebSphere Banking Content Pack 7.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ UTP (UTDF and  UQDF) 3.0
+* IBM Rational PurifyPlus for Windows 7.0
+* IBM WebSphere Front Office Feed Handler for NYSE Arca Quotes and Trades 3.0
+* IBM Rational Requirements Composer Reviewer Client Access 2.0
+* IBM WebSphere Front Office Feed Handler for CEF ultra+ Xetra Level 2 3.0
+* IBM solidDB 6.5
+* IBM Netcool/Impact Tier 1 3rd pty 5.1
+* IBM Netcool/Impact 5.1
+* IBM Netcool/Impact Tier 3 5.1
+* IBM Netcool/Impact Tier 3 3rd pty 5.1
+* IBM Netcool/Impact Base 5.1
+* IBM Netcool/Impact Tier 2 5.1
+* IBM Netcool/Impact Tier 1 5.1
+* IBM Informix SE Developer 7.25
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX Europe TotalView-ITCH 3.0
+* IBM Lotus Smart Suite 9.8
+* IBM SmartSuite 9.8
+* IBM Rational Method Composer 7.5
+* IBM WebSphere Front Office Feed Handler for LSE Infolect Level 1 3.0
+* Netcool/OMNIbus Probes Tier 7 - 3rd Pary B 1.0
+* Tivoli Netcool/OMNIbus Probe Tier 5 3rd pty B 7.1
+* IBM WebSphere Integration Developer 7.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ Level 2 3.0
+* IBM WebSphere Application Server Hypervisor Edition on AIX 6.1
+* IBM System Storage Data Center Fabric Manager 10.3
+* IBM solidDB Universal Cache 6.5
+* IBM WebSphere Front Office Feed Handler for NYSE Euronext UTP Cash Level 1 3.0
+* IBM Rational Method Composer 7.2
+* IBM WebSphere Front Office Feed Handler for Direct Edge 3.0
+* IBM WebSphere Application Server Hypervisor Edition on AIX 7.0
+* IBM WebSphere Front Office Feed Handler for NYSE Trades 3.0
+* IBM WebSphere Front Office Feed Handler for CEF ultra+ Xetra Level 1 3.0
+* IBM Informix SE Runtime 7.25
+* Informix SE 7.25
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX GIDS 3.0
+* IBM WebSphere Insurance Content Pack 7.0
+* IBM WebSphere Telecom Content Pack 7.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ NOII 3.0
+* IBM WebSphere Front Office Feed Handler for Xetra EBS Level 1 3.0
+* IBM WebSphere Front Office Consolidated Book 3.0
+* IBM Tivoli Monitoring for Databases 6.1
+* IBM Personal Communications 6.0
+* Tivoli Application Dependency Discovery Manager 7.2
+* IBM WebSphere Front Office Feed Handler for Osaka Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE OpenBook Ultra 3.0
+* IBM WebSphere Dynamic Process Edition Server 7.0
+* IBM WebSphere Healthcare Content Pack 7.0
+* IBM WebSphere Front Office Platform Services for Non-Production Environment 3.0
+* IBM WebSphere Front Office Feed Handler for TSE Flex Full 3.0
+* IBM WebSphere Front Office Feed Handler for Eurex EBS Level 1 3.0
+* IBM Informix 4GL RDS Development 7.31
+* IBM WebSphere Front Office Feed Handler for Bloomberg B-Pipe on Demand 3.0
+* IBM Content Integrator 8.6
+* IBM WebSphere Message Broker Remote Adapter Deployment 7.0
+* IBM WebSphere Message Broker Starter Edition 7.0
+* IBM WebSphere Message Broker 7.0
+* IBM Tool Pack for WebSphere Business Services Fabric 7.0
+* IBM WebSphere Front Office Feed Handler for LSE Infolect Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for BOVESPA Level 1 3.0
+* IBM PowerVM Workload Partitions Manager for AIX 2.1
+* IBM Informix 4GL Interactive Debugger Development 7.31
+* IBM WebSphere Front Office Feed Handler for NASDAQ BBDS/TDDS 3.0
+* IBM WebSphere Dynamic Process Edition Tool and Testing 7.0
+* IBM WebSphere Front Office Feed Handler Runtime 3.0
+* IBM Informix ESQL/C Development 5.20
+* IBM WebSphere Front Office Feed Handler for NASDAQ NIDS 3.0
+* Red Hat Enterprise Linux for POWER 5.4
+* IBM WebSphere Front Office Feed Handler for TSX TL1/CL1 3.0
+* IBM Tivoli Workload Scheduler 8.5
+* IBM Organizer 6.1
+* IBM WebSphere Business Compass 7.0
+* IBM WebSphere Front Office Development Toolkit 3.0
+* Tivoli Netcool/OMNIbus Probe Tier 4 3rd pty B 7.1
+* Netcool/OMNIbus Probes Tier 6 - 3rd Party B 1.0
+* IBM WebSphere Front Office Feed Handler for NYSE Arca Europe 3.0
+* IBM Tivoli NC/Portal Basic Edition 2.1
+* IBM Tivoli NC/Portal Entry Edition 2.1
+* IBM Tivoli NC/Portal Premium Edition 2.1
+* IBM Tivoli NC/Portal Standard Edition 2.1
+* IBM WebSphere Enterprise Service Bus 7.0
+* IBM Informix C-ISAM 7.25
+* IBM Content Integrator Enterprise Edition 8.3
+* IBM WebSphere Front Office Feed Handler for NYSE OpenBook 3.0
+* IBM WebSphere Business Modeler Basic 7.0
+* SUSE LINUX Enterprise Server for POWER Systems 10.0
+* SUSE LINUX Enterprise Server for POWER Systems 10.3
+* IBM Foundation Pack for WebSphere Business Services Fabric 7.0
+* IBM Rational DOORS Web Access 1.3
+* IBM WebSphere Process Server for Multiplatforms 7.0
+* IBM Lotus Enterprise Integrator 8.5
+* IBM Informix 4GL RDS Runtime 7.31
+* IBM WebSphere Buisness Modeler Advanced 7.0
+* IBM ThinkPad Presentation Director 3.0
+* IBM Tivoli Workload Scheduler 8.4
+* IBM Lotus Domino Collaboration Express 7.0
+* IBM Lotus Domino Enterprise Server 7.0
+
+The following products have been added:
+* McAfee VirusScan Enterprise 8.6
+* SetPoint 4.72
+* Veritas CommandCentral Storage 5.1
+* Java 2 Runtime Environment Standard Edition 1.5
+* Datastream Advance 4.09
+* CA Brightstor ARCServe Backup Agent 11.5
+* Microsoft Windows Server 2008 Standard Edition 6.1
+* CityVision Excel Contributor 3.6
+* Java 2 Runtime Environment Standard Edition 1.4
+* SONARIS Bonds 4.4
+* Algo Collateral 4.8
+* Realtek AC97 Audio Event Monitor 1.6
+* Microsoft Internet Explorer 6.0
+* Sysinternals PsExec 1.94
+* MKS Toolkit for Win32 9.0
+* Reuters Desktop Management Console 5.1
+* Realtek HD Sound Manager 1.0
+* Reuters Trader 5.100
+* SuperViewer Application 7.0
+* Tizor 5.8
+* Borland SilkTest 10.0
+* Reuters 3000 Xtra 5.100
+* CityVision TraderStation 8.7
+* Microsoft Windows 7 Enterprise Edition 6.1
+
+=================================================================================================================
+=================================================================================================================
+
+
+Summary of changes for October 2009 release:
+
+This section summarizes the general changes that have been made to 
+Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), October 2009 release.
+
+The following fixes to signature definitions have been introduced:
+* IBM i5/OS 6.1
+* INTERNET SECURITY SYSTEMS IBM REALSECURE SERVER SENSOR 7.0
+* IBM Parallel Environment for AIX 5.2
+* IBM Tivoli Netcool/OMNIbus 7.3
+* IBM Tivoli Security Information and Event Manager Management Modules 2.0
+* IBM Tivoli Security Information and Event Manager Install 2.0
+* IBM Tivoli Security Information and Event Manager for Servers 2.0
+* IBM Tivoli Security Information and Event Manager for z/OS Events 2.0
+* IBM Tivoli Security Information and Event Manager for Network Security Devices 2.0
+* IBM Tivoli Security Information and Event Manager for Applications and Databases 2.0
+* IBM Tivoli Security Information and Event Manager Client Devices 2.0
+* IBM Tivoli Security Information and Event Manager for Network Nodes 2.0
+* SUSE LINUX Enterprise Server for POWER Systems 11.0
+* HA Journal Performance 5.4
+* IBM Content Collector for Email Employee 2.1
+* InstallShield 11.50
+* Firefox 1.9
+* IBM WebSphere Commerce Developer Enterprise 7.0
+* DB2 Multisystem 5.4
+* IBM InfoSphere Content Collector for Microsoft SharePoint Authorized 2.1
+* HA Switchable Resources 5.4
+* IBM ThinkPad Presentation Director 3.0
+* InstallDriver Module 7.03
+* IBM Content Collector for File Systems External 2.1
+* IBM Netcool/PrecisionIP Topology Disc Tier 2 3.8
+* IBM Netcool/PrecisionIP Disc & Root Cause Anal 3.8
+* IBM Netcool/PrecisionIP Topology Disc Tier 1 3.8
+* IBM Netcool/PrecisionIP Asset Discovery Tier 2 3.8
+* Encrypted Backup Enablement 6.1
+* IBM WebSphere MQ Low Latency Messaging for Linux on System z for Non-Production Environment 2.3
+* IBM Advanced Job Scheduler for i5/OS 5.4
+* Tivoli Storage Manager For Databases - Data Protection For Oracle 5.5
+* BRMS - Network Feature 6.1
+* System/38 Compatible COBOL 6.1
+* Spreadsheet Client 1.1
+* IBM WebSphere MQ Low Latency Messaging 2.3
+* IBM Lotus Notes with Messaging 6.0
+* IBM Performance Tools for iSeries 5.4
+* ILE C++ 5.4
+* Additional Fonts 5.4
+* Extended Base Directory Support 6.1
+* IBM InfoSphere Content Collector for File Systems Authorized 2.1
+* IBM Gift Center for WebSphere Commerce Professional 7.0
+* IBM WebSphere Commerce Professional 7.0
+* PSF for i5/OS 1-100 IPM Printer Support 6.1
+* IBM Tivoli Remote Control 5.1
+* IBM Rational Developer for System z 7.6
+* Encrypted ASP Enablement 6.1
+* BRMS - Network Feature 5.4
+* IBM Lotus Smart Suite 9.8
+* IBM SmartSuite 9.8
+* IBM Query for iSeries 5.4
+* IBM WebSphere Development Studio for System i 6.1
+* IBM Lotus Notes with Collaboration 7.0
+* IBM WebSphere Commerce Developer Express 7.0
+* IBM Performance Tools for i5/OS 6.1
+* IBM Lotus Domino Designer 8.5
+* IBM Content Collector for File Systems Employee 2.1
+* Online Information 5.4
+* IBM Lotus Domino Designer 6.0
+* Media and Storage Extensions 5.4
+* IBM Rational AppScan Standard Ed 7.9
+* IBM Rational AppScan Build Edition 7.9
+* IBM Rational AppScan Express Edition 7.9
+* Performance Tools - Manager Feature 6.1
+* IBM InfoSphere Content Collector for Email Authorized 2.1
+* IBM DB2 DataPropagator for iSeries, V8.1 5.2
+* Run Time User Enablement 1.1
+* IBM SalesCenter for WebSphere Commerce 7.0
+* AIX 5.2
+* ILE COBOL *PRV Compiler 6.1
+* IBM DB2 Web Query for System i 1.1
+* IBM WebSphere MQ Low Latency Messaging for Non-Production Environment 2.3
+* IBM InfoSphere Discovery 4.1
+* IBM Communications Utilities for System i 6.1
+* International Components for Unicode 5.4
+* IBM WebSphere Message Broker 5.0
+* AFP Compatibility Fonts 6.1
+* Qshell 5.4
+* CCA Cryptographic Service Provider 6.1
+* IBM InfoSphere Content Collector for Microsoft SharePoint Employee 2.1
+* IBM WebSphere MQ Low Latency Message Store 2.3
+* OpenOffice.org 2.03
+* OLAP Enablement 1.1
+* PSF for i5/OS Any Speed Printer Support 6.1
+* IBM Advanced DBCS Printer Support for iSeries 6.1
+* Host Servers 6.1
+* Microsoft Document Explorer 9.0
+* PS to AFP Transform 5.3
+* IBM PowerHA for AIX Standard Edition 6.1
+* IBM DB2 Extenders Version 9.1 for i5/OS 6.1
+* IXLC for C/C++ 6.1
+* IBM PowerVM Lx86 1.3
+* Adv DBCS Printer Support - IPDS 5.3
+* Qshell 6.1
+* System/36 Compatible COBOL 6.1
+* IBM Rational Team Concert for System z Floating Developer Client Access 2.0
+* IBM Rational Team Concert for System z Developer Client Access 2.0
+* IBM Rational AppScan Reporting Console 5.6
+* IBM Rational AppScan Tester Edition for Rational Quality Manager 5.6
+* IBM Rational Policy Tester Privacy Edition 5.6
+* IBM Rational AppScan Tester Edition for HP Quality Center 5.6
+* IBM Rational Policy Tester Quality Edition 5.6
+* IBM Rational AppScan Enterprise Edition Reporting User 5.6
+* IBM Rational Policy Tester Accessibility Edition 5.6
+* IBM Rational AppScan Enterprise Edition 5.6
+* Sysinternals PsExec 1.82
+* Extended Base Support 5.4
+* IBM Content Collector for Email External 2.1
+* Digital Certificate Manager 5.4
+* RPG/400 6.1
+* IBM Lotus Domino Designer 6.5
+* OPM COBOL 6.1
+* IBM Compliance Expert Express Edition 1.1
+* IBM Lotus Notes with Messaging 7.0
+* ILE C++ 6.1
+* Workstation Tools - Base 5.4
+* IBM Netcool/Precision Topology Server 3.8
+* IBM Netcool/PrecisionIP Asset Discovery Tier 1 3.8
+* IBM Netcool/PrecisionIP Asset Discovery 3.8
+* PRV CL Compiler Support 5.4
+* IBM Backup Recovery and Media Services for i5/OS 6.1
+* IBM Lotus Domino Designer 7.0
+* IBM Tivoli Service Automation Manager for Websphere Application Server 7.2
+* INTERNET SECURITY SYSTEMS ADVANCE EXCHANGE FOR PROVENTIA 10.0
+* IBM DataMirror iCluster 5.2
+* AIX 5.3
+* IBM Advanced Job Scheduler for i5/OS 6.1
+* IBM Lotus Notes with Collaboration 6.5
+* Domain Name System 5.4
+* IBM PowerHA for AIX Enterprise Edition 6.1
+* GDDM 6.1
+* Media and Storage Extensions 6.1
+* IBM InfoSphere Content Collector for Microsoft SharePoint External 2.1
+* ILE RPG *PRV Compiler 5.4
+* Performance Tools - Job Watcher 6.1
+* SafeGuard Easy 4.20
+* IBM WebSphere Commerce - Express 7.0
+* IBM WebSphere Commerce Enterprise 7.0
+* IBM Gift Center for WebSphere Commerce Enterprise 7.0
+* Integrated Server Support 6.1
+* PRV CL Compiler Support 6.1
+* IBM i5/OS 5.4
+* ILE RPG 6.1
+* IBM Tivoli Service Automation Manager Base 7.2
+* ObjectConnect 6.1
+* ILE C 6.1
+* ILE COBOL 6.1
+* System/38 Compatible RPG III 6.1
+* Adapter for Microsoft SQL Server 1.1
+* System/36 Environment 6.1
+* IBM Infoprint Designer for iSeries 4.5
+* Host Servers 5.4
+* IBM System i Access Family 6.1
+* IBM WebSphere MQ Low Latency Messaging for Linux on System z 2.3
+* PSF 1-100 IPM Printer Support 5.4
+* IBM Lotus Notes with Collaboration 6.0
+* Per Processor Pricing Key 6.0
+* InstallDriver Module 9.01
+* System Openness Includes 6.1
+* GDDM 5.4
+* Integrated Server Support 5.4
+* INTERNET SECURITY SYSTEMS ADVANCE EXCHANGE FOR PROVENTIA 5.0
+* DB2 Multisystem 6.1
+* DB2 Text Extender 6.1
+* IBM Rational Team Concert for System z Starter Edition Server 2.0
+* IBM Rational Team Concert for System z Enterprise Edition Server 2.0
+* IBM Rational Team Concert for System z Standard Edition Server 2.0
+* IBM Optim Database Relationship Analyzer for Linux, UNIX, and Windows 2.1
+* Portable App Solutions Environment 5.4
+* IBM WebSphere Commerce Developer Professional 7.0
+* IBM COBOL Set 1.1
+* BRMS - Advanced Feature 6.1
+* IBM Management Edition for AIX 1.2
+* IBM HTTP Server 6.1
+* AFP Compatibility Fonts 5.4
+* Additional Fonts 6.1
+* Example Tools Library 5.4
+* IBM DB2 Query Manager and SQL Development Kit for iSeries 5.4
+* IBM WebSphere Development Studio for iSeries 5.4
+* DB2 Symmetric Multiprocessing 5.4
+* Extended G11N Support 6.1
+* System i Access Enablement Support 6.1
+* IBM Advanced Function Printing Utilities 6.1
+* OptiConnect 6.1
+* Active Reports 1.1
+* IBM WebSphere MQ Low Latency Message Store for Non-Production Environment 2.3
+* IBM Rational Functional Tester 7.0
+* Performance Tools - Agent Feature 6.1
+* System/36 Compatible RPG II 6.1
+* Backup Recovery and Media Services for iSeries 5.4
+* Workstation Tools - Base 6.1
+* IBM DB2 Web Query Report Broker 1.1
+* Websphere Business Integration Event Broker 5.0
+* OPM COBOL 5.4
+* Digital Certificate Manager 6.1
+* Portable App Solutions Environment 6.1
+* IBM Lotus Notes with Messaging 6.5
+* Nokia Launch Application 7.1
+* AIX 6.1
+* IBM ThinkPad UltraNav Wizard 3.04
+* PSF Any Speed Printer Support 5.4
+* IBM DB2 Web Query Software Development Kit 1.1
+* RPG/400 5.4
+* System Openness Includes 5.4
+* IBM Lotus Domino Designer 8.0
+* IBM Query for i5/OS 6.1
+* Nokia Launch Application 6.86
+* IXLC for C/C++ 5.4
+* IBM Communications Utilities for i5/OS 5.4
+* BRMS - Advanced Functions Feature 5.4
+* iSeries Access Enablement Support 5.4
+* IBM Advanced DBCS Printer Support for iSeries 5.3
+* iSeries Tools - Application Development 5.4
+* Performance Tools - Manager Feature 5.4
+* IBM DB2 Developer Workbench 1.1
+* Per Processor Pricing Key 5.0
+* ILE COBOL *PRV Compiler 5.4
+* Text Search Engine 6.1
+* IBM Informix Client SDK 2.81
+* Red Hat Enterprise Linux for POWER 5.3
+* IBM AFP Utilities for iSeries 5.2
+* Tivoli Common Agent 1.3
+* IBM eServer iSeries Access Family 5.4
+* ObjectConnect 5.4
+* IBM Tivoli Workload Scheduler LoadLeveler for AIX 4.1
+* NetWare Enhanced Integration 5.4
+* System/38 Compatible RPG III 5.4
+* Application Server Key 5.0
+* System/38 Compatible COBOL 5.4
+* Performance Tools - Agent Feature 5.4
+* HA Switchable Resources 6.1
+* InstallDriver Module 10.50
+* User Based Pricing Key 5.0
+* Adv DBCS Printer Support - IPDS 6.1
+* System/38 Environment 5.4
+* HA Journal Performance 6.1
+* Online Information 6.1
+* System/36 Environment 5.4
+* Domain Name System 6.1
+* DB2 XML Extender 6.1
+* Text Extender for iSeries 5.4
+* ILE RPG *PRV Compiler 6.1
+* IBM DB2 Universal Database Extenders for iSeries V8.2 5.4
+* IBM System i High Availability Solutions Manager 6.1
+* Cisco Systems VPN Client 4.8
+* User Based Pricing Key 6.0
+* System/36 Compatible RPG II 5.4
+* IBM DB2 DataPropagator for iSeries, V8.1 6.1
+* Text Search Engine 5.4
+* DB2 Symmetric Multiprocessing 6.1
+* InstallDriver Module 8.1
+* Application Development ToolSet 6.1
+* ILE C 5.4
+* Extended NLS Support 5.4
+* PSF 1-45 IPM Printer Support 5.4
+* Synaptics Pointing Device Driver 11.1
+* International Components for Unicode 6.1
+* System/38 Environment 6.1
+* IBM Infoprint Server for iSeries 5.3
+* Application Server Key 6.0
+* PSF for i5/OS 1-55 IPM Printer Support 6.1
+* ILE COBOL 5.4
+* ILE RPG 5.4
+* CCA Cryptographic Service Provider 5.4
+* Example Tools Library 6.1
+* Performance Viewer Open Source Components 6.1
+* XML Extender 5.4
+* Extended Base Directory Support 5.4
+* System/36 Compatible COBOL 5.4
+* OptiConnect 5.4
+* IBM DB2 Query Manager and SQL Development Kit for i5/OS 6.1
+* Extended Base Support 6.1
+
+The following products have been added:
+* IBM Rational Team Concert for System z - Standard Edition Server 2.0
+* IBM Rational Team Concert for System z - Standard Edition Authorized Developer Client Access 2.0
+* IBM Rational Team Concert for System z - Starter Edition Server 2.0
+* IBM Rational Team Concert for System z - Enterprise Edition Server 2.0
+* IBM Rational Team Concert for System z - Standard Edition Floating Developer Client Access 2.0
+* IBM WebSphere Commerce Developer Enterprise 7.0
+* IBM WebSphere Commerce Developer Express 7.0
+* IBM WebSphere Commerce Developer Professional 7.0
+* IBM WebSphere Commerce Enterprise 7.0
+* IBM Gift Center for WebSphere Commerce Enterprise 7.0
+* IBM WebSphere Commerce - Express 7.0
+* IBM WebSphere Commerce Professional 7.0
+* IBM Gift Center for WebSphere Commerce Professional 7.0
+* IBM Compliance Expert Express Edition 1.1
+* IBM PowerHA for AIX Standard Edition
+* IBM PowerHA for AIX Enterprise Edition 6.1
+* IBM InfoSphere Content Collector for Email Authorized 2.1
+* IBM InfoSphere Content Collector for File Systems Authorized 2.1
+* IBM InfoSphere Content Collector for Email Employee 2.1
+* IBM InfoSphere Content Collector for Email External 2.1" 2.1
+* IBM InfoSphere Content Collector for File Systems Employee 2.1
+* IBM InfoSphere Content Collector for File Systems External 2.1
+* IBM InfoSphere Content Collector for Microsoft SharePoint Authorized 2.1 2.1
+* IBM InfoSphere Content Collector for Microsoft SharePoint Employee 2.1
+* IBM InfoSphere Content Collector for Microsoft SharePoint External 2.1 2.1
+* IBM SalesCenter for WebSphere Commerce 7.0
+* IBM Rational AppScan Reporting Console 5.6
+* IBM Rational Policy Tester Quality Edition 5.6
+* IBM Rational Policy Tester Privacy Edition 5.6
+* IBM Rational Policy Tester Accessibility Edition 5.6
+* IBM Rational AppScan Enterprise Edition Reporting User 5.6
+* IBM Rational AppScan Enterprise Edition 5.6
+* IBM Rational AppScan Tester Edition for HP Quality Center 5.6
+* IBM Rational AppScan Tester Edition for Rational Quality Manager 5.6
+* IBM Rational AppScan Standard Edition 7.9
+* IBM Rational AppScan Express Edition 7.9
+* IBM Tivoli Netcool/OMNIbus 7.3
+* IBM Optim Database Relationship Analyzer for Linux, UNIX, and Windows 2.1
+* IBM Rational Developer for System z 7.6
+* IBM Tivoli Security Information and Event Manager Install 2.0
+* IBM Tivoli Security Information and Event Manager for Network Nodes 2.0
+* IBM Tivoli Security Information and Event Manager for Network Security Devices 2.0
+* IBM Tivoli Security Information and Event Manager for Servers 2.0
+* IBM Tivoli Security Information and Event Manager for z/OS Events 2.0
+* IBM Tivoli Security Information and Event Manager Management Modules 2.0
+* IBM Tivoli Security Information and Event Manager Client Devices 2.0
+* IBM Tivoli Security Information and Event Manager for Applications and Databases 2.0
+* IBM Management Edition for AIX 1.2
+* IBM Infosphere Discovery 4.1
+* IBM Tivoli Workload Scheduler LoadLeveler for AIX 4.1
+* IBM Tivoli Service Automation Manager Base 7.2
+* IBM Tivoli Service Automation Manager for Websphere Application Server 7.2
+* IBM Parallel Environment for AIX 5.2
+* IBM Tivoli Remote Control 5.1
+* IBM WebSphere MQ Low Latency Messaging 2.3
+* IBM WebSphere MQ Low Latency Message Store 2.3
+* IBM WebSphere MQ Low Latency Messaging for Linux on System z 2.3
+* IBM WebSphere MQ Low Latency Messaging for Non-Production Environment 2.3
+* IBM WebSphere MQ Low Latency Message Store for Non-Production Environment 2.3
+* IBM WebSphere MQ Low Latency Messaging for Linux on System z for Non-Production Environments 2.3
+
+
+=================================================================================================================
+=================================================================================================================
+
+Summary of changes for September 2009 release:
+
+This section summarizes the general changes that have been made to 
+Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), September 2009 release.
+
+The following fixes have been introduced:
+* Alternative signatures for:
+ WebSphere MQ 6.0
+ WebSphere MQ 7.0
+ WebSphere MQ 5.3
+ IBM WebSphere MQ 6.0
+ IBM WebSphere MQ Low Latency Messaging - Development kit 2.0.0
+ WebSphere MQ Express 5.3
+ IBM WebSphere MQ Transaction Client 5.3
+ IBM WebSphere MQ Transaction Client 6.0
+ IBM WebSphere MQ Transaction Client 7.0
+* Fix for IBM Tivoli System Automation Multiplatforms 3.1
+* Fix for IBM Tivoli Storage Manager for Databases 6.1
+* Fix for MKS Toolkit
+
+The following products have been added:
+* IBM Rational Asset Manager 7.2
+* IBM InfoSphere Information Server Pack for SAP R3 6.5
+* IBM FileNet Report Manager 5.0
+* IBM Tivoli Netcool Performance Manager 1.2
+* IBM Global Parallel File System for Multiplatform Client 3.3
+* IBM Global Parallel File System for Multiplatform Server 3.3
+* IBM Global Parallel File System for POWER Server 3.3
+* IBM Global Parallel File System for POWER Client 3.3
+* IBM Lotus Mashups 2.0
+* IBM InfoSphere MashupHub 2.0
+* IBM Mashup Center 2.0 2.0
+* IBM WebSphere Front Office Feed Handler for NYSE Alerts 3.0
+* IBM WebSphere Front Office Feed Handler for CME FIX/FAST Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for Bloomberg B-Pipe on Demand 3.0
+* IBM WebSphere Front Office Feed Handler for Xetra EBS Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for CEF Core Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for Chi-X MD Canada 3.0
+* IBM WebSphere Front Office Feed Handler for Chi-X MD Europe 3.0
+* IBM WebSphere Front Office Feed Handler for Xetra EBS Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for CEF ultra+ Xetra Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for CEF ultra+ Xetra Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX Nordics 3.0
+* IBM WebSphere Front Office Authorized User Connection for Non-Production Environment 3.0
+* IBM WebSphere Front Office Application Connection for Non-Production Environment 3.0
+* IBM WebSphere Front Office Platform Services Non-Production Environment 3.0
+* IBM WebSphere Front Office Consolidated Book Non-Production Environment 3.0
+* IBM InfoSphere QualityStage Module for Name Analysis 8.5
+* IBM InfoSphere QualityStage Module for Name Analysis for Non-Production Environments 8.5
+* IBM Maximo Archiving with Optim Data Growth Solution 6.2
+* IBM Maximo Archiving for Optim Data Growth Solution 6.2
+* IBM Maximo Asset Management Scheduler 7.1
+* HACMP for AIX 5.1 / 5.2 / 5.3 / 5.4
+* Mercury Interactive TestDirector for Quality Center 9.1.0.4383
+* DNE 2000 Network Config 3.11.3.13203
+* InstallShield 11.0.0.28844
+* Driver Package Installer 2.1
+* Watson Subscriber for SENS Network Notifications 12.0.4518.1014
+* Free Download Manager 3.0.848.0
+* Google Talk 1.0.0.104
+* Java 2 Platform Standard Edition 6.0 Update 11  5.0.110.3
+* Java 2 Platform Standard Edition 5.0 Update 6 5.0.60.5
+* MyInterwise Application 8.2.28
+* Resize Window 2.02
+* SmartSockets 4.0.10.1
+* SetPoint 3.30.165
+* SMax4PNP MFC Application 6.0.0.20
+* TutorAuthor 8.03.0002
+* UltraCompare Professional 4.1
+* Microsoft .NET Framework 9.0.30729.1
+* Microsoft ActiveSync 4.5.5096.0
+* Mercury Interactive TestDirector for Quality Center 9.1.0.4383
+
+
+=================================================================================================================
+=================================================================================================================
+
+Summary of changes for August 2009 release:
+
+This section summarizes the general changes that have been made to 
+Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), August 2009 release.
+
+The following fixes have been introduced:
+* Fix for a large extended signature (PMR 54794,499,000, 12167,L6Q,000)
+* Microsoft Visual Studio 2005 definition migrates to Microsoft Visual Studio 8.0
+* Wrong signature WSNAA for IBM WebSphere Application Server Network Deployment 5.0.0.0. deleted (PMR 63872,019,866)
+* IBM Lotus CEO Enhanced Collaboration Bundle 6.1 updated (IBM Lotus Quickr)
+
+The following products have been added:
+* IBM InfoShpere Classification Module 8.7
+* IBM Lotus Foundations Reach 1.0
+* IBM Maximo for Energy Optimization 1.1
+* IBM Rational Insight Adapter for HP Quality Center Software - Data Service 1.0
+* IBM Developer Kit, JavaTM 2 Technology Edition 5.0
+* IBM Developer Kit, JavaTM 2 Technology Edition 6.0
+* IBM ThinkPad Presentation Director 3.0
+* AllFusion Framework 7.1
+* Microsoft Dynamics AX 5.0
+* Navision Axapta 3.0
+* Bloomberg DDE Server 3.0
+* Broadcom Bluetooth Software 5.0
+* Microsoft .NET Framework 3.5
+* Driver Package Installer 2.1
+* Watson Subscriber for SENS Network Notifications 12.0
+* EcoWin 6.0
+* Microsoft Equation Editor 2005.3
+* FENICS FX 10.5
+* FinOffice 3.2
+* FinOffice 5.1
+* IBM VisualAge Smalltalk Enterprise 5.0
+* Microsoft Internet Explorer 7.0
+* InstallShield UnInstaller 5.51
+* iTunes 8.2.1.6
+* SetPoint 2.42
+* SetPoint 3.30
+* Bonjour 1.0
+* MOT Professional 7.0
+* Client and Host Security Platform 104.0
+* Cyberlink PowerDVD 2.50
+* Print2PDF 1.1
+* PsExec 1.23
+* AT&T Connect PushClient 8.2
+* Realtek HD Audio Sound Effect Manager 2.0
+* SetPoint 2.42
+* AT&T Connect Participant 8.2
+* Microsoft Visual Studio 8.0
+* TestDirector 9.1
+* Bloomberg Finance L.P. wintrv 2009.7
+
+
+=================================================================================================================
+=================================================================================================================
+
+Summary of changes for July 2009 release:
+
+This section summarizes the general changes that have been made to 
+Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), July 2009 release.
+
+
+The following fixes have been introduced:
+* Missing usage signatures for TEC 3.9 (PMR 34558,499,000)
+* Omegamon XE 7.0 PVU/Subcapacity eligibility (PMR 23944,661,706)
+* Fix for IBM Tivoli Monitoring for Microsoft Applications (PMR 39634,344,000)
+* Microsoft Windows Operating System 2003 Standard Edition - overlap signatures for 5.2 and 5.2.0.1
+* Fix for duplicated detection of: VMware Player 1.0, Microsoft Windows Media Player 10.00, Microsoft Windows Operating System 2003 Standard Edition 5.2
+
+The following products have been added:
+* IBM Rational Functional Tester 8.1
+* IBM Rational Software Analyzer 7.1
+* IBM License Metric Tool 7.2
+* IBM Lotus Connections 2.5
+* IBM InfoSphere Business Glossary Pack 8.1 & 8.2
+* IBM Tivoli Asset Management for IT 7.2
+* IBM Tivoli Asset Discovery for Distributed 7.2
+* IBM Tivoli Business Service Manager 4.2
+* IBM Software Assembly Toolkit 3.2
+* Red Hat Enterprise Linux AS 4.3, 4.5.5, 4.6.1, 4.7, 4.8,
+* Red Hat Enterprise Linux Server 5.0.0.9, 5.1.0.2, 5.2.0.4, 5.3.0.3
+* SUSE Linux Enterprise Desktop 11.1.43
+* SUSE Linux Enterprise Server 8.10, 9.82.11, 10.15.2, 11.72.13
+* Microsoft Windows Vista Business 6.0
+* Syncsort Backup Express 2.25.2
+* Navision Axapta Debugger 3.0
+* Navision Axapta Client 2.5
+* Microsoft Axapta Client 3.0
+* Adobe Acrobat 9.0
+* Adobe Acrobat Distiller 9.0
+* Adobe Acrobat Distiller 8.1
+* Apple Mobile Device Service 2.5
+* Apple Mobile Device Service 2.1
+* Apple Mobile Device Service 1,1
+* Apple Mobile Device Service 2.1
+* Nokia Application Launcher 6.8
+* Nokia Application Launcher 6.8
+* Nokia Application Launcher 7.0
+* Nokia Application Launcher 7.0
+* Nokia Application Launcher 7.1
+* Nokia Application Launcher 7.1
+* Microsoft .NET Framework 1.0
+* BView Application 2.6
+* Client and Host Security Platform 104.0
+* Client and Host Security Platform 104.0
+* Productivity Software Common Files 1.23
+* Symantec AntiVirus 10.1
+* Driver Package Installer 2.01
+* Microsoft Equation Editor 3.1
+* InstallDriver Module 10.0
+* InstallDriver Module 7.07
+* Microsoft InfoPath 2007 12.0
+* Java 2 Platform Standard Edition 6.0 Update 11 6.0
+* Symantec LiveUpdate 3.1
+* Symantec LiveUpdate 3.1
+* MyInterwise Application 7.2
+* VeriSign NAVI Agent 2.0
+* VeriSign NAVI Client 2.0
+* NotesCONNECT Application 0, 2
+* Interwise PushClient 7.2
+* Interwise Participant 7.2
+* Java 2 Platform Standard Edition 6.0 Update 11 6.0
+* Java 2 Platform Standard Edition 6.0 Update 11 6.0
+* Microsoft Robocopy 4.0
+* Norstedts Skatt 2006.4
+* Norstedts Skatt 2007.3
+* Norstedts Skatt 2008.4
+* Norstedts Skatt 2009.3
+* SMax4PNP MFC Application 6,0
+* Java 2 Platform Standard Edition 5.0 Update 12 5.0
+* Reuters Messaging Client 8.0
+* Cisco Systems VPN Client 4.8
+* Microsoft .NET Framework 2.0
+* iPCAgent Module 3.4
+* Cisco Systems VPN Client 4.8
+* Microsoft Message Queue 5.1
+* Citrix ICA Client 11.0
+* SGLOG 1.31
+* Synaptics TouchPad Enhancements 11.1
+* Synaptics TouchPad 11.1
+* Cordless Handler 1.23
+* MICROSOFT WINDOWS INSTALLER 3.1
+* TextBridge API 4.5
+* Java 2 Platform Standard Edition 6.0 Update 11 6.0
+
+
+=================================================================================================================
+=================================================================================================================
+
+Summary of changes for June 2009 release:
+
+This section summarizes the general changes that have been made to 
+Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), June 2009 release.
+
+
+The following fixes have been introduced:
+
+* Missing signature for Lotus Notes 8.0.2 added (PMR 43079,122,000).
+* Missing usage signatures for fixpacks of IBM WebSphere Application Server and IBM WebSphere Application Server for Network Deployment.
+* Missing signatures for IBM Tivoli Storage Manager 6.1 added.
+
+
+The following products have been added:
+
+* IBM Systems Director Active Energy Manager 4.1
+* IBM Tivoli Directory Integrator 7.0
+* IBM Maximo Asset management for IT 7.2
+* IBM WebSphere Service Registry and Repository 6.3
+* IBM Optim Query Tuner for DB2 for Linux, UNIX and Windows 2.2
+* IBM Mobile Portal Accelerator 6.1
+* IBM Tivoli Identity Manager 5.1
+* IBM InfoSphere Warehouse 9.7
+* IBM WebSphere Application Server Hypervisor Edition 6.1, 7.0
+* IBM InfoSphere Information Server Pack for Hyperion Essbase 1.0
+* IBM Optim pureQuery Runtime 2.2
+* IBM WebSphere Business Integration 3.1
+* IBM Optim Development Studio 3.1
+* IBM Optim Database Administrator for DB2 for Linux, UNIX, and Windows" 2.2
+* IBM DB2 9.7
+* IBM Tivoli Netcool Performance Manager Base 1.2
+* IBM Chemical and Petrolum Integrated Information Framework 3.1
+* IBM Tivoli Netcool Performance Manager 2.1
+* IBM InfoSphere Global Name Management for Information Server 8.1
+* IBM WebSphere QualityStage US 7.8 & 8.0 & 8.1
+* IBM WebSphere eXtreme Scale 7.0
+* IBM WebSphere Sensor 6.2
+* IBM Sensor Data Services for WebSphere 6.2
+* IBM Location Awareness Services for WebSphere 6.2
+* IBM Asset Visibility Services for WebSphere" 6.2
+* IBM Tivoli Workload Scheduler for Applications 8.5
+* IBM Lotus Sametime Unified Telephony 8.0
+* IBM Rational Team Concert 2.0
+* IBM CloudBurst 1.1
+* IBM WebSphere Front Office Devkit 3.0
+* IBM WebSphere Front Office Authorized User Connection 3.0
+* IBM WebSphere Front Office Application Connection 3.0
+* IBM WebSphere Front Office Platform Services 3.0
+* IBM WebSphere Front Office Consolidated Book 3.0
+* IBM WebSphere Front Office Feed Handler for CME ITC 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ MFDS 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ NIDS 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ NOII 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ BBDS/TTDS 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMDF 3.0
+* IBM WebSphere Front Office Feed Handler for TSX TL1/CL1 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE Alerts 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE Best Quote 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE Trades 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ UTP 3.0
+* IBM WebSphere Front Office Feed Handler for SIAC CTA 3.0
+* IBM WebSphere Front Office Feed Handler for SIAC OPRA 3.0
+* IBM WebSphere Front Office Feed Handler for Pink Sheets Qdist 3.0
+* IBM WebSphere Front Office Feed Handler for TSX TL2/CL2 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE OpenBook 3.0
+* IBM WebSphere Front Office Feed Handler for CME FIX/FAST Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for Direct Edge View 3.0
+* IBM WebSphere Front Office Feed Handler for BATS PITCH/FAST PITCH 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ TotalView Aggregated 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ TotalView ITCH 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE ArcaBook for Equities 3.0
+* IBM WebSphere Front Office Feed Handler for Eurex EBS Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for Bloomberg B-Pipe on Demand 3.0
+* IBM WebSphere Front Office Feed Handler for Bloomberg B-Pipe 3.0
+* IBM WebSphere Front Office Feed Handler for IDC PlusFeed 3.0
+* IBM WebSphere Front Office Feed Handler for Xasax AlgoFeed 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX Europe TotalView ITCH 3.0
+* IBM WebSphere Front Office Feed Handler for BATS Europe PITCH/FAST PITCH 3.0
+* IBM WebSphere Front Office Feed Handler for TSE FLEX 3.0
+* IBM WebSphere Front Office Feed Handler for LSE Infolect Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for Eurex EBS Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE OpenBook Ultra 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX Europe Trade Feed 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX BX TotalView 3.0
+* IBM WebSphere Front Office Feed Handler for NASDAQ OMX GIDS 3.0
+* IBM WebSphere Front Office Feed Handler for LSE Infolect Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for Turquoise TTS 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE Arca Europe 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE Euronext UTP Cash Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for NYSE Euronext UTP Cash Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for Xetra EBS Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for CEF Core Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for CEF ultra+ Eurex Level 1 3.0
+* IBM WebSphere Front Office Feed Handler for CEF ultra+ Eurex Level 2 3.0
+* IBM WebSphere Front Office Feed Handler for BATS Multicast PITCH/FASTPITCH 3.0
+* Quest Vintela Authentication Services 3.3.1.48 (PMR 32413,499,000)
+* Quest Vintela Authentication Services 3.3.2.70 (PMR 32413,499,000)
+* Quest Vintela Authentication Services 1.0 (PMR 32413,499,000)
+* Cisco Systems VPN Client 5.0.3, Cisco IP Communicator 2.1.4.0 (PMR 43081,122,000)
+* VZAccess Manager Enterprise 6.8.0 and 6.2.0 and 6.9.4 (PMR 43083,122,000)
+* Adobe Reader 9.1 (PMR 43084,122,000)
+* McAfee AntiSpyware Enterprise Module 8.7.0 and 8.5.0 (PMR 43085,122,000)
+* Citrix XenApp Plugin for Hosted Apps 11.0.0.5357 (PMR 43086,122,000)
+* PROXY Pro Master 6.0.2.1324, 5.2.0, 4.1 and PROXY Pro Host 6.0.2.1324, 5.2.0, 4.1 (PMR 43870,122,000)
+* Microsoft Windows  XP SP3 Operating System (PMR 43872,122,000)
+* Backup Express Client 3.0 (PMR 43876,122,000)
+* Altova Xmlspy 11.0.0.0
+* Altova Xmlspy 11.0.1.1
+* Altova Xmlspy 11.0.1.2
+* Altova Xmlspy 5.0.0.0
+* Visual Studio 2008 Professional with MSDN Professional bundle (PMR 65635,999,744)
+* Microsoft Office OneNote 12.0.6316.5000 (PMR 32523,060,678)
+* Autodesk 3D Studio MAX 2009  2009 11.0.0.57 (PMR 59803,999,744)
+* PC-Lint 1.0.0.1
+* Hummingbird NFS Maestro Client 7.0
+
+
+=================================================================================================================
+=================================================================================================================
+
+Summary of changes for May 2009 release:
+
+This section summarizes the general changes that have been made to 
+Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), May 2009 release.
+
+
+The following fixes have been introduced:
+
+* Almost all PVU eligible products became eligible for Sub-capacity. Following Part Numbers are not eligible for Sub-capacity:
+D571FLL, E02DTLL, D571GLL, D564PLL, E0287LL, D564QLL.
+* Fix for duplicated detection of IBM DB2 Enterprise Server Edition 8.x on Unix boxes.
+* Fix for duplicated detection of Tivoli Storage Manager Client v5.4 on Unix boxes.
+* New signature for Windows 2003 Server 5.2 added (PMR 46322,180,000 and 46407,180,000).
+* New signatures for Sybase ASE, Java Sun Web Server EE (PMR 32413,499,000).
+* New signatures for Adobe CS4 added (PMR 84313,689,864).
+
+
+The following products have been added:
+
+* IBM Communications Server 6.4
+* IBM Optim Data Growth
+* IBM Optim Data Privacy 6.1
+* IBM Optim Test Data Management 3.2
+* Parallel ESSL for Linux on POWER 3.3.2.0
+* IBM Lotus Quickr 8.2
+* IBM Rational Insight Standard Edition - Report Server 1.0
+* IBM Retail Store Server 7.0
+* IBM Tivoli System Automation 3.1
+* IBM Tivoli Policy Driven Software Distribution 7.1
+* IBM WebSphere MQ Low Latency 2.2
+* Cummins Service Tool 1.0
+* NEC Electronics Tools PG-LPC 1.0
+* NEC PG-FP5 2.01
+* NEC PM+ 6.11
+* NEC PM+ 6.30
+* NEC PM+ 6.31
+* Tullet Prebon Jira 3.13
+* Trace 32 ICD 2.0
+* Wind River Compiler 5.5
+* E-Z Audit 6.0
+* Tally 7.2
+* Siemens UGS NX 4.0
+* Continental wxWave 4.99
+* Visteon QAD 2.5
+* Autodesk Moldflow CAD Doctor 2010
+* Autodesk Moldflow Communicator 2010
+* Autodesk Moldflow Adviser 2010
+* Autodesk Moldflow Design Link 2010
+* Autodesk Moldflow Insight 2010
+* Adobe Photoshop CS3 10.0
+* Adobe InDesign CS3 5.0
+* Adobe Illustrator CS3 13.0
+* Adobe Creative Suite 3 Design Standard
+* Altera MegaCore IP Library 7.2
+* Altera ModelSim-Altera 7.2
+* Altera Nios II Embedded Design Suite 7.2
+* Altera Quartus II 7.2
+* Altera Quartus II Programmer and SignalTap 7.2
+* AutoCAD Mechanical 2009
+* Pro/ENGINEER 2.3
+* Pro/INTRALINK 3.3
+* Virtual Test Center 1.0
+* TASKING VX-toolset for TriCore and PCP  3.1
+* IAR Embedded Workbench Kickstart for ARM 4.24
+* SenseiPDM Client API 4.6
+* Microsoft Dynamics NAV Server 5.0
+* PLUS+1 GUIDE Service Tool 2.2
+* Flexible License Manager 6.1
+* Data Dynamics ActiveBar 3.0
+* Quest Software TOAD for Oracle 8.6
+* Solid Converter PDF 5.0
+* Autodesk Inventor Professional 2008
+* InstallShield 2009
+* Innovator 8.1
+* HelpBreeze HTML Help/JavaHelp Editions 1.0
+* Microsoft Dynamics CRM Server 4.0
+* Calterm III 2.7
+* WebGPI Beta 2.0
+* Resource Standard Metrics and GUI Wizard 7.5
+* MySQL Workbench 5.0
+* Sun Java Composite Application Platform Suite (Java CAPS) 6.0
+* StarTeam 5.2
+* StarTeam 5.4
+* HP Quality Center 9.2
+* AutoCAD Raster Design 2009
+* Microsoft BizTalk Server 2006
+* InstallShield DevStudio 9.0
+* NX I-DEAS 5.0
+* Q-Checker V5R16
+* Q-Checker V5R17
+* Aventail Connect 5.32
+* TASKING Tools for C166/ST10 8.5
+* DotNetBar for Windows Forms 7.7
+* USB Commubox FXA291 Serial Port
+* Endress+Hauser FuelsManager 2000 Tools
+* Infineon DAS 2.6
+* Infineon Memtool 4.00
+* PartCover .NET 2 1.0
+* dSpace TestButler 1.0
+* MKS Integrity Client 2006
+* M3 Companion EN
+
+=================================================================================================================
+=================================================================================================================
+
+Summary of changes for April 2009 release:
+
+This section summarizes the general changes that have been made to 
+Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), April 2009 release.
+
+The following fixes have been introduced:
+
+* IBM Rational ClearCase usage signature added (PMR 59803,999,744)
+* DB2 Enterprise Server Edition(PMR 09673,082,000)
+* Tivoli Storage Manager and Tivoli Storage Manager Client (PMR 89964,227,000)
+
+
+The following products have been added:
+
+* IBM Lotus Forms Server 2.6
+* IBM Lotus Forms Server 2.7
+* IBM Lotus Forms Server 3.5
+* IBM WebSphere Presence Server 7.0
+* IBM WebSphere Telecom Web Services Server 7.0
+* IBM WebSphere XML Document Management Server 7.0
+* IBM Banking Data Warehouse 8.2
+* IBM Tivoli Monitoring for Databases - Sybase Server Agent 6.2
+* IBM Tivoli Monitoring for Databases - MS SQL Agent 6.2
+* IBM Tivoli Monitoring for Databases - Oracle Agent 6.2
+* IBM Tivoli Monitoring for Databases - DB2 Agent 6.2
+* IBM Tivoli Storage Manager Client 5.3.6.0
+* IBM Tivoli Storage Manager Client 5.3.5.5
+* IBM Tivoli Storage Manager Client 5.3.5.6
+* IBM Tivoli Monitoring for Messaging & Collaboration 6.1
+* Pointsec for PC 6.3.1
+* Snagit 9.1
+* Microsoft SQL Server 2005 Standard Edition
+* Microsoft SQL Server 2005 Express Edition
+* Microsoft SQL Server 2005 Developer Edition
+* Microsoft SQL Server 2005 Enterprise Edition
+* Microsoft SQL Server 2005 Workgroup Edition
+* Microsoft SQL Server 2005 Enterprise Edition (64-bit)
+* Microsoft SQL Server 2000 Personal Edition
+* Microsoft SQL Server 2000 Standard Edition 
+* Microsoft SQL Server 2000 Enterprise Edition
+* Microsoft SQL Server 2000 Developer Edition
+* Microsoft SQL Server 2000 Evaluation Edition
+* Microsoft SQL Server 2008 Enterprise Edition (64-bit)
+* Microsoft SQL Server 2008 Standard Edition
+* Microsoft SQL Server 2008 Enterprise Edition
+* Microsoft SQL Server 2008 Developer Edition 
+* Microsoft SQL Server 2008 Workgroup Edition
+* Microsoft SQL Server 2008 Web Edition
+* Microsoft SQL Server 2008 Express Edition
+* dSpace TargetLink 2.3
+* Developer Express .NET 8.2
+* Enterprise Architect 7.0
+* Microsoft FxCop 1.36
+* nUnit 2.4.6
+* TestComplete 5.1
+* Ricardo MINT 5.0.1
+* Reactis 2007, 2008, 2009
+* TASKING VX-toolset for C166 2.3
+* dSpace ControlDesk 6.4
+* MathWorks DaimlerChrysler StyleGuide 4.2
+* BCGControlBar Professional Edition 10.30
+* Danfoss AKM 6.2
+* SQLyog 4.07
+* Cantata++ 5.3.0.1
+* WinAVR 20070112
+* PCAN Developer
+* Kvaser CANKing 4.1
+* Borland CaliberRM 2006
+* NI-DAQ C and VB6 API, NI-DAQmx, NI-DAQmx MAX Support
+* AVR Studio 4.13
+* IntelliJ IDEA 5.3, 6.0, 7.0.3, 8.0
+* CodeWarrior for MPC55xx 2.3
+* Understand for C++ 1.4
+* QNX Momentics 6.3.0
+* ComponentOne Chart 8.0
+* ComponentOne VS FlexGridPro 8.0
+* COSMIC 68HC12 Compiler 4.51
+* COSMIC ZAP SIM S12X 4.4.6
+* Measurement Studio Development System 2.1
+* ActiveState Perl Dev Kit 7.3
+* Telelogic Synergy 6.5
+* OpenTTCN Tester for TTCN-3 2.56
+* SourceOffSite Classic Client 3.5.3
+* Adobe Acrobat Pro Extended 9.0
+* C2000 Code Composer Studio 3.3
+* BullseyeCoverage 7.8.36
+* Green Hills Compiler 4.0
+* Tessy 2.4
+* Microsoft Office Live Communications Server 2005
+
+=================================================================================================================
+=================================================================================================================
+
+Summary of changes for March 2009 release:
+
+This section summarizes the general changes that have been made to 
+Software Catalog for Tivoli License Compliance Manager 2.2 and 2.3 (contains all software), March 2009 release.
+
+The following fixes have been introduced:
+
+* IBM WebSphere MQ 5.3 - a new signature for AIX added (PMR 57733,999,866).
+* IBM WebSphere MQ 6.0.2.4 - new signatures for i5/OS added (PMR 58925,999,866).
+
+
+The following products have been added:
+
+* Tivoli Storage Productivity Center 4.1
+* IBM Solution for Compliance in a Regulated Environment 6.1
+* IBM Lotus Foundations Start 1.1
+* IBM Lotus Foundations Branch Office 1.1
+* IBM Records Manager 8.5
+* IBM TXSeries for Multiplatforms 7.1
+* IBM Alloy by IBM and SAP 1.0
+
+
+=================================================================================================================
+
+Trademarks:
+
+IBM, the IBM logo and ibm.com are trademarks of International Business Machines Corp., registered in many jurisdictions worldwide.
+Other product and service names might be trademarks of IBM or other companies.
+A current list of IBM trademarks is available on the Web at "Copyright and trademark information" at www.ibm.com/legal/copytrade.shtml.

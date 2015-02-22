@@ -1,0 +1,19 @@
+# epmgr.cfg Template File
+# $Header: /work/RCS/epmgr.cfg-template,v 1.1 2005/04/05 00:46:35 rcompos Exp $
+# IBM USDA FS TMR Build v2.1 
+#
+# Config file for endpoint policy scripts
+# Defines the preferred gateway for specified IP subnets
+#
+# Use this file as an example
+# Three parameters, space-separated
+# If flag is 'n', gateway won't be used
+#
+# Subnet	Gateway		Flag	#Comments
+#
+199.131.13.*	rXtgw2-gw,rXtgw1-gw	y	# Subnet comment here
+199.131.14.*	rXtgw1-gw		y	# Forest X
+199.131.12.*	rXtgw1-gw		n	# Forest Y 
+10.*.*.*	rXtgw1-gw,rXtgw2-gw	y	# 
+210.*.*.*	rXtgw2-gw	 	y	#
+*.*.*.*		rXtmr1-gw		y	# 

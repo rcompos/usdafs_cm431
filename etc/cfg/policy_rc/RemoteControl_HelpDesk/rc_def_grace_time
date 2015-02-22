@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Policy Region 
+#
+#  This method prints the grace period for user confirmation of an operation
+#
+#  Possible values are:
+#	0		do operation immediately, no confirmation required
+#	5		wait 5 seconds
+#	10
+#	15
+#	30
+#	60		wait 1 minute
+#	120		wait 2 minutes
+#	240		      .
+#	480		      .
+#	960		wait 16 minutes
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <value>-locked
+#  (eg: echo "5-locked")
+#
+
+#echo "60"
+echo "60-locked"
+
+exit 0

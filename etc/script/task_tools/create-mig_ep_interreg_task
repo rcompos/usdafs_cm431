@@ -1,0 +1,249 @@
+#!/usr/bin/perl
+# $Header: /work/tmrb23/tmrb23_rcs/create-mig_ep_interreg_task,v 1.1 2005/09/15 01:54:57 rcompos Exp $
+#
+# Create task rX.mig_ep_interreg.tsk in task library rX.tools.tl 
+#
+
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my $tl_name         = "tools";
+my $tname           = "mig_ep_interreg";
+my $tdesc           = "Migrate w32-ix86 EPs across regions";
+my $ult             = "/usr/local/Tivoli";
+my $ulte            = "$ult/etc";
+my $ultec           = "$ulte/cfg";
+my $ultv            = "$ult/var";
+my $ultes            = "$ulte/script";
+my $dir_script_task = "$ultes/task_$tl_name";
+my $dir_log         = "$ultv/log/task_$tl_name";
+my $reg             = get_region();
+my $pr              = "$reg.framework.$tl_name.pr";
+my $tasklib         = "$reg.$tl_name.tl";
+my $taskname        = "$reg.$tname.tsk";
+my $interp          = "w32-ix86";
+my $tscript         = "$dir_script_task/$tname.bat";
+my $job_id          = 0;
+
+my %opt;
+getopts( 'dfhlu', \%opt );
+if( $opt{ h } ) { usage() };
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $list     = $opt{ l } ? 1 : 0;
+my $force    = $opt{ f } ? 1 : 0;
+my $uninst   = $opt{ u } ? 1 : 0;
+my $action   = $opt{ u } ? "UNINSTALL" : "INSTALL";
+   $action   = $opt{ l } ? "LIST" : $action;
+$main::xs    = 0; print $main::xs if $dbug;
+my $spc      = 4;
+
+my $self     = vhx( "objcall 0.0.0 self", 3, 1 );
+$self =~ /^(\S+)\.(\S+)\.\S+$/;
+my $num_reg  = $1;
+my $disp     = $2;
+unless( $disp == 1 ) { print "Must be on TMR server!\n"; exit 1 }
+
+my $oid = vhx( "objcall $self get_host_location", 3, 1 );
+my $mn = vhx( "idlcall $oid _get_label", 3, 1 );
+$mn =~ s/^"(\S+)"$/$1/;
+
+unless( -d $dir_log || $uninst ) { vhx( "mkdir -p -m755 $dir_log" ) }
+
+title( "$action endpoint inter-region migration task", 10, 0 );
+confirm( $force ) unless $list;
+print "\n";
+
+title( "DEBUG", 40, 5 ) if $dbug;
+
+if( vhx( "wlookup -r TaskLibrary $tasklib", 3, 2 ) ) {
+    print "Found: $tasklib\n";
+} else {
+    print "TaskLibrary not found! $tasklib \n";
+    if( $uninst ) {
+        print "Done.\n";
+        exit 0;
+    } else {
+        exit 1;
+    }
+}
+
+
+my( $task_arg, $job_arg, $sched_arg );
+my $job_sub = $uninst ? \&delete_all :\&create_all;
+
+
+### Begin task definitions ###
+
+# Create task to run batch script on Windows EPs
+
+$task_arg  = qq{ -t $taskname -l $tasklib -u \\\$root_user -g \\\$root_group -r super:senior:user -c "$tdesc" -i $interp $mn $tscript };
+
+&$job_sub( $tname, $tasklib, $task_arg );
+
+### End task definitions ###
+
+print "\n$0 complete.\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub delete_all {
+    my $tname      = shift;
+    my $tl         = shift;
+    my $task_arg   = shift;
+    my $job_arg    = shift; 
+    my $sched_arg  = shift;
+
+    my $task       = "$reg.$tname.tsk";
+    my $job        = "$reg.$tname.job";
+
+    print "\nDelete: $tname\n";
+    my @task_lib   = vhx( "wlstlib $tl", 3, 2 );
+    if( @task_lib ) {
+        if( $sched_arg && ( my @jobs_running = grep { /^\s*\d+\s+$tname\s+/ } vhx( "wgetsched", 3, 2 ) ) ) {
+            if( $#jobs_running > 0 ) {
+                print " " x $spc, "WARNING: Multiple $tname jobs running: ", $#jobs_running + 1, "\n";
+            }
+            my $arg;
+            my $id_nums;
+            for( @jobs_running ) {
+                if( /^\s*(\d+)\s+/ ) {
+                    $arg .= "-s $1 ";
+                    $id_nums .= "$1 ";
+                } else {
+                    print " " x $spc, "WARNING: Error parsing wgetsched output!\n$_\n";
+                }
+            }
+            print " " x $spc, "Removing scheduled job(s): $id_nums\n";
+            print "wdelsched $arg\n" if $list;
+            vhx( "wdelsched $arg", 0, 2 ) unless $list;
+        } 
+
+    } else {
+        print " " x $spc, "Task library doesn\'t exist: $tl\n";
+        return 0;
+    }
+
+    if( $job_arg && grep { /$job/ } @task_lib ) {  
+        print " " x $spc, "Removing job: $job\n";
+        print "wdeljob $job $tl\n" if $list;
+        vhx( "wdeljob $job $tl", 0, 2 ) unless $list;
+    }
+
+    if( grep { /$task/ } @task_lib ) {  
+        print " " x $spc, "Removing task: $task\n";
+        print "wdeltask $task $tl\n" if $list;
+        vhx( "wdeltask $task $tl", 0, 2 ) unless $list;
+    }
+
+}   # end sub delete_all
+
+
+sub create_all {
+#
+# Create task, job and scheduled job 
+#
+    my $tname      = shift;
+    my $tl         = shift;
+    my $task_arg   = shift;
+    my $job_arg    = shift; 
+    my $sched_arg  = shift;
+
+    my $task       = "$reg.$tname.tsk";
+    my $job        = "$reg.$tname.job";
+
+    print "\nCreate: $tname\n";
+    my @task_lib   = vhx( "wlstlib $tl", 3, 2 );
+    if( grep { /$task/ } @task_lib ) {  
+        print " " x $spc, "Updating task: $task\n";
+        print "wsettask $task_arg\n" if $list;
+        vhx( "wsettask $task_arg", 0, 0 ) unless $list;
+    } else {
+        print " " x $spc, "Creating task: $task\n" unless $list;
+        print "wcrttask $task_arg\n" if $list;
+        vhx( "wcrttask $task_arg", 0, 0 ) unless $list;
+    }
+
+ if( $job_arg ) {
+    if( grep { /$job/ } @task_lib ) {  
+        print " " x $spc, "Updating job: $job\n";
+        print "wsetjob $job_arg\n" if $list;
+        vhx( "wsetjob $job_arg", 0, 0 ) unless $list;
+    } else {
+        print " " x $spc, "Creating job: $job\n" unless $list;
+        print "wcrtjob $job_arg\n" if $list;
+        vhx( "wcrtjob $job_arg", 0, 0 ) unless $list;
+    }
+  }
+
+  if( $sched_arg ) {
+    if( my @jobs_running = grep { /^\s*\d+\s+$tname\s+/ } vhx( "wgetsched", 3, 2 ) ) {
+        if( $#jobs_running == 0 ) {
+            $jobs_running[0] =~ /^\s*(\d+)\s+/;
+            print " " x $spc, "Editing scheduled job: id: $1\n";
+            print "wedsched $sched_arg $1\n" if $list;
+            vhx( "wedsched $sched_arg $1", 0, 2 ) unless $list;
+        } elsif( $#jobs_running > 0 ) {
+            print " " x $spc, "WARNING: Multiple $tname jobs running: ", $#jobs_running + 1, "\n";
+            my $arg;
+            my $id_nums;
+            for( @jobs_running ) {
+                if( /^\s*(\d+)\s+/ ) {
+                    $arg .= "-s $1 ";
+                    $id_nums .= "$1 ";
+                } else {
+                    print " " x $spc, "WARNING: Error parsing wgetsched output!\n$_\n";
+                }
+            }
+            print " " x $spc, "Removing scheduled job: id: $id_nums\n";
+            print "wdelsched $arg\n" if $list;
+            vhx( "wdelsched $arg", 0, 2 ) unless $list;
+            print " " x $spc, "Scheduling job:\n";
+            print "wschedjob -L $tl -n $job $sched_arg\n" if $list;
+            vhx( "wschedjob -L $tl -n $job $sched_arg", 0, 0 ) unless $list; 
+        }
+    } else {
+        print " " x $spc, "Scheduling job:\n";
+        print "wschedjob -L $tl -n $job $sched_arg\n" if $list;
+        vhx( "wschedjob -L $tl -n $job $sched_arg", 0, 0 ) unless $list; 
+    }
+  }
+
+}   # end sub create_all
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+Usage: $0 [-dhflu]
+
+Desc:  Create task to migrate endpoint across
+       TMR regions.  
+
+       -f  Force
+       -d  Debuggin mode
+       -h  Help
+       -l  List actions without performing them
+       -u  Uninstall task
+
+USAGE
+    print "   Task name: $reg.$tname.tsk\n";
+    print "Task library: $tasklib\n";
+    print "      Script: $dir_script_task/$tname.bat\n\n";
+    print "When running task supply the new TMR FQDN or\n";
+    print "IP address as the argument.\n";
+    print "The default gateway port of 9494 is used.\n\n";
+   exit 0;
+}
+

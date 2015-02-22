@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Disable Background Option 
+#
+#  This method sets the default value for the Disable Background Option. 
+#
+#  Possible modes are:
+#	On                     		
+#	Off         	
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <mode>-locked
+#  (eg: echo "On-locked")
+
+echo "On"
+
+exit 0

@@ -1,0 +1,82 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/set-policy_ep,v 1.2 2009/08/20 19:55:54 rcompos Exp $
+# IBM USDA Forest Service CM423 TMR
+# Description : Install Framework v4.1.1 TMR server
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my( %opt );
+getopts( 'dfhl', \%opt );
+if( $opt{ h } ) { usage() };
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $force    = $opt{ f } ? 1 : 0;
+$main::xs    = 0; print $main::xs if $dbug;
+my $list     = $opt{ l } ? 1 : 0;
+my $action   = $opt{ l } ? "LIST" : "INSTALL";
+my $_x_      = $opt{ l } ? 4      : 0;
+
+my $ult         = "/usr/local/Tivoli";
+my $ulte        = "$ult/etc";
+my $ultv        = "$ult/var";
+my $ultec       = "$ulte/cfg";
+my $dir_pol     = "$ultec/policy_ep";
+my $dir_bkup    = "$ultv/backup/policy_ep";
+my @ep_policy   = qw( allow_install_policy after_install_policy login_policy select_gateway_policy );
+
+unless( -d $dir_pol ) { vhx( "mkdir -p -m775 $dir_pol", $_x_, 1 ) }
+unless( -d $dir_bkup ) { vhx( "mkdir -p -m775 $dir_bkup", $_x_, 1 ) }
+
+my $date_stamp = vhx( "date '+%Y%m%d-%H%M%S'", 3, 1 );
+chomp $date_stamp;
+
+title( "Set endpoint policies", 10, 0 );
+confirm( $force ) unless $list;
+print "\n";
+
+print "\nBacking up policies\n\n";
+for my $pol_ep ( @ep_policy ) { vhx( "wgeteppol $pol_ep > $dir_bkup/$pol_ep.$date_stamp", $_x_, 1 ) }
+
+print "\nPutting policies\n\n";
+for my $pol_ep ( @ep_policy ) { vhx( "wputeppol $pol_ep < $dir_pol/$pol_ep", $_x_, 1 ) }
+
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+   print "$_\n" for( @_ );
+   print STDERR <<"USAGE";
+Usage: $0 [-dhf]
+
+Desc:  Set Tivoli endpoint policies.
+          * allow_install_policy
+          * after_install_policy
+          * login_policy 
+          * select_gateway_policy
+
+       -f  Force
+       -d  Debuggin mode
+       -h  Help
+
+USAGE
+   exit 0;
+}
+

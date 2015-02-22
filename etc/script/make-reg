@@ -1,0 +1,153 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/make-reg,v 1.1 2009/08/20 19:50:34 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Create Framework v4.1.1 policy regions
+#               and profile managers.
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+########################
+
+my %opt;
+getopts( 'dfhl', \%opt );
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $force    = $opt{ f } ? 1 : 0;
+usage()     if $opt{ h };
+my $list     = $opt{ l } ? 1 : 0;
+my $action   = $list ? "LIST" : "INSTALL";
+my $list_arg = $list ? "-l" : "";
+my $dbug     = $main::dbug;
+$main::xs    = 0;
+my $disp     = 1;
+
+title( "DEBUG", 40, 5 ) if $dbug;
+chomp( my $host = vhx( "hostname", 3, 1 ) );
+chomp( my $fqdn = vhx( "hostnew $host", 3, 1 ) );
+$fqdn =~ s/^(\S+)\s.*$/$1/;
+
+my $ult       = "/usr/local/Tivoli";
+my $ultv      = "$ult/var";
+my $ults      = "$ult/src";
+my $ulte      = "$ult/etc";
+my $ultes     = "$ulte/script";
+my $ultec     = "$ulte/cfg";
+my $dir_depot = "$ult/depot";
+
+my $dir_fw411_1    = "$ults/fw411/C531TML";  # FW411 CD1
+my $dir_fw411_2    = "$ults/fw411/C531UML";  # FW411 CD2
+
+my $dir_tmp        = "$ultv/tmp";
+my $dir_log        = "$ultv/log";
+my $cfg_tmr        = "$ultec/inst/tmr.cfg";
+my $dir_db         = "$ult/db/${host}.db";
+my $file_ep_tmr    = "$dir_tmp/ep_tmr.cfg";
+my $file_env       = "/etc/Tivoli/setup_env.sh";
+my $reg            = get_region();
+my $gw             = "$host-gw";
+my $mn             = "$host";
+my $reg_name       = "$reg.pr";
+my $admin_flag     = 1;
+
+########################
+
+my $set_env = 1;
+if( -f $file_env ) { setup_tivoli_env(); $set_env = 0; }
+#setup_tivoli_env() if $set_env;
+#print "\n\nEnvironment:\n"; for ( sort keys %ENV ) { print "$_ : '$ENV{$_}'\n" }; print "\n\n";
+
+print "***  $action MODE  ***\n" if $list;
+title( "Tivoli Management Region Server Build", 10, 0 );
+print "    Host : $host\n";
+print "  Region : $reg\n";
+confirm( $force ) unless $list;
+print "\n";
+
+my $start_time = time;
+print "    Start_Time : ", scalar localtime, "\n";
+
+$ENV{DOGUI} = "no";
+
+###################################
+
+title( "Install Tivoli policy regions and profile managers : $mn", 6, 0 );
+#vhx( "$ultes/loadtiv -f -c $cfg_tmr -s $ults $mn", 0, 1 );
+#vhx( "true", 0, 1 ); ### TEST ###
+
+my @struct = ( "struct-framework.cfg", 
+               "struct-nodes.cfg", 
+               "struct-subs_base.cfg",
+               "struct-subs.cfg", 
+               "struct-INV423.cfg", 
+               "struct-ITM512.cfg",
+               "struct-SWD423.cfg" );
+
+for my $struct ( @struct ) {
+    my $file_struct = "$ultec/struct/$struct";
+    print ">> $file_struct\n" if $dbug;
+    vhx( "$ultes/loadreg $list_arg -fc $file_struct", 0, 1 );
+}
+
+
+###################################
+
+print "\n$0 complete.\n\n";
+
+############################
+#        end corpus        #
+############################
+
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhl]
+
+Desc:  Create Tivoli v4.1.1 policy regions and profile managers 
+       listed in config file /usr/local/Tivoli/etc/cfg/inst/tmr.cfg.
+
+       -f  force
+       -h  help
+       -l  list
+
+       Supply the managed node label as <managed_node>.
+
+  -f : option to force execution by skipping the confirmation
+       step.
+
+  -h : show help message
+
+  -l : option to list the commands to be run, but NOT perform 
+       the installation. This option is useful for problem 
+       determination.
+ 
+USAGE
+exit 0;
+}   # end sub usage
+
+
+sub setup_tivoli_env {
+    my @Value = `. $file_env; env`;
+    chomp @Value;
+    for my $Element ( @Value ) {
+        my( $ElementKey, $ElementVal ) = split ( /=/, $Element );
+        $ENV{$ElementKey} = $ElementVal;
+    }
+}  # end sub setup_tivoli_env
+
+

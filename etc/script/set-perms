@@ -1,0 +1,282 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/set-perms,v 1.7 2009/08/20 19:55:14 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Set permissions and ownership on directories and files
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+
+use strict;
+use Getopt::Std;
+use Cwd;
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'dfhl', \%opt );
+if( $opt{ h } ) { usage() };
+my $dbug         = $opt{ d } ? 1 : 0;
+my $force        = $opt{ f } ? 1 : 0;
+my $list         = $opt{ l } ? 1 : 0;
+
+my $ult          = "/usr/local/Tivoli";
+my $ultv         = "$ult/var";
+my $ults         = "$ult/src";
+my $ulte         = "$ult/etc";
+my $ultes        = "$ulte/script";
+my $ultec        = "$ulte/cfg";
+my $ultep        = "$ulte/package";
+my $dir_depot    = "$ult/depot";
+my $lcfdir       = "$ult/lcf/dat/1";
+my $logdir       = "$ultv/log";
+my $dir_etc_Tiv  = "/etc/Tivoli";
+my $file_env     = "/etc/Tivoli/setup_env.sh";
+my $cmd;
+my $_dir_;
+
+my $set_env = 1;
+if( -f $file_env ) { setup_tivoli_env(); $set_env = 0; }
+#setup_tivoli_env() if $set_env;
+#print "\n\nEnvironment:\n"; for ( sort keys %ENV ) { print "$_ : '$ENV{$_}'\n" }; print "\n\n";
+
+my $dbdir = $ENV{DBDIR};
+#print "DBDIR>> $dbdir\n";
+
+print "\n***  Listing actions only - no changes will be made  ***\n" if $list;
+
+# File, Arg_chmod, Sub-dir_Arg_chmod, Recursive_Read_All
+my @list = ( 
+
+    # Directories
+
+    [ "$ult/",                       "2775" ], 
+    [ "$ulte/",                      "2775" ], 
+    [ "$dir_depot/",                 "2777" ],
+    [ "$ultv/db_bkup/",              "2775" ],
+    [ "$ultv/fsdistrib/",            "2775" ],
+    [ "$ults/",                      "2775", "2775", 1 ],
+    [ "$ultv/",                      "2777", "2777", 1 ],
+    [ "$ultec/",                     "2775", "2775", 1 ],
+    [ "$ultec/inst/",                "2775", "2775", 1 ],
+    [ "$ultes/",                     "2775", "2775", 1 ],
+    [ "$ultep/",                     "2775", "2775", 1 ],
+    [ "/tmp/.tivoli",                "0777" ],  # Clear GID bit
+    [ "/tmp/.tivoli",                "1777" ], 
+    [ "/etc/Tivoli",                 "2755", "2755", 1 ], 
+
+    # Static config files
+
+    [ "$ultec/.tivenv",                          "644" ],
+    [ "$ultv/tmp/gateway.list",                  "666" ],
+    [ "$ultv/tmp/hostname",                      "666" ],
+    [ "$ultv/tmp/tmrname",                       "666" ],
+
+    # Log files
+
+    [ "$ultv/log/policy_ep/after_install.log",   "666" ],
+    [ "$ultv/log/policy_ep/after_install.debug", "666" ],
+    [ "$ultv/log/policy_ep/allow_install.log",   "666" ],
+    [ "$ultv/log/policy_ep/allow_install.debug", "666" ],
+    [ "$ultv/log/policy_ep/login_policy.log",    "666" ],
+    [ "$ultv/log/policy_ep/login_policy.debug",  "666" ],
+    [ "$ultv/log/policy_ep/select_gateway.log",  "666" ],
+    [ "$ultv/log/policy_ep/select_gateway.debug","666" ],
+
+    # Custom lib
+
+    [ "$ultes/lib/dates.pl",                     "555" ],
+    [ "$ultes/lib/tool.pl",                      "644" ],
+    [ "$ultes/lib/tooltiv.pl",                   "644" ],
+
+    # Tivoli startup and environment
+
+    [ "/etc/Tivoli/oserv.rc",                    "555" ],
+    [ "/etc/Tivoli/setup_env.sh",                "555" ],
+    [ "/etc/rc.tivoli",                          "555" ],
+
+
+);
+
+print "Changing permissions on the following directories/files\n\n";
+print "File Mode Mode_Sub-dirs Recursive_Read_All\n";
+my $i =0;
+while( $i < $#list + 1 ) {
+    unless( $list[$i][0] && $list[$i][1] ) { print STDERR "Improper format: \$list[$i]\n"; exit 1; }
+    print "$list[$i][0] $list[$i][1] ";;
+    print "$list[$i][2] " if $list[$i][2]; 
+    print "$list[$i][3] " if $list[$i][3];
+    print "\n";
+    $i++;
+}
+
+confirm( $force ) unless $list;
+print "\n***  Listing actions only - no changes will be made  ***\n" if $list;
+print "\n";
+
+
+$_dir_ = "$dir_etc_Tiv";
+print "Setting ownership: $_dir_\n";
+unless( -d $_dir_ ) {
+    print "ERROR: Directory not found! $_dir_\n";
+    print "Cannot continue.\n";
+    exit 1;
+} else {
+    $cmd = "chown -R root.staff $_dir_";
+    print "    $cmd\n";
+    `$cmd` unless $list;
+}
+print "\n";
+
+$_dir_ = "$ult";
+print "Setting ownership: $_dir_\n";
+unless( -d $_dir_ ) {
+    print "ERROR: Directory not found! $_dir_\n";
+    print "Cannot continue.\n";
+    exit 1;
+} else {
+    $cmd = "chown -R root.staff $_dir_";
+    print "    $cmd\n";
+    `$cmd` unless $list;
+}
+print "\n";
+
+$_dir_ = "$dbdir/inventory";
+print "Setting ownership: $_dir_\n";
+unless( -d $_dir_ ) {
+    print "WARNING: Directory not found! $_dir_\n";
+} else {
+    $cmd = "chown -R nobody.nobody $_dir_";
+    print "    $cmd\n";
+    `$cmd` unless $list;
+}
+print "\n";
+
+$_dir_ = "$dbdir/mcollect";
+print "Setting ownership: $_dir_\n";
+unless( -d $_dir_ ) {
+    print "WARNING: Directory not found! $_dir_\n";
+} else {
+    $cmd = "chown -R nobody.nobody $_dir_";
+    print "    $cmd\n";
+    `$cmd` unless $list;
+}
+print "\n";
+
+$_dir_ = "$ultes/sql";
+print "Setting ownership: $_dir_\n";
+unless( -d $_dir_ ) {
+    print "WARNING: Directory not found! $_dir_\n";
+} else {
+    $cmd = "chown -R oracle.dba $_dir_";
+    print "    $cmd\n";
+    `$cmd` unless $list;
+}
+print "\n";
+
+$_dir_ = "$logdir/sqllog";
+print "Setting ownership: $_dir_\n";
+unless( -d $_dir_ ) {
+    print "WARNING: Directory not found! $_dir_\n";
+} else {
+    $cmd = "chown -R oracle.dba $_dir_";
+    print "    $cmd\n";
+    `$cmd` unless $list;
+}
+
+print "Setting perms on all .cfg files under $ultec\n";
+unless( -d $ultec ) {
+    print "WARNING: Directory not found! $ultec\n";
+    print "Can't set permissions on .cfg files.\n";
+} else {
+    $cmd = "find $ultec -type f -name \"*.cfg\" -exec chmod 664 {} \\;";
+    print "    $cmd\n";
+    `$cmd` unless $list;
+}
+print "\n";
+
+$i = 0;
+while( $i < $#list + 1 ) {
+
+    my $file     = $list[$i][0];
+    my $mod      = $list[$i][1];
+    my $mod_sub  = $list[$i][2] ? $list[$i][2] : 0;
+    my $read_all = $list[$i][3] ? $list[$i][3] : 0;
+
+    my $cmd;
+    if( -d $file ) {    # directory?
+        print "$file\n";
+        $cmd = "chmod $mod $file";
+        print "    $cmd\n"; `$cmd` unless $list;
+        if( $mod_sub ) {
+            print "    Changing mode on all sub-directories: $mod_sub\n";
+            my @sublist = `find $file -type d`;
+            chomp @sublist;
+            my @revlist = reverse @sublist;
+            pop @revlist;
+            @sublist = reverse @revlist;
+            for( @sublist ) {
+                print "        $_\n";
+                $cmd = "chmod $mod_sub $_";
+                print "        $cmd\n" if $dbug; `$cmd` unless $list;
+            } 
+        }
+        if( $read_all ) {
+            $cmd = "chmod -R ugo+r $file";
+            print "    $cmd\n"; `$cmd` unless $list;
+        }
+    } elsif( -f $file ) {  # file?
+        if( $mod_sub || $read_all ) { print STDERR "Improper format\n"; exit 1; }
+        print "$file\n";
+        $cmd = "chmod $mod $file";
+        print "    $cmd\n"; `$cmd` unless $list;
+    } else { 
+        print STDERR "WARNING: File or dir not found: $file\n";
+    }
+    $i++;
+
+}
+
+print "\n$0 complete\n";
+
+##################
+#   end corpus   #
+##################
+
+
+sub confirm { # Prompt user for confirmation
+    my $force = shift;
+    unless( $force ) {
+        print "$_\n" for( @_ );
+        print "\nContinue? (yes/no) ";
+        my $in = <STDIN>;
+        chomp $in;
+        unless( lc $in eq "yes" ){ print "Cancelled.\n"; exit 0 }
+    }
+}   # end confirm
+
+sub setup_tivoli_env {
+    my @Value = `. $file_env; env`;
+    chomp @Value;
+    for my $Element ( @Value ) {
+        my( $ElementKey, $ElementVal ) = split ( /=/, $Element );
+        $ENV{$ElementKey} = $ElementVal;
+    }
+}  # end sub setup_tivoli_env
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+Usage: $0 [-dhlr]
+Desc:  Set permissions and ownership for Tivoli 
+       directories and files.
+
+       -f  Force
+       -h  Help
+       -l  List actions to be performed
+USAGE
+    exit;
+}   # end usage
+
+

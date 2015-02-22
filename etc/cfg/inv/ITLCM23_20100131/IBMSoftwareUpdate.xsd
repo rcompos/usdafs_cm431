@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed Materials - Property of IBM
+5724-D33
+IBM Tivoli License Compliance Manager
+
+(C) Copyright IBM Corp. 2002, 2006.  All Rights Reserved.
+
+US Government Users Restricted Rights - Use, duplication or
+disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!-- ========================== -->
+	<!-- Global elements definition -->
+	<!-- ========================== -->
+	<xsd:element name="IBMSoftwareUpdate">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="ReadOnlyVendors" type="ReadOnlyVendorsType" minOccurs="0"/>
+				<xsd:element name="Platforms" type="PlatformsType"/>
+				<xsd:element name="Vendors" type="VendorsType"/>
+				<xsd:element name="Signatures" type="SignaturesType"/>
+				<xsd:element name="Components" type="ComponentsType"/>
+				<xsd:element name="Products" type="ProductsType"/>
+				<xsd:element name="Supersedes" type="SupersedesType"/>
+			</xsd:sequence>
+			<xsd:attribute name="Copyright" type="xsd:string" use="required"/>
+			<xsd:attribute name="Date" type="DateType" use="required"/>
+			<xsd:attribute name="Description" type="xsd:string"/>
+			<xsd:attribute name="Version" type="xsd:string" use="required"/>
+			<xsd:attribute name="IBMUseOnly" type="xsd:boolean" default="false"/>
+			<xsd:attribute name="Exported" type="xsd:boolean" default="false"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- ============================= -->
+	<!-- Container elements definition -->
+	<!-- ============================= -->
+	<xsd:complexType name="PlatformsType">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="Platform" type="PlatformType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VendorsType">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="Vendor" type="VendorType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SignaturesType">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="File" type="FileType"/>
+			<xsd:element name="WinReg" type="WinRegType"/>
+			<xsd:element name="InstReg" type="InstRegType"/>
+			<xsd:element name="AppServer" type="AppServerType"/>
+			<xsd:element name="J2EEApp" type="J2EEAppType"/>
+			<xsd:element name="XslmId" type="XslmIdType"/>
+			<xsd:element name="ExtSig" type="ExtSigType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ComponentsType">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="Component" type="ComponentType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductsType">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="Product" type="ProductType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SupersedesType">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="Supersede" type="SupersedeType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReadOnlyVendorsType">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="RdnlyVendor" type="RdnlyVendorType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- =========================== -->
+	<!-- Signature types definitions -->
+	<!-- =========================== -->
+	<!-- Each signature type extends an AbstractSignatureType, which collects common attributes -->
+	<xsd:complexType name="AbstractSignatureType" abstract="true">
+		<xsd:attribute name="ID" type="SignatureIdType" use="required"/>
+		<xsd:attribute name="TargetPlatform" type="xsd:IDREF" use="required"/>
+		<xsd:attribute name="IsDeleted" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="CustomerDefined" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="Description" type="xsd:string" use="optional"/>
+		<xsd:attribute name="Version" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="FileType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSignatureType">
+				<xsd:attribute name="Name" type="xsd:string" use="required"/>
+				<xsd:attribute name="Size" type="xsd:long" default="0"/>
+				<xsd:attribute name="Scope" type="SignatureScopeType" default="Any"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="XslmIdType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSignatureType">
+				<xsd:attribute name="PublisherID" type="SixteenBytes" use="required"/>
+				<xsd:attribute name="ProductID" type="EightBytes" use="required"/>
+				<xsd:attribute name="VersionID" type="EightBytes" use="required"/>
+				<xsd:attribute name="FeatureID" type="EightBytes" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="InstRegType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSignatureType">
+                <xsd:attribute name="Key" type="xsd:string" use="required"/>
+				<xsd:attribute name="Data" type="xsd:string"/>
+				<xsd:attribute name="Source" type="InstRegSourceType" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="WinRegType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSignatureType">
+				<xsd:attribute name="Key" type="xsd:string" use="required"/>
+				<xsd:attribute name="Data" type="xsd:string"/>
+				<xsd:attribute name="Type" type="WinRegDataType" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AppServerType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSignatureType">
+				<xsd:attribute name="Name" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="J2EEAppType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSignatureType">
+				<xsd:attribute name="Name" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ExtSigType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractSignatureType">
+				<xsd:all>
+					<xsd:element name="Body" type="xsd:string"/>
+				</xsd:all>
+				<xsd:attribute name="Key" type="xsd:string" use="required"/>
+				<xsd:attribute name="Scope" type="SignatureScopeType" default="Any"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ============================ -->
+	<!-- Catalog elements definitions -->
+	<!-- ============================ -->
+	<!-- The Component type extends an AbstractComponentType, which collects common attributes -->
+	<xsd:complexType name="AbstractComponentType" abstract="true">
+		<xsd:attribute name="Name" type="xsd:string" use="required"/>
+		<xsd:attribute name="Description" type="xsd:string" use="optional"/>
+		<xsd:attribute name="VendorID" type="xsd:IDREF" use="required"/>
+	</xsd:complexType>
+	<!-- A concrete Component must have at least one associated Version  -->
+	<xsd:complexType name="ComponentType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractComponentType">
+				<xsd:sequence maxOccurs="unbounded">
+					<xsd:element name="CVersion" type="ComponentVersionType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- A Component is identifiable by an arbitrary set of Signatures (IDREFS)-->
+	<!-- IsSimple means that the component is not an aggregate component -->
+	<xsd:complexType name="ComponentVersionType">
+		<xsd:attribute name="ID" type="ExternalIdType" use="required"/>
+		<xsd:attribute name="Value" type="ComponentVersionValueType" use="required"/>
+		<xsd:attribute name="SupportedPlatform" type="xsd:IDREF" use="required"/>
+		<xsd:attribute name="IsDeleted" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="Signatures" type="xsd:IDREFS" use="optional"/>
+		<xsd:attribute name="DisabledMonitoringSignatures" type="xsd:IDREFS" use="optional"/>
+		<xsd:attribute name="DisabledRecognitionSignatures" type="xsd:IDREFS" use="optional"/>
+		<xsd:attribute name="DisabledAnySignatures" type="xsd:IDREFS" use="optional"/>
+		<xsd:attribute name="IsSimple" type="xsd:boolean" default="false"/>
+	</xsd:complexType>
+	<!-- A Product is the composition of an arbitrary number of software components;
+         we need the possibility to use the Name, Description, Vendor attributes 
+         at each level of the product version hierarchy, because a product may change their 
+         values starting from a given Version or Release. This implies that the Name, Description
+         and VendorID attributes are optional for the Version and Release elements and, if someone
+         is not specified, the value of the ancestor element is considered -->
+	<xsd:complexType name="AbstractProductType" abstract="true">
+		<xsd:attribute name="ID" type="ExternalIdType" use="required"/>
+		<xsd:attribute name="IsIBM" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="LicenseType" type="xsd:int" default="2"/>
+		<xsd:attribute name="IsDeleted" type="xsd:boolean" default="false"/>
+	</xsd:complexType>
+	<xsd:complexType name="ProductType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractProductType">
+				<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+					<xsd:element name="Version" type="ProductVersionType"/>
+				</xsd:sequence>
+				<xsd:attribute name="Name" type="xsd:string" use="required"/>
+				<xsd:attribute name="Description" type="xsd:string" use="optional"/>
+				<xsd:attribute name="VendorID" type="xsd:IDREF" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Name and Description are optional attributes; if not specified, use the values defined by the ancestor element -->
+	<xsd:complexType name="ProductVersionType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractProductType">
+				<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+					<xsd:element name="Release" type="ProductReleaseType"/>
+				</xsd:sequence>
+				<xsd:attribute name="Value" type="ProductVersionValueType" use="required"/>
+				<xsd:attribute name="Name" type="xsd:string" use="optional"/>
+				<xsd:attribute name="Description" type="xsd:string" use="optional"/>
+				<xsd:attribute name="VendorID" type="xsd:IDREF" use="optional"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Name and Description are optional attributes; if not specified, use the values defined by the ancestor element -->
+	<!-- If the Platforms attribute is not specified, All platforms are supported -->
+	<!-- Managed Components are always chargeable -->
+	<xsd:complexType name="ProductReleaseType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractProductType">
+				<xsd:attribute name="Value" type="ProductReleaseValueType" use="required"/>
+				<xsd:attribute name="Name" type="xsd:string" use="optional"/>
+				<xsd:attribute name="Description" type="xsd:string" use="optional"/>
+				<xsd:attribute name="VendorID" type="xsd:IDREF" use="optional"/>
+				<xsd:attribute name="SupportedPlatforms" type="xsd:IDREFS" use="required"/>
+				<xsd:attribute name="Components" type="xsd:IDREFS" use="optional"/>
+				<xsd:attribute name="NoChargeComponents" type="xsd:IDREFS" use="optional"/>
+				<xsd:attribute name="ManagedComponents" type="xsd:IDREFS" use="optional"/>
+				<xsd:attribute name="Products" type="xsd:IDREFS" use="optional"/>
+				<xsd:attribute name="NoChargeProducts" type="xsd:IDREFS" use="optional"/>
+				<xsd:attribute name="ManagedProducts" type="xsd:IDREFS" use="optional"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- =============================== -->
+	<!-- Other complex types definitions -->
+	<!-- =============================== -->
+	<xsd:complexType name="PlatformType">
+		<xsd:attribute name="ID" type="PlatformIdType" use="required"/>
+		<xsd:attribute name="Name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="VendorType">
+		<xsd:attribute name="ID" type="VendorIdType" use="required"/>
+		<xsd:attribute name="Name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="SupersedeType">
+		<xsd:attribute name="NewID" type="SupercededIdType" use="required"/>
+		<xsd:attribute name="OldID" type="SupercededIdType" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="RdnlyVendorType">
+		<xsd:attribute name="Name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<!-- ======================== -->
+	<!-- Symple Types Definitions -->
+	<!-- ======================== -->
+	<xsd:simpleType name="PlatformIdType">
+		<xsd:restriction base="xsd:ID">
+			<xsd:pattern value="p\d{1,9}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VendorIdType">
+		<xsd:restriction base="xsd:ID">
+			<xsd:pattern value="v\d{1,9}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SignatureIdType">
+		<xsd:restriction base="xsd:ID">
+			<xsd:pattern value="s\d{1,9}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ExternalIdType">
+		<xsd:restriction base="xsd:ID"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SupercededIdType">
+		<xsd:restriction base="xsd:IDREF"/>
+	</xsd:simpleType>
+	<!-- A Product Version value is a number optionally followed by a pound and a star (n.*) -->
+	<xsd:simpleType name="ProductVersionValueType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d+(\.\*)?"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- A Product Release value is a number, followed by a pound and a second number,
+         optionally followed by a pound and a star (n.m.*) -->
+	<xsd:simpleType name="ProductReleaseValueType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d+.\d+(\.\*)?"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- A Component Version value is a number, optionally followed by an 
+         arbitrary sequence of dot separated numbers (n.m, n.m.x,...) -->
+	<xsd:simpleType name="ComponentVersionValueType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\d+((\.\d+)+)?"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SignatureScopeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Recognition"/>
+			<xsd:enumeration value="Monitoring"/>
+			<xsd:enumeration value="Any"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SixteenBytes">
+		<xsd:restriction base="xsd:hexBinary">
+			<xsd:length value="16"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EightBytes">
+		<xsd:restriction base="xsd:hexBinary">
+			<xsd:length value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="InstRegSourceType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OS"/>
+			<xsd:enumeration value="ISMP"/>
+			<xsd:enumeration value="Any"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WinRegDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="binary"/>
+			<xsd:enumeration value="dword"/>
+			<xsd:enumeration value="expand_string"/>
+			<xsd:enumeration value="multi_string"/>
+			<xsd:enumeration value="string"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="20\d\d-[0-1]\d-[0-3]\d 12:00:00.000000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

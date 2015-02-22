@@ -1,0 +1,128 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/inv/../../b272rcs/config-inv,v 1.2 2009/08/20 20:02:52 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Configure Tivoli CM423 Inventory 
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+
+#
+# Description : Configure Tivoli Inventory
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'dfhls', \%opt );
+if( $opt{ h } ) { usage() }
+$main::dbug     = $opt{ d } ? 1 : 0;
+my $dbug        = $main::dbug;
+my $list        = $opt{ l } ? "-l"   : "";
+my $force       = $opt{ f } ? 1 : 0;
+my $skip_invsig = $opt{ s } ? 1 : 0;
+$main::xs       = 0; print $main::xs if $dbug;
+my $_x_         = $opt{ l } ? 4      : 0;
+my $action      = $opt{ l } ? "LIST" : "INSTALL";
+
+my $ult         = "/usr/local/Tivoli";
+my $ulte        = "$ult/etc";
+my $ults        = "$ult/src";
+my $ultes       = "$ulte/script";
+my $ultec       = "$ulte/cfg";
+my $dir_inv     = "$ultes/inv";                 # Tivoli Inventory scripts
+my $reg         = get_region();
+my $file_env     = "/etc/Tivoli/setup_env.sh";
+
+my $set_env = 1;
+if( -f $file_env ) { setup_tivoli_env(); $set_env = 0; }
+#print "\n\nEnvironment:\n"; for ( sort keys %ENV ) { print "$_ : '$ENV{$_}'\n" }; print "\n\n";
+#my $dbdir = $ENV{DBDIR};
+my $bindir = $ENV{BINDIR};
+
+my $file_swsig  = "$ultec/inv/ITLCM23_20100131/itlcm22-allProducts-fullSwCat-20100131.xml";
+
+my( $mn, $mn_oid, $obj_no ) = get_mn();
+unless( $obj_no =~ /\d+\.1\.0/ ) { usage ("Must be run from TMR server" ) }
+
+title( "$action Tivoli Inventory", 10, 0 );
+confirm( $force ) unless $list;
+print "\n";
+
+title( "DEBUG", 40, 5 ) if $dbug;
+
+# Change collector settings
+# Run this manually to check the settings: wcollect @InvDataHandler:inv_data_handler
+vhx( "wcollect -g 10 -z 100 -t 16 -o 16 \@InvDataHandler:inv_data_handler", $_x_, 0 );
+vhx( "wcollect -h immediate \@InvDataHandler:inv_data_handler", $_x_, 0 );
+sleep 10 unless $list;
+vhx( "wcollect -s \@InvDataHandler:inv_data_handler", $_x_, 0 );
+print "\nNew InvDataHandler settings:\n";
+vhx( "wcollect \@InvDataHandler:inv_data_handler", $_x_, 0 );
+print "\n";
+
+# Change RIM settings
+
+# Manually check the max db conns setting - should be 16:
+#     idlcall `wlookup -or RIM invdh_1` _get_max_conn
+vhx( "wsetrim -m 16 invdh_1", $_x_, 0 );
+
+# This idlcall will list the old name of the rim
+# idlcall <rim_oid> _get_application_type
+vhx( "wsetrim -a invdh invdh_1", $_x_, 0 );
+
+print "Create inventory queries.\n";
+vhx( "$bindir/../generic/inv/SCRIPTS/QUERIES/inventory_query.sh $reg.apps.inv.pr", $_x_, 0 );
+print "\n";
+
+print "Create subscription queries.\n";
+vhx( "$bindir/../generic/inv/SCRIPTS/QUERIES/subscription_query.sh $reg.apps.inv.pr", $_x_, 0 );
+print "\n";
+
+print "Create pervasive queries.\n";
+vhx( "$bindir/../generic/inv/SCRIPTS/QUERIES/pervasive_query.sh $reg.apps.inv.pr", $_x_, 0 );
+print "\n";
+
+vhx( "$dir_inv/crtinvpm.sh", $_x_, 0 );
+print "\n";
+
+vhx( "$dir_inv/bldpcsubs.sh", $_x_, 0 );
+print "\n";
+
+# Import Inventory signatures
+vhx( "winvsig -a -f $file_swsig", $_x_, 0 ) unless $skip_invsig;
+
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-hfl]
+
+Desc:  Configure Tivoli Inventory
+
+       -h  help
+       -f  force
+       -l  list commands to be run without execution
+       -s  skip inventory signature registration
+
+USAGE
+    exit 0;
+}   # end sub usage
+

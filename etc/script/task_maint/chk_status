@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# (C) COPYRIGHT International Business Machines Corp. 1996
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+# IBM Confidential Information
+#
+# US Goverment Users Restricted Rights - Use, duplication or
+# disclosure restricted by USDA Forest Service Contract with
+# IBM Corp. (contract no. GS00K94ALD0001)
+#
+#
+#    This is a script to capture Tivoli status information and send it back to Boulder.
+#
+. /etc/Tivoli/setup_env.sh
+
+dir_tmp=/usr/local/Tivoli/var/tmp
+
+REGION=`wtmrname`
+DATE=`date +%D`
+JDATE=`date +%j`
+Self=`objcall 0.0.0 self`
+Dispatcher=`echo $Self | awk -F\. '{print $2}'`
+Oid=`objcall $Self get_host_location`
+ManagedNodeLabel=`idlcall $Oid _get_label`
+ManagedNodeLabel=`echo ${ManagedNodeLabel} | sed 's/\"//g'`
+EPCOUNT=`wlookup -ar Endpoint | wc -l | sed 's/ //g'`
+MNCOUNT=`wlookup -ar ManagedNode | wc -l | sed 's/ //g'`
+GWCOUNT=`wlookup -ar Gateway | wc -l | sed 's/ //g'`
+GWMDWN=`wgateway | grep " D " | wc -l`
+GWMSWN=`wgateway | grep " d " | wc -l`
+EPONTMR=`wep ls -g $ManagedNodeLabel-gw | wc -l | sed 's/ //g'`
+SCANCOUNT=`wrunquery -n INVENTORY_HARDWARE | sort -u | wc -l | sed 's/ //g'`
+
+# Count Duplicates #
+/usr/local/Tivoli/etc/script/tool/get_dups.pl  > $dir_tmp/dupelist.$JDATE
+LINES=`cat $dir_tmp/dupelist.$JDATE | wc -l |  awk '{print $1}' | sed 's/ //g'`
+SEPARATOR=`cat $dir_tmp/dupelist.$JDATE | grep ==== | wc -l`
+SEPARATOR2=`expr $SEPARATOR \* 2`
+DUPECOUNT=`expr $LINES - $SEPARATOR2`
+#
+echo $REGION " " $DATE " " $EPCOUNT " " $MNCOUNT " " $GWCOUNT " " $GWMDWN " " $GWSDWN " " $DUPECOUNT " " $EPONTMR " " $SCANCOUNT >> /usr/local/Tivoli/var/status.log
+#echo $REGION >> $dir_tmp/dupestat.$JDATE
+#echo $DATE >> $dir_tmp/dupestat.$JDATE
+#echo "" >> $dir_tmp/dupestat.$JDATE
+#echo "Total Endpoints				$EPCOUNT" >> $dir_tmp/dupestat.$JDATE
+#echo "Total ManagedNodes			$MNCOUNT" >> $dir_tmp/dupestat.$JDATE
+#echo "Total Gateways				$GWCOUNT" >> $dir_tmp/dupestat.$JDATE
+#echo "Total Gateway machines down	$GWMDWN" >> $dir_tmp/dupestat.$JDATE
+#echo "Total Gateway services down	$GWSDWN" >> $dir_tmp/dupestat.$JDATE
+#echo "Duplicate Endpoints			$DUPECOUNT" >> $dir_tmp/dupestat.$JDATE
+#echo "Endpoints on TMR			$EPONTMR" >> $dir_tmp/dupestat.$JDATE
+#echo "Unique Scans				$SCANCOUNT" >> $dir_tmp/dupestat.$JDATE
+#cat $dir_tmp/dupestat.$JDATE
+#mail -s $REGION rgmontgomery@fs.fed.us < $dir_tmp/dupestat.$JDATE
+exit 0
+
+

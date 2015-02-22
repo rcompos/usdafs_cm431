@@ -1,0 +1,39 @@
+#!/bin/ksh
+#
+# Export notices to a file and then expire notices
+
+unset CHILD_OF_OSERV
+
+setup_unix="/etc/Tivoli/setup_env.sh"
+setup_nt="/winnt/system32/drivers/etc/Tivoli/setup_env.sh"
+
+if [[ -f $setup_unix ]] ; then
+   . $setup_unix
+else
+   . $setup_nt
+fi
+
+Self=`objcall 0.0.0 self`
+disp=`echo $Self | awk -F\. '{print $2}'`
+if [[ $disp -ne 1 ]]; then
+    echo "Must be run on the TMR server"
+fi
+
+date=`date +%Y%m%d`
+time=`date +%H%M%S`
+
+dir_log_maint=/usr/local/Tivoli/var/log/maint
+
+echo "wlsnotif > $dir_log_maint/notice_$date-$time"
+wlsnotif > $dir_log_maint/notice_$date-$time
+echo "compress $dir_log_maint/notice_$date-$time"
+compress $dir_log_maint/notice_$date-$time
+
+for group in `wls -ol /Library/TMF_Notice | awk '{ print $1 }'`; do
+   echo "idlcall $group expire_all"
+   idlcall $group expire_all
+done
+
+echo "$0 complete"
+exit 0
+

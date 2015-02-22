@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# (C) COPYRIGHT International Business Machines Corp. 1996
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+# IBM Confidential Information
+#
+# US Goverment Users Restricted Rights - Use, duplication or
+# disclosure restricted by USDA Forest Service Contract with
+# IBM Corp. (contract no. GS00K94ALD0001)
+#
+# this program will clean up the gatelog on all gateways
+# if it is executed on the TMR, which it will be from
+# the scheduler, the task will serially execute on each
+# gateway using wruntask.  This way only one script
+# is needed and all gateways will be take care of.
+
+unset CHILD_OF_OSERV
+
+. /etc/Tivoli/setup_env.sh
+
+file_tmp=/usr/local/Tivoli/var/tmp/clean$$
+
+# first find out where we are, we must be on the TMR
+Self=`objcall 0.0.0 self`
+Dispatcher=`echo $Self | awk -F\. '{print $2}'`
+
+if [ ${Dispatcher} -ne 1 ]; then
+	tail -1000 $DBDIR/gatelog >$file_tmp
+	mv $file_tmp $DBDIR/gatelog
+	rm -f $file_tmp
+	chmod a+rw $DBDIR/gatelog
+else
+	TMR=`wtmrname`
+	FS_REGION=`echo $TMR | awk -F\. '{ print $1 }'`
+	TL="$FS_REGION.maint.tl"
+	TSK="${FS_REGION}.log_clean_gw.task"
+	tail -1000 $DBDIR/epmgrlog >$file_tmp
+	mv $file_tmp $DBDIR/epmgrlog
+	rm -f $file_tmp
+	chmod a+rw $DBDIR/epmgrlog
+	for gw in `wlookup -aLr Gateway`; do
+		gw_oid=`wlookup -r Gateway $gw`
+		gw_oid=`echo $gw_oid | sed 's/\"//g'`
+		rh_oid=`idlcall $gw_oid get_resource_host`
+		host=`idlcall $rh_oid _get_label`
+		host=`echo $host | sed 's/\"//g'`
+		wruntask -t $TSK -l $TL -h $host -E -m 120 -M serial -o 05
+	done
+fi
+
+
+

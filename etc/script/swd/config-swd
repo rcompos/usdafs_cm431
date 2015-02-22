@@ -1,0 +1,111 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/swd/../../b272rcs/config-swd,v 1.2 2009/08/20 20:10:28 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Configure Tivoli CM423 Software Distribution
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+# Note: Requires existence of @ProfileManager:<reg>.apps.swd.package-editor.dpm
+#
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'dfhl', \%opt );
+if( $opt{ h } ) { usage() }
+$main::dbug     = $opt{ d } ? 1         : 0;
+my $force       = $opt{ f } ? 1         : 0;
+my $dbug        = $main::dbug;
+$main::xs       = 0; print "$main::xs\n" if $dbug;
+my $list        = $opt{ l } ? 1 : 0;
+my $_x_         = $opt{ l } ? 4      : 0;
+my $action      = $opt{ l } ? "LIST" : "INSTALL";
+
+my $ult            = "/usr/local/Tivoli";
+my $ulte           = "$ult/etc";
+my $ultec          = "$ulte/cfg";
+my $ultv           = "$ult/var";
+my $ults           = "$ult/src";
+my $ultes          = "$ulte/script";
+my $bindir         = "$ult/bin/aix4-r1";
+my $dir_pkg        = "$ultv/package";
+my $dir_pkg_src    = "$ults/cm423fp06/cd2/package";
+my $reg            = get_region();
+my $pm_swd_pkg_ed  = "$reg.apps.swd.package-editor.dpm";
+
+
+title( "$action Tivoli Software Distribution", 10, 0 );
+confirm( $force ) unless $list;
+print "\n";
+
+title( "DEBUG", 40, 5 ) if $dbug;
+
+
+#my $script_queries = "$bindir/TME/SWDIS/SCRIPTS/swdis_queries.sh";
+#print "\nInstalling Software Distribution Queries:\n";
+#if( -f $script_queries ) {
+#    vhx( "$script_queries $reg.apps.swd.pr $reg.apps.swd.ql", $_x_, 1 );
+#} else {
+#    print "SD query not found! $script_queries\n\n";
+#}
+
+mkdir $dir_pkg unless( -d $dir_pkg );
+
+#print "\nImporting JRE package\n";
+#
+#vhx( "wimpspo -c \@ProfileManager:$pm_swd_pkg_ed -f $dir_pkg_src/Tivoli_JRE_AIX.spb -p $dir_pkg/Tivoli_JRE_AIX.spb -t build Tivoli_JRE_AIX^1", $_x_, 1 );
+#vhx( "wimpspo -c \@ProfileManager:$pm_swd_pkg_ed -f $dir_pkg_src/Tivoli_JRE_NT.spb -p $dir_pkg/Tivoli_JRE_NT.spb -t build Tivoli_JRE_NT^1", $_x_, 1 );
+#vhx( "wimpspo -c \@ProfileManager:$pm_swd_pkg_ed -f $dir_pkg_src/Tivoli_JRE_LINUX_IX86.spb -p $dir_pkg/Tivoli_JRE_LINUX_IX86.spb -t build Tivoli_JRE_LINUX_IX86^1", $_x_, 1 );
+
+#print "\nImporting Software Distribution Package Editor package\n";
+#
+#vhx( "wimpspo -c \@ProfileManager:$pm_swd_pkg_ed -f $dir_pkg_src/Tivoli_SWDEP_AIX_Fix.v4.2.3.FP06.spb -p $dir_pkg/Tivoli_SWDEP_AIX_Fix.v4.2.3.FP06.spb -t build Tivoli_SWDEP_AIX_Fix.v4.2.3.FP06^1", $_x_, 1 );
+#vhx( "wimpspo -c \@ProfileManager:$pm_swd_pkg_ed -f $dir_pkg_src/Tivoli_SWDEP_NT_Fix.v4.2.3.FP06.spb -p $dir_pkg/Tivoli_SWDEP_NT_Fix.v4.2.3.FP06.spb -t build Tivoli_SWDEP_NT_Fix.v4.2.3.FP06^1", $_x_, 1 );
+#vhx( "wimpspo -c \@ProfileManager:$pm_swd_pkg_ed -f $dir_pkg_src/Tivoli_SWDEP_LINUX_IX86_Fix.v4.2.3.FP06.spb -p $dir_pkg/Tivoli_SWDEP_LINUX_IX86_Fix.v4.2.3.FP06.spb -t build Tivoli_SWDEP_LINUX_IX86_Fix.v4.2.3.FP06^1", $_x_, 1 );
+
+#print "\nImporting APM GUI software package\n";
+#
+#vhx( "wimpspo -c \@ProfileManager:$pm_swd_pkg_ed -f $dir_pkg_src/Tivoli_APM_GUI_Fix.v4.2.3.FP06.spb -p $dir_pkg/Tivoli_APM_GUI_Fix.v4.2.3.FP06.spb -t build Tivoli_APM_GUI_Fix.v4.2.3.FP06^1", $_x_, 1 );
+
+#print "\nImporting CCM GUI software package\n";
+#vhx( "wimpspo -c \@ProfileManager:$pm_swd_pkg_ed -f $dir_pkg_src/Tivoli_CCM_GUI_Fix.v4.2.3.FP06.spb -p $dir_pkg/Tivoli_CCM_GUI_Fix.v4.2.3.FP06.spb -t build Tivoli_CCM_GUI_Fix.v4.2.3.FP06^1", $_x_, 1 );
+
+#print "\nImporting INV GUI software package\n";
+#vhx( "wimpspo -c \@ProfileManager:$pm_swd_pkg_ed -f $dir_pkg_src/Tivoli_INV_GUI_Fix.v4.2.3.FP06.spb -p $dir_pkg/Tivoli_INV_GUI_Fix.v4.2.3.FP06.spb -t build Tivoli_INV_GUI_Fix.v4.2.3.FP06^1", $_x_, 1 );
+
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-hfl]
+
+Desc:  Configure Tivoli Software Distribution
+
+       -h  help
+       -f  force
+       -l  list commands to be run without execution
+
+
+USAGE
+exit 0;
+}   # end sub usage
+

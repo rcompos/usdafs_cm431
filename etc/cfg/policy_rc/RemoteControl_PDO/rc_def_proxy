@@ -1,0 +1,74 @@
+#!/bin/sh
+###########################################################################
+#
+#  Licensed Materials - Property of IBM
+#
+#  (C) Copyright IBM Corp. 1996,2004.  All Rights Reserved.
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with
+#  IBM Corp.
+#
+############################################################################
+#           IBM Tivoli Remote Control Version 3.8.1 (5724-C21)
+############################################################################
+#
+#  Default policy method for Remote Control proxy 
+#
+#  This policy method determines whether to use Remote Control proxies. 
+#  If you use Remote Control proxies, rc_def_proxy defines how the controller 
+#  uses the Remote Control proxies to start a session with a target across a 
+#  firewall.
+#  
+#  Possible values:
+#  
+#  NO      Do not use the Remote Control proxies.
+#  
+#  YES <configuration type> <rc proxy ip address> <rc proxy port>
+#          Use the Remote Control proxies, where:
+#
+#            <configuration type>
+#                              Identifies the following scenarios:
+#   
+#                              auto
+#				 The controller and Remote Control proxies 
+#                                search the route to the target using the 
+#                                information stored by 
+#                                Tivoli Firewall Security Toolbox.
+#
+#                              manual
+#                                The Remote Control proxies run as standalone. 
+#                                The controller uses the network address that
+#                                you specify in this method to reach
+#                                the machine where the target 
+#                                proxy runs.
+#
+#            <rc proxy ip address>
+#                              Identifies the machine where the target proxy 
+#                              runs. You must use this parameter only with 
+#                              the manual configuration type.
+#
+#            <rc proxy port>
+#                              Identifies the port that the target proxy uses to
+#                              communicate with the controller or the controller 
+#                              proxy. 
+#  
+#  Default value: NO 
+#
+#
+#  Examples follow.
+#
+#  First example:
+#	 YES manual 192.168.100.50 3501 
+#
+#  Second example:
+#	 YES auto 3501     		
+#
+#  Third example:
+#	 NO         	
+#
+
+echo "NO"
+
+exit 0
+

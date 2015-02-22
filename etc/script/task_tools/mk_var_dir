@@ -1,0 +1,28 @@
+#!/usr/bin/perl
+
+use strict;
+
+my $dir_tiv = "/usr/local/Tivoli"; 
+my $dir_var = "$dir_tiv/var"; 
+my $dir_tmp = "$dir_var/tmp"; 
+
+unless( -d $dir_tiv ) { print "Tivoli directory doesn't exist: $dir_tiv\n"; exit 1 }
+
+make_dir( $dir_var, 2777 );
+make_dir( $dir_tmp, 2777 );
+
+sub make_dir {
+    my $dir    = shift;
+    my $perms  = shift;
+    if( -d $dir ) { 
+        print "Dir exists: $dir\n";
+    } else {
+        print "Creating directory: $dir\n";
+        mkdir $dir;
+    }
+    print "Changing ownership: root:staff\n";
+    `chown -R root:staff $dir`;
+    print "Changing perms: $perms\n";
+    `chmod $perms $dir`;
+}   # end sub make_dir
+

@@ -1,0 +1,33 @@
+#!/bin/sh
+###########################################################################
+#
+#  Licensed Materials - Property of IBM
+#
+#  (C) Copyright IBM Corp. 1996,2004.  All Rights Reserved.
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with
+#  IBM Corp.
+#
+############################################################################
+#           IBM Tivoli Remote Control Version 3.8.1 (5724-C21)
+############################################################################
+#
+#  Default policy method for Remote Control  
+#
+#  This policy method determines whether or not to encrypt data  
+#  transmitted during the following sessions:
+#  - A file transfer session
+#  - A remote control session between Windows NT, 
+#    Windows 2000, and Windows XP controllers and targets.
+#  
+#  Possible values:
+#     No     Data is not encrypted
+#     Yes    Data is encrypted, except for the data exchanged 
+#            during a chat session
+#  
+#  Default value: No 
+
+echo "No"
+
+exit 0

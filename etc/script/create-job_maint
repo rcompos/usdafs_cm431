@@ -1,0 +1,321 @@
+#!/usr/bin/perl
+# $Header: /work/RCS/create-job_maint,v 1.1 2005/04/05 07:44:07 rcompos Exp $
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my( %opt );
+getopts( 'dfhlu', \%opt );
+if( $opt{ h } ) { usage() };
+my $dbug     = $opt{ d } ? 1 : 0;
+my $list     = $opt{ l } ? 1 : 0;
+my $force    = $opt{ f } ? 1 : 0;
+my $uninst   = $opt{ u } ? 1 : 0;
+my $action   = $opt{ u } ? "UNINSTALL" : "INSTALL";
+$main::xs    = 0;  print $main::xs if $dbug;
+my $spc      = 0;
+my $_x_      = $opt{ l } ? 4 : 0;
+
+my $self     = vhx( "objcall 0.0.0 self", 3, 1 );
+$self =~ /^(\S+)\.(\S+)\.\S+$/;
+my $num_reg = $1;
+my $disp = $2;
+unless( $disp == 1 ) { print "Must be on TMR server!\n"; exit 1 }
+
+my $oid = vhx( "objcall $self get_host_location", 3, 1 );
+my $mn = vhx( "idlcall $oid _get_label", 3, 1 );
+$mn =~ s/^"(\S+)"$/$1/;
+
+my $tl_name         = "maint";
+my $dir_tiv         = "/usr/local/Tivoli";
+my $dir_etc         = "$dir_tiv/etc";
+my $dir_var         = "$dir_tiv/var";
+my $dir_cfg         = "$dir_etc/cfg";
+my $dir_script      = "$dir_etc/script";
+my $dir_script_task = "$dir_script/task_$tl_name";
+my $dir_log         = "$dir_var/log/task_$tl_name";
+my $reg             = get_region();
+my $pr              = "$reg.framework.maint.pr";
+my $reg_up          = "$reg.framework.pr";
+my $tasklib         = "$reg.$tl_name.tl";
+my $job_id          = 0;
+my $date            = "01/01/2005"; # Saturday
+
+
+title( "$action $tasklib", 10, 0 );
+confirm( $force ) unless $list;
+print "\n";
+
+title( "DEBUG", 40, 5 ) if $dbug;
+
+unless( -d $dir_log || $uninst ) { vhx( "mkdir -p -m755 $dir_log", 3, 1 ) }
+
+print "\nChecking policy region: $pr\n";
+if( vhx( "wlookup -r PolicyRegion $pr", 3, 2 ) ) {
+    print "Found: $pr\n";
+} else {
+    unless( $uninst ) { 
+        #print "Policy region not found: $pr\n";
+        vhx( "wcrtpr -s \@PolicyRegion:$reg_up -m TaskLibrary -m QueryLibrary -m ProfileManager -m ManagedNode $pr", $_x_, 1 ); 
+    }
+}
+print "\n";
+
+unless( $uninst ) {
+    my $tl_flag = 0;
+    my @pr_list = vhx( "wgetpr \@PolicyRegion:$pr", 3, 1 );
+    for( @pr_list ) { $tl_flag = 1 if /TaskLibrary/ }
+    unless( $tl_flag ) {
+        print "$pr does not have managed resource TaskLibrary\n";
+        vhx( "wsetpr TaskLibrary \@PolicyRegion:$pr", $_x_, 1 );
+    }
+    vhx( "wsetpr -v BasicTaskLibrary -E TaskLibrary \@PolicyRegion:$pr", $_x_, 1 );
+}
+
+unless( vhx( "wlookup -r TaskLibrary $tasklib", 3, 2 ) ) {
+    print "TaskLibrary $tasklib does not exist!\n";
+    if( $uninst ) {
+        print "Done.\n";
+        exit 0;
+    } else {
+        vhx( "wcrttlib $tasklib $pr", $_x_, 1 );
+    }
+} else {
+    print "Found: $tasklib\n";
+}
+
+
+my( $tname, $tdesc, $time, $task_arg, $job_arg, $sched_arg );
+my $job_sub = $uninst ? \&delete_all :\&create_all;
+
+
+### Begin task definitions ###
+
+#
+# DB Backup
+#
+$tname = "db_backup";
+$time  = "04:00";
+$task_arg  = qq{ -t "$reg.$tname.tsk" -l $tasklib -g system -u \\\$root_user -r user -c "$tname" -i default $mn $dir_script_task/$tname };
+$job_arg   = qq{ -j "$reg.$tname.job" -l $tasklib -t $reg.$tname.tsk -M serial -m 7200 -o 15 -d $mn -f $dir_log/${tname}-job.log -h $mn };
+$sched_arg = qq{ -t "$date $time" -f $dir_log/${tname}-sched.log -h $mn -l "$tname" -o -r '1 day' -c '1 hour' -g "TME Administration" -s "$tname" };
+
+&$job_sub( $tname, $tasklib, $task_arg, $job_arg, $sched_arg );
+
+
+#
+# DB Check
+#
+$tname = "db_check";
+$time  = "21:00";
+$task_arg  = qq{ -t "$reg.$tname.tsk" -l $tasklib -g system -u \\\$root_user -r user -c "$tname" -i default $mn $dir_script_task/$tname };
+$job_arg   = qq{ -j "$reg.$tname.job" -l $tasklib -t $reg.$tname.tsk -M serial -m 7200 -o 15 -d $mn -f $dir_log/${tname}-job.log -h $mn };
+$sched_arg = qq{ -t "$date $time" -f $dir_log/${tname}-sched.log -h $mn -l "$tname" -o -r '7 day' -c '1 hour' -g "TME Administration" -s "$tname" };
+
+&$job_sub( $tname, $tasklib, $task_arg, $job_arg, $sched_arg );
+
+#
+# Log Clean
+#
+$tname = "log_clean";
+$time  = "02:00";
+$task_arg  = qq{ -t "$reg.$tname.tsk" -l $tasklib -g system -u \\\$root_user -r user -c "$tname" -i default $mn $dir_script_task/$tname };
+$job_arg   = qq{ -j "$reg.$tname.job" -l $tasklib -t $reg.$tname.tsk -M serial -m 7200 -o 15 -d $mn -f $dir_log/${tname}-job.log -h $mn };
+$sched_arg = qq{ -t "$date $time" -f $dir_log/${tname}-sched.log -h $mn -l "$tname" -o -r '1 day' -c '1 hour' -g "TME Administration" -s "$tname" };
+
+&$job_sub( $tname, $tasklib, $task_arg, $job_arg, $sched_arg );
+
+
+#
+# Log Clean GW
+#
+$tname = "log_clean_gw";
+$time  = "02:15";
+$task_arg  = qq{ -t "$reg.$tname.tsk" -l $tasklib -g system -u \\\$root_user -r user -c "$tname" -i default $mn $dir_script_task/$tname };
+$job_arg   = qq{ -j "$reg.$tname.job" -l $tasklib -t $reg.$tname.tsk -M serial -m 7200 -o 15 -d $mn -f $dir_log/${tname}-job.log -h $mn };
+$sched_arg = qq{ -t "$date $time" -f $dir_log/${tname}-sched.log -h $mn -l "$tname" -o -r '1 day' -c '1 hour' -g "TME Administration" -s "$tname" };
+
+&$job_sub( $tname, $tasklib, $task_arg, $job_arg, $sched_arg );
+
+
+#
+# Realign EPs
+#
+$tname = "ep_realign";
+$time  = "11:00";
+$task_arg  = qq{ -t "$reg.$tname.tsk" -l $tasklib -g system -u \\\$root_user -r user -c "$tname" -i default $mn $dir_script_task/$tname };
+$job_arg   = qq{ -j "$reg.$tname.job" -l $tasklib -t $reg.$tname.tsk -M serial -m 7200 -o 15 -d $mn -f $dir_log/${tname}-job.log -h $mn };
+$sched_arg = qq{ -t "$date $time" -f $dir_log/${tname}-sched.log -h $mn -l "$tname" -o -r '1 day' -c '1 hour' -g "TME Administration" -s "$tname" };
+
+&$job_sub( $tname, $tasklib, $task_arg, $job_arg, $sched_arg );
+
+#
+# Notice File
+#
+$tname = "notice_expire";
+$time  = "02:30";
+$task_arg  = qq{ -t "$reg.$tname.tsk" -l $tasklib -g system -u \\\$root_user -r user -c "$tname" -i default $mn $dir_script_task/$tname };
+$job_arg   = qq{ -j "$reg.$tname.job" -l $tasklib -t $reg.$tname.tsk -M serial -m 7200 -o 15 -d $mn -f $dir_log/${tname}-job.log -h $mn };
+$sched_arg = qq{ -t "$date $time" -f $dir_log/${tname}-sched.log -h $mn -l "$tname" -o -r '7 day' -c '1 hour' -g "TME Administration" -s "$tname" };
+
+&$job_sub( $tname, $tasklib, $task_arg, $job_arg, $sched_arg );
+
+
+### End task definitions ###
+
+
+if( $uninst ) {
+    print "wdel \@TaskLibrary:$tasklib\n" if $list;
+    vhx( "wdel \@TaskLibrary:$tasklib", 0, 2 ) unless $list;
+};
+print "\n";
+
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub delete_all {
+    my $tname      = shift;
+    my $tl         = shift;
+    my $task_arg   = shift;
+    my $job_arg    = shift; 
+    my $sched_arg  = shift;
+
+    my $task       = "$reg.$tname.tsk";
+    my $job        = "$reg.$tname.job";
+
+    print "\nDelete: $tname\n";
+    my @task_lib = vhx( "wlstlib $tl", 3, 2 );
+    if( @task_lib ) {
+        if( $sched_arg && ( my @jobs_running = grep { /^\s*\d+\s+$tname\s+/ } vhx( "wgetsched", 3, 2 ) ) ) {
+            if( $#jobs_running > 0 ) {
+                print " " x $spc, "WARNING: Multiple $tname jobs running: ", $#jobs_running + 1, "\n";
+            }
+            my $arg;
+            my $id_nums;
+            for( @jobs_running ) {
+                if( /^\s*(\d+)\s+/ ) {
+                    $arg .= "-s $1 ";
+                    $id_nums .= "$1 ";
+                } else {
+                    print " " x $spc, "WARNING: Error parsing wgetsched output!\n$_\n";
+                }
+            }
+            print " " x $spc, "Removing scheduled job(s): $id_nums\n";
+            vhx( "wdelsched $arg", $_x_, 2 );
+        } 
+
+    } else {
+        print " " x $spc, "Task library doesn\'t exist: $tl\n";
+        return 0;
+    }
+
+    if( $job_arg && grep { /$job/ } @task_lib ) {  
+        print " " x $spc, "Removing job: $job\n";
+        vhx( "wdeljob $job $tl", $_x_, 2 );
+    }
+
+    if( grep { /$task/ } @task_lib ) {  
+        print " " x $spc, "Removing task: $task\n";
+        vhx( "wdeltask $task $tl", $_x_, 2 );
+    }
+
+}   # end sub delete_all
+
+
+sub create_all {
+#
+# Create task, job and scheduled job 
+#
+    my $tname      = shift;
+    my $tl         = shift;
+    my $task_arg   = shift;
+    my $job_arg    = shift; 
+    my $sched_arg  = shift;
+
+    my $task       = "$reg.$tname.tsk";
+    my $job        = "$reg.$tname.job";
+
+    my @task_lib = vhx( "wlstlib $tl", 3, 2 );
+
+    print "\nCreate: $tname\n";
+    if( grep { /$task/ } @task_lib ) {  
+        print " " x $spc, "Updating task: $task\n";
+        vhx( "wsettask $task_arg", $_x_, 0 );
+    } else {
+        print " " x $spc, "Creating task: $task\n";
+        vhx( "wcrttask $task_arg", $_x_, 0 );
+    }
+
+ if( $job_arg ) {
+    if( grep { /$job/ } @task_lib ) {  
+        print " " x $spc, "Updating job: $job\n";
+        vhx( "wsetjob $job_arg", $_x_, 0 );
+    } else {
+        print " " x $spc, "Creating job: $job\n";
+        vhx( "wcrtjob $job_arg", $_x_, 0 );
+    }
+  }
+
+  if( $sched_arg ) {
+    if( my @jobs_running = grep { /^\s*\d+\s+$tname\s+/ } vhx( "wgetsched", 3, 2 ) ) {
+        if( $#jobs_running == 0 ) {
+            $jobs_running[0] =~ /^\s*(\d+)\s+/;
+            print " " x $spc, "Editing scheduled job: id: $1\n";
+            vhx( "wedsched $sched_arg $1", $_x_, 2 );
+        } elsif( $#jobs_running > 0 ) {
+            print " " x $spc, "WARNING: Multiple $tname jobs running: ", $#jobs_running + 1, "\n";
+            my $arg;
+            my $id_nums;
+            for( @jobs_running ) {
+                if( /^\s*(\d+)\s+/ ) {
+                    $arg .= "-s $1 ";
+                    $id_nums .= "$1 ";
+                } else {
+                    print " " x $spc, "WARNING: Error parsing wgetsched output!\n$_\n";
+                }
+            }
+            print " " x $spc, "Removing scheduled job: id: $id_nums\n";
+            vhx( "wdelsched $arg", $_x_, 2 );
+            print " " x $spc, "Scheduling job:\n";
+            vhx( "wschedjob -L $tl -n $job $sched_arg", $_x_, 0 );
+        }
+    } else {
+        print " " x $spc, "Scheduling job:\n";
+        vhx( "wschedjob -L $tl -n $job $sched_arg", $_x_, 0 );
+    }
+  }
+
+}   # end sub create_all
+
+
+sub usage {
+   print "$_\n" for( @_ );
+   print STDERR <<"USAGE";
+Usage: $0 [-dhflu]
+
+Desc:  Create task, job and schedule jobs
+
+       -f  Force
+       -d  Debuggin mode
+       -h  Help
+       -l  List actions without performing them
+       -u  Uninstall all jobs and tasks
+
+USAGE
+   exit 0;
+}
+

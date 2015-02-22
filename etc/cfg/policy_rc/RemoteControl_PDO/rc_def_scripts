@@ -1,0 +1,35 @@
+#!/bin/sh
+###########################################################################
+#
+#  Licensed Materials - Property of IBM
+#
+#  (C) Copyright IBM Corp. 1996,2004.  All Rights Reserved.
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with
+#  IBM Corp.
+#
+############################################################################
+#           IBM Tivoli Remote Control Version 3.8.1 (5724-C21)
+############################################################################
+#
+#  Default policy method for Remote Control Policy Region
+#
+#  This policy method allows you to run scripts before and after a remote control
+#  session on a target machine.
+#
+#
+#  Possible values are:
+#     ENABLED    The execution of scripts is enabled. The remote control
+#                session does not start if the pre-script fails.
+#     FORCE      The execution of scripts is enabled. The remote control session
+#                starts regardless of the pre-script exit code.
+#     DISABLED   The execution of scripts is disabled.
+#
+#
+#  Default value: DISABLED
+#
+
+echo "DISABLED"
+
+exit 0

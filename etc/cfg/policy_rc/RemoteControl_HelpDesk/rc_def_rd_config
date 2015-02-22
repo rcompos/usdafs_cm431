@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Diagnosis GUI configuration 
+#
+# This method is to set a list of possible configuration settings.  
+# Input values follow this naming convention :
+#
+#     echo "setting-name:<filepattern>"   
+#
+#  where "setting-name" can be one of the following:
+#  "rd_browser", "rd_mail_from", "rd_mail_host".
+#
+#  Please use '/' as directory delimiter.
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  setting-name:<X>-locked	
+#  (eg: "rd_browser:<c:/netscape/netscape.exe>-locked")
+# 
+#  The default value for a generic setting-name is: <Unknown>. 
+#  This means that the user will choose the setting from the GUI.
+#
+
+echo "rd_browser:<Unknown>"
+echo "rd_mail_from:<Unknown>"
+echo "rd_mail_host:<Unknown>"
+
+exit 0

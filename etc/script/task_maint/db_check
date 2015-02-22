@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# Auth: Don Bailey
+# Desc: This script does a checkdatabase on the Tivoli
+#       database.  This should be  run on a weekly basis.
+
+# set Tivoli environment
+unset CHILD_OF_OSERV
+. /etc/Tivoli/setup_env.sh
+
+LOG_DIR="/usr/local/Tivoli/var/log/maint"
+ BU_DIR="/usr/local/Tivoli/var/db_bkup"
+
+FS_REGION=`wtmrname | awk -F\. '{ print $1 }'`
+
+if [ ! -d $LOG_DIR ]; then
+	mkdir $LOG_DIR
+	chmod 775 $LOG_DIR
+fi
+
+# The check database command 
+file=${FS_REGION}_chkdb-`date`
+file=`echo $file | sed 's/ /_/g'`
+wchkdb -ux >$LOG_DIR/${file} 2>&1
+
+if [ "$?" = "0" ]; then
+	date=`date`
+	wsndnotif "TME Administration" Notice <<EOF
+wchkdb Completed Successfully - $date
+EOF
+
+else
+	date=`date`
+	wsndnotif "TME Administration" Notice <<EOF
+Wchkdb FAILED! - $date
+EOF
+
+fi
+

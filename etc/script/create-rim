@@ -1,0 +1,184 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/create-rim,v 1.2 2009/08/20 19:42:47 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Create Tivoli Framework v4.1.1 RIM
+#               objects for database interaction.
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my( %opt );
+getopts( 'b:fhln:r:i:t:uv:x', \%opt );
+if( $opt{ h } ) { usage() };
+$main::dbug   = $opt{ x } ? 1 : 0;
+my $dbug      = $main::dbug;
+my $force     = $opt{ f } ? 1 : 0;
+$main::xs     = 0; print $main::xs if $dbug;
+my $list      = $opt{ l } ? 1 : 0;
+my $uninst    = $opt{ u } ? 1 : 0;
+my $netsn     = $opt{ n } ? $opt{ n } : usage( "Must supply database net service name -n" );
+my $inst_name = $opt{ i } ? $opt{ i } : usage( "Must supply database instance name -i" );
+my $vendor    = $opt{ v } ? $opt{ v } : "Oracle";
+my $db_home   = $opt{ b } ? $opt{ b } : "/var/lpp/oracle";
+my $_x_       = $opt{ l } ? 4      : 0;
+
+my @mn_info = get_mn();
+my( $mn, $mn_oid, $obj_no ) = ( $mn_info[0], $mn_info[1], $mn_info[2] );
+
+my $host_rim  = $opt{ r } ? $opt{ r } : $mn;
+
+my $self = vhx( "objcall 0.0.0 self", 3, 1 );
+$self =~ /^(\S+)\.(\S+)\.\S+$/;
+my $num_reg = $1;
+my $disp = $2;
+unless( $disp == 1 ) { print "Must be on TMR server!\n"; exit 1 }
+
+my $action = $opt{ u } ? "UNINSTALL" : "INSTALL";
+$action = "LIST" if $list;
+
+my $dir_script      = "/usr/local/Tivoli/etc/script";
+my $dir_cfg         = "/usr/local/Tivoli/etc/cfg";
+my $date_stamp      = vhx( "date '+%m/%d/%Y'", 3, 1 ); chomp $date_stamp;
+my $reg = get_region();
+
+
+my $rim_change = $uninst ? \&rim_remove : \&rim_make;
+
+title( "$action RIM objects", 10, 0 );
+confirm( $force ) unless $list;
+print "\n";
+
+my @rim;
+my @raw = vhx( "wlookup -aLr RIM", 3, 1 );
+chomp @raw;
+for my $rim_string ( @raw ) {
+    $rim_string =~ s/^(\S+)\s*$/$1/;
+    print "RIM: '$rim_string'\n" if $dbug;
+    push( @rim, $rim_string );
+}
+
+&$rim_change();
+
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub rim_make {
+
+my $rim;
+my $rim_cmd;
+
+$rim = "inv_query";
+if( grep { /$rim/ } @rim ) {
+    print "RIM object exists: $rim\n";
+} else {
+    $rim_cmd = "wcrtrim -i -v $vendor -h $host_rim -u invtiv -H $db_home -d $netsn -s $inst_name inv_query <<DONE\ntivoli\nDONE";
+    vhx( $rim_cmd, $_x_, 1 );
+}
+
+$rim = "invdh_1";
+if( grep { /$rim/ } @rim ) {
+    print "RIM object exists: $rim\n";
+} else {
+    $rim_cmd = "wcrtrim -i -v $vendor -h $host_rim -u invtiv -H $db_home -d $netsn -s $inst_name invdh_1 <<DONE\ntivoli\nDONE";
+    vhx( $rim_cmd, $_x_, 1 );
+}
+
+$rim = "mdist2";
+if( grep { /$rim/ } @rim ) {
+    print "RIM object exists: $rim\n";
+} else {
+    $rim_cmd = "wcrtrim -i -v $vendor -h $host_rim -u mdstatus -H $db_home -d $netsn -s $inst_name  mdist2 <<DONE\nmdstatus\nDONE";
+    vhx( $rim_cmd, $_x_, 1 );
+}
+
+$rim = "planner";
+if( grep { /$rim/ } @rim ) {
+    print "RIM object exists: $rim\n";
+} else {
+    $rim_cmd = "wcrtrim -i -v $vendor -h $host_rim -u planner -H $db_home -d $netsn -s $inst_name planner <<DONE\nplanner\nDONE";
+    vhx( $rim_cmd, $_x_, 1 );
+}
+
+
+#$rim = "tmd";
+#if( grep { /$rim/ } @rim ) {
+#    print "RIM object exists: $rim\n";
+#} else {
+#    $rim_cmd = "wcrtrim -i -v $vendor -h $host_rim -u tmd -H $db_home -d $netsn -s $inst_name tmd <<DONE\ntmd\nDONE";
+#    vhx( $rim_cmd, $_x_, 1 );
+#}
+
+$rim = "ccm";
+if( grep { /$rim/ } @rim ) {
+    print "RIM object exists: $rim\n";
+} else {
+    $rim_cmd = "wcrtrim -i -v $vendor -h $host_rim -u tivoli -H $db_home -d $netsn -s $inst_name ccm <<DONE\ntivoli\nDONE";
+    vhx( $rim_cmd, $_x_, 1 );
+}
+
+$rim = "trm";
+if( grep { /$rim/ } @rim ) {
+    print "RIM object exists: $rim\n";
+} else {
+    $rim_cmd = "wcrtrim -i -v $vendor -h $host_rim -u tivoli -H $db_home -d $netsn -s $inst_name trm <<DONE\ntivoli\nDONE";
+    vhx( $rim_cmd, $_x_, 1 );
+}
+
+}   # end sub rim_make
+
+
+sub rim_remove {
+    print "This function currently not implemented: rim_remove\n";
+}   # end sub rim_remove
+
+
+sub usage {
+    print "$_\n" for( @_ );
+   print STDERR <<"USAGE";
+Usage: $0 [-dhfl] [-b <oracle_home>] [-r <rim_host>] [-v <vendor>] -n <net_service_name> -i <instance_name>
+
+Desc:  Create RIM objects:
+
+       RIM        User        Password
+       ---------  ---------   ---------
+       inv_query  invtiv      tivoli
+       invdh_1    invtiv      tivoli
+       mdist2     mdstatus    mdstatus
+       planner    planner     planner
+       ccm        tivoli      tivoli
+       trm        tivoli      tivoli
+
+       -b  Database home location
+           default is /var/lpp/oracle
+       -f  Force
+       -i  Database instance name
+       -h  Help
+       -n  Database net service name
+       -r  RIM host (managed node label)
+           default is TMR managed node
+       -v  DB vendor
+           default is Oracle
+       -x  Debuggin mode
+
+USAGE
+   exit 0;
+}
+

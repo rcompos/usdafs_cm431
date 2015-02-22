@@ -1,0 +1,82 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/tune-mdist,v 1.2 2009/08/20 19:56:44 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Configure mdist and gateway repeater
+#               settings.
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+
+use strict;
+use Getopt::Std;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'dfhl', \%opt );
+if( $opt{ h } ) { usage() }
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $force    = $opt{ f } ? 1 : 0;
+$main::xs    = 0; print $main::xs if $dbug;
+#my $reg      = get_region();
+my $list     = $opt{ l } ? "-l" : "";
+my $action   = $list     ? "LIST" : "TUNE";
+my $_x_      = $opt{ l } ? 4      : 0;
+
+my $ultec    = "/usr/local/Tivoli/etc/cfg";
+my $file_cfg = "$ultec/mdist.cfg";
+
+title( "$action mdist settings", 10, 0 );
+print "\nConfig file: $file_cfg\n";
+confirm( $force ) unless $list;
+print "\n***  Listing actions only - no changes will be made  ***\n" if $list;
+print "\n";
+
+open(FH1, $file_cfg ) or die "Couldn't read file: $file_cfg";
+while( my $line = <FH1> ) {
+    chomp($line);
+    if( $line =~ /^\s*#/ or $line =~ /^\s*$/ ) { print "# $line\n" if $dbug; next };
+
+    my( $MN,$OID,$DEF,$CLNT,$MEMM,$DISKM,$DISKH,$DISKT,$DISKD,$NETL,$MAXC,$STATI,$RPTD,$PERMS,$MAXSH,$MAXSM,$MAXSL,$DMAX,$MMAX,$SENDT,$EXET,$NOTFI,$CONR,$RETRYC,$NETLOAD,$PACKS,$TARGETN,$DEBUGL ) = split(/,/, $line);
+
+    my $CMD = "wmdist -s $MN rpt_dir=$RPTD permanent_storage=$PERMS max_sessions_high=$MAXSH max_sessions_medium=$MAXSM max_sessions_low=$MAXSL disk_max=$DMAX mem_max=$MMAX send_timeout=$SENDT execute_timeout=$EXET notify_interval=$NOTFI conn_retry_interval=$CONR retry_ep_cutoff=$RETRYC net_load=$NETLOAD packet_size=$PACKS target_netload=$TARGETN debug_level=$DEBUGL";
+
+    vhx( $CMD, $_x_, 1 );
+
+    print "\n";
+}
+
+close(FH1);
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-hfl]
+
+Desc:  Set mdist repeater tuning parameters.
+       Values are set in the config file.
+
+       -h  Help
+       -f  Force
+       -l  List commands to be run without execution.
+
+USAGE
+    exit 0;
+}   # end sub usage
+

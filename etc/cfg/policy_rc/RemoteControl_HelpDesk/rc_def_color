@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control  
+#
+#  This method allows to set another Performance Tuning option  :
+#  force 16 colors or 256 colors 
+#
+#  Possible values are:
+#           0 not reduce colors 
+#           4 reduce to 16 colors
+#           8 reduce to 256 colors
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <value>-locked
+#  (eg: echo "4-locked")
+#
+
+echo "8"
+
+exit 0
+

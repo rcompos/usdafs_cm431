@@ -1,0 +1,23 @@
+# after_install.cfg Template File
+# $Header: /work/RCS/after_install.cfg-template,v 1.1 2005/04/05 01:06:07 rcompos Exp $
+# IBM USDA FS TMR Build v2.1
+#
+# Config file for after_install_policy endpoint policy
+# Three parameters, space-separated
+#
+# Use this file as an example
+#
+# Subnet        Interp          ProfileManager            #Comments
+
+199.131.12.*	win95		rX.subs.WO.RPC.dsk-w95.dpm  # Comment
+199.131.12.*	w32-ix86	rX.subs.WO.RPC.dsk-wnt.dpm  # Comment
+199.131.12.*	aix4-r1		rX.subs.WO.RPC.svr-aix.dpm
+
+199.131.13.*    win95   	rX.subs.WO.RPE.dsk-w95.dpm
+199.131.13.*    w32-ix86        rX.subs.WO.RPE.dsk-wnt.dpm
+199.131.13.*    aix4-r1 	rX.subs.WO.RPE.svr-aix.dpm
+ 
+210.*.*.*	win95		rX.subs.WO.Yates.dsk-w95.dpm
+210.*.*.*	w32-ix86	rX.subs.WO.Yates.dsk-wnt.dpm
+210.*.*.*  	aix4-r1 	rX.subs.WO.Yates.svr-aix.dpm
+ 

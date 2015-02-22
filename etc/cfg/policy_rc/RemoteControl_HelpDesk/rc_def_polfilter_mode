@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Policy Region 
+#
+#  This method prints the filtering mode for the list of possible targets .
+#
+#  Possible modes are:
+#	region		(show according the policy choosen)
+#	myregion	(show according the policy region where is the tool)
+#	all         	(show all)
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <value>-locked
+#  (eg: echo "myregion-locked")
+
+echo "myregion"
+
+exit 0

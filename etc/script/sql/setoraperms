@@ -1,0 +1,93 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/sql/../../b272rcs/setoraperms,v 1.1 2009/08/20 20:08:09 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Set perms on Oracle directories and files
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-09-09
+#
+#
+
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'dfhl', \%opt );
+usage()     if $opt{ h };
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $force    = $opt{ f } ? 1 : 0;
+my $list     = $opt{ l } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $_x_      = $opt{ l } ? 4      : 0;
+my $r_shift  = 4;
+
+my $term_cols   = vhx( "tput cols", 3, 2 );
+chomp $term_cols;
+unless( $term_cols ) { $term_cols = 40 }
+print ">> $term_cols <<\n" if $dbug;
+
+my $ulte      = "/usr/local/Tivoli/etc";
+my $ultv      = "/usr/local/Tivoli/var";
+my $ultes     = "$ulte/script";
+my $dir_sql   = "$ultes/sql";
+my $dir_log   = "$ultv/log/sqllog";
+my $oracle_home = "/var/lpp/oracle";
+my $tnsnames  = "$oracle_home/network/admin/tnsnames.ora";
+
+print "\nUSDA FS CM423 TMR Install\n";
+print "\nSet Oracle 10g client directory and file permissions.\n\n";
+
+print "***  LIST MODE - NO ACTION WILL BE TAKEN  ***\n" if $list; 
+
+print "\n" unless $list;
+confirm( $force ) unless $list;
+print "\n" unless $list;
+
+print "_" x $term_cols, "\n\n";
+
+vhx( "chown -R root.system /etc/oraInst.loc", $_x_, 1 );
+vhx( "chown -R oracle.dba $oracle_home /home/oracle", $_x_, 1 );
+vhx( "chown oracle.system /usr/lbin/coraenv /usr/lbin/oraenv /usr/lbin/dbhome", $_x_, 1 );
+vhx( "chown -R oracle.dba $dir_sql", $_x_, 1 );
+vhx( "chmod 755 $oracle_home", $_x_, 1 );
+vhx( "chmod 644 $tnsnames", $_x_, 1 );
+vhx( "find $oracle_home -type d -exec chmod 775 {} \\;", $_x_, 1 );
+vhx( "find $oracle_home -type f -exec chmod go+r {} \\;", $_x_, 1 );
+vhx( "mkdir -m775 $dir_log", $_x_, 1 );
+vhx( "chown oracle.dba $dir_log", $_x_, 1 );
+
+
+print "_" x $term_cols, "\n";
+print "\n";
+print "\n$0 complete\n";
+
+
+##################
+#   end corpus   #
+##################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhl] 
+Desc:  Set directory and file permissions for 
+       Oracle 10g client.
+
+       -f  force
+       -h  help
+       -l  list actions without performing
+
+USAGE
+    exit;
+}   # end usage
+

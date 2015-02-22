@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+
+. /etc/Tivoli/setup_env.sh
+unset CHILD_OF_OSERV
+
+ConfigFile="/usr/local/Tivoli/etc/cfg/CleanLogs.cfg"
+   dir_tmp="/usr/local/Tivoli/var/tmp"
+  file_tmp="$dir_tmp/clean$$"
+
+if [ ! "$ConfigFile" ]; then
+	echo "This program requires a configuration file"
+	echo "$ConfigFile is a file that contains"
+	echo "2 fields, the log file name, and the number"
+	echo "lines that will be maintained in the file after"
+	echo "cleanup is complete"
+	exit 1
+fi
+
+cat $ConfigFile | grep -v "^#" | while read File Lines
+do
+	if [ -d $File ]; then
+		cwd=`pwd`
+		cd $File
+		for f in *; do
+			tail -$Lines $f >$file_tmp
+			mv $file_tmp $File/$f
+			chmod a+rw $File/$f
+		done
+	else
+		tail -$Lines $File >$file_tmp
+		mv $file_tmp $File 2>/dev/null
+		chmod a+rw $File
+	fi
+done

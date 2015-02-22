@@ -1,0 +1,51 @@
+# mdist.cfg Template File
+# $Header: /work/RCS/mdist.cfg-template,v 1.1 2005/04/05 00:47:19 rcompos Exp $
+# IBM USDA FS TMR Build v2.1
+#
+# Config file for mdist and wrpt
+# Config parameters on one line, comma-separated
+#
+# Use this file as an example
+#
+# CONFIG PARAMETERS
+# Arguments to wrpt or wmdist are indicated
+#
+# MN                    : Managed node label
+# OID                   : Managed node OID
+# wan                   : wrpt
+# range                 : wrpt
+# mem_max               : wrpt
+# disk_max              : wrpt
+# disk_hiwat            : wrpt
+# disk_time             : wrpt
+# disk_dir              : wrpt
+# net_load              : wrpt
+# max_conn              : wrpt
+# stat_intv             : wrpt
+# rpt_dir               : wmdist
+# permanent_storage     : wmdist
+# max_sessions_high     : wmdist
+# max_sessions_medium   : wmdist
+# max_sessions_low      : wmdist
+# disk_max              : wmdist
+# mem_max               : wmdist
+# send_timeout          : wmdist
+# execute_timeout       : wmdist
+# notify_interval       : wmdist
+# conn_retry_interval   : wmdist
+# retry_ep_cutoff       : wmdist
+# net_load              : wmdist
+# packet_size           : wmdist
+# target_netload        : wmdist
+# debug_level           : wmdist
+#
+#
+# HEADING
+#
+# MN, OID, wan, range, mem_max, disk_max, disk_hiwat, disk_time, disk_dir, net_load, max_conn, stat_intv, rpt_dir, permanent_storage, max_sessions_high, max_sessions_medium, max_sessions_low, disk_max, mem_max, send_timeout, execute_timeout, notify_interval, conn_retry_interval, retry_ep_cutoff, net_load, packet_size, target_netload, debug_level
+#
+
+rXtmr1,1,wd-,3,128000,4800000,4800000,1,/usr/local/Tivoli/depot,5000,100,180,/usr/local/Tivoli,TRUE,5,5,5,4800,128,300,600,10,900,7200,5000,16,0,3
+rXtgw1.wo.fs.fed.us,3,,4,128000,4000000,4000000,1,/usr/local/Tivoli/depot,5000,100,180,/usr/local/Tivoli,TRUE,5,5,5,4000,128,300,600,30,900,7200,5000,16,0,3
+rXtgw2.wo.fs.fed.us,4,,,128000,4000000,4000000,1,/usr/local/Tivoli/depot,5000,100,180,/usr/local/Tivoli,TRUE,5,5,5,4000,128,300,600,30,900,7200,5000,16,0,3
+

@@ -1,0 +1,42 @@
+#!/usr/bin/perl
+# Desc: This script backs up the Tivoli database on the 
+#       TMR and all managed nodes/gateways.
+#
+
+use strict;
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+#unset CHILD_OF_OSERV
+#. /etc/Tivoli/setup_env.sh
+
+$main::xs        = 0; 
+my $date_stamp   = vhx( "date '+%Y%m%d'", 3, 2 );
+chomp $date_stamp;
+my $dir_var      = "/usr/local/Tivoli/var";
+my $dir_log      = "$dir_var/log/maint";
+my $dir_backup   = "$dir_var/db_bkup";
+my $dir_bin      = "/usr/local/Tivoli/bin/aix4-r1/bin";
+my $reg          = get_region();
+my $file         = "${reg}_bkupdb-$date_stamp";
+
+unless( -d $dir_log    ) { vhx( "mkdir -m2777 $dir_log" ) }
+unless( -d $dir_backup ) { vhx( "mkdir -m2777 $dir_backup" ) }
+
+# Clean up Log files and Backups over 30 days
+vhx( "find $dir_log -mtime +30 -type f -exec rm {} \\;" );
+print "\n";
+vhx( "find $dir_backup -mtime +30 -type f -exec rm {} \\;" );
+print "\n";
+
+vhx( "$dir_bin/wbkupdb -s -d $dir_backup/${reg}-db_bkup-%t > $dir_log/$file 2>&1" );
+
+chomp( $date_stamp = `date` );
+if( $main::xs ) { 
+    vhx( qq{$dir_bin/wsndnotif "TME Administration" Notice "DB backup FAILED - $date_stamp"} );
+}
+print "\n";
+
+print "$0 complete.\n\n";
+

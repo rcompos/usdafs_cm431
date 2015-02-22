@@ -1,0 +1,29 @@
+# USDA Forest Service CM423 TMR Install
+# Date: 2008-09-19
+#
+# example tnsnames.ora file
+# /var/lpp/oracle/network/admin/tnsnames.ora
+# must be customized prior to use
+# replace <variable> with actual values
+#
+# <net_service_name> =
+#     (DESCRIPTION =
+#         (ADDRESS = (PROTOCOL = TCP)(HOST = <host>)(PORT = 1521))
+#         (CONNECT_DATA =
+#             (SERVER = DEDICATED)
+#             (SERVICE_NAME = <service_name>)
+#             (INSTANCE_NAME = <instance_name>)
+#         )
+#    )
+#
+
+
+TPMDB1 =
+    (DESCRIPTION =
+        (ADDRESS = (PROTOCOL = TCP)(HOST = slmcivip010.mci.fs.fed.us)(PORT = 1521))
+        (CONNECT_DATA =
+            (SERVER = DEDICATED)
+            (SERVICE_NAME = tpmdb)
+            (INSTANCE_NAME = tpmdb1)
+        )
+    )

@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control  
+#
+#  This method allows to set another Performance tuning Option :
+#  compression or uncompress data ( the second one suggested if you are using a fast link) 
+#  Possible modes are:
+#           On    to compress
+#           Off   to uncompress	
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <value>-locked
+#  (eg: echo "On-locked")
+
+echo "On"
+
+exit 0

@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+#  Default policy method for File Transfer Mode
+#
+#  The choices are:
+#
+#	"send"	
+#	"receive"
+#  "both"
+#
+#
+
+echo "both"
+
+exit 0

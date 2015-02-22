@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Policy Region 
+#
+#  This method prints the default option to take if the target system
+#  gives no answer within the grace period
+#
+#  Possible modes are:
+#	ENABLED		Continue with operation if timeout occurs
+#	DISABLED		Abort operation of timeout occurs
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <value>-locked
+#  (eg: echo "ENABLED-locked")
+#
+
+#echo "DISABLED"
+echo "ENABLED"
+
+exit 0

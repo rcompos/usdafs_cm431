@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Define Targets list
+#
+#  This policy method determines how the targets list is built and displayed.
+#  
+#  Possible values:
+#    DefinableTargetList     Lists by target label according to rc_def_targets.
+#    FilteredList            Lists by policy region according to 
+#                            rc_def_polfilter_mode and by label 
+#                            according to rc_def_targets.
+#    UncheckedList           Lists according to rc_def_uncheckedlist. 
+#                            No validation is performed.
+#  
+#  Default value: DefinableTargetList
+#  
+#  If the value is DefinableTargetList or FilteredList, then a target is 
+#  listed if it is included by rc_def_targets. 
+#  
+#  If the value is DefinableTargetList, the targets list can be reset 
+#  using the Define Targets List dialog. The edited list is saved in 
+#  rc_def_targets for future use.
+#  
+#  If the value DefinableTargetList has the suffix -locked, the targets 
+#  list cannot be reset using the Define Targets List dialog.
+# 
+#  If you are using the wrc command and you want to filter the targets 
+#  according to the policy methods, you must add the suffix -apply2cli 
+#  to the specified rc_def_define value.
+#     
+#  The suffixes -locked and -apply2cli can be specified together as follows:
+#   DefinableTargetList-locked-apply2cli
+#   DefinableTargetList-apply2cli-locked
+
+
+echo "UncheckedList-locked"
+
+exit 0

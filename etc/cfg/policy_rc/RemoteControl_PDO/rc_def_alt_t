@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+#  Default policy method for Remote Control Policy Region 
+#
+#  This method checks if the Alt+T on the target is enabled. 
+#
+#  Possible modes are:
+#	ENABLED		
+#	DISABLED         	
+#	DEPEND-ON-TARGET         	
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <value>-locked
+#  (eg: echo "DISABLED-locked")
+#			 
+
+echo "DISABLED"
+
+exit 0

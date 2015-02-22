@@ -1,0 +1,383 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/loadtiv,v 1.4 2009/08/20 19:49:25 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Install Tivoli products and patches
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+
+use strict;
+use Getopt::Std;
+use Cwd;
+use File::Basename;
+
+my $start_dir = getcwd();
+print "Starting dir: $start_dir\n";
+
+#my $me = $0;
+print "Me: $0 \n";
+my( $file, $path, $suffix ) = fileparse( $0, qr/\.[^.]*/ );
+
+#print "File: $file\n";
+#print "Path: $path\n";
+#print "Suffix: $suffix\n";
+print "Lib path: ${path}lib\n";
+
+unshift( @INC, "${path}lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'a:c:dhfls:', \%opt );
+if( ! $ARGV[0] ) { usage( "No arguments supplied" ) }
+my $dbug     = $opt{ d } ? 1 : 0;
+my $force    = $opt{ f } ? 1 : 0;
+$main::xs    = 0; print $main::xs if $dbug;
+my $reload   = $opt{ a } ? $opt{ a } : ""; 
+my $cfg_file = $opt{ c } ? $opt{ c } : usage( "Specify product configuration file with -c option" );
+usage()     if $opt{ h };
+my $list     = $opt{ l } ? 1 : 0;
+my $src_dir  = $opt{ s } ? $opt{ s } : "/usr/local/Tivoli/src";
+my $action      = $opt{ l } ? "LIST" : "INSTALL";
+my $_x_         = $opt{ l } ? 4      : 0;
+my $STATUS   = 0;
+my $MN = $ARGV[0] ? $ARGV[0] : 0;
+usage( "Must specify managed node" ) unless $MN;
+if( "$reload" eq "!" ) { $reload = "BIN=! LIB=! MAN=! CAT=!" };
+
+#( my $me = $0 ) =~ s/^.*\/(\S+)$/$1/;
+#( my $run_dir = $0 ) =~ s/^(.*)\/\S+$/$1/;
+#if( "$run_dir" eq "." ) { $run_dir = getcwd() };
+
+print "DBUG: $dbug\n" if $dbug;
+
+my $server_type = "";
+my $cfg_num_substrings = 1;
+
+if( ! -d $src_dir ) { print "Product source directory not found! $src_dir\n"; exit 5; }
+
+print "\n"; 
+my( $fsregion, $DISP, $reg, $wping_status  ) = &chk_tiv( $MN );
+
+print "***  LISTING MODE - INSTALL WILL NOT BE PERFOMED  ***\n\n" if $list;
+
+print " ManagedNode : $MN\n";
+print "  Dispatcher : $DISP\n";
+print "  Region Num : $reg\n";
+print "   FS Region : $fsregion\n";
+print "        Date : ", scalar localtime, "\n";
+print "Overwrite dirs: $reload\n" if $reload;
+
+( my $cfg_dir = $cfg_file ) =~ s/^(.*)\/\S+$/$1/;
+unless( -d $cfg_dir ) { print "Dir not found: $cfg_dir\n"; exit 1; }
+print "  Config dir : $cfg_dir\n";
+
+confirm( $force );
+
+    my @cfg = ();
+
+    # Initial check of installation config file
+    title( "$action Tivoli products and patches", 10, 0 );
+    &check_config( $cfg_file, $cfg_num_substrings, 1, \@cfg );
+    print "\n";
+
+    # Perform additional checking and then perform install
+
+    my $failed = 0;
+    unless( $list ) {  # Proceed with installation
+        $STATUS = install( 0, 0, \@cfg );  # go = 0, show = 0 : check pre-reqs only
+        if( $STATUS ) { 
+            print "\nBad config entries : $STATUS\n";
+            exit $STATUS;
+        }
+        $STATUS = install( 1, 1, \@cfg );
+        if( $STATUS ) { 
+            print "\nAT LEAST ONE INSTALL FAILED\n";
+            print "\nFAILED : $STATUS\n";
+            exit $STATUS;
+        } else {
+            print "\nSUCCESSFULL INSTALL\n";
+        }
+    } else {  # Just list the components, NO install
+        $STATUS = install( 0, 1, \@cfg );
+        if( $STATUS ) { 
+            print "\nBad config entries : $STATUS\n";
+            exit $STATUS;
+        }
+        print "\nEND PRODUCT\/PATCH LISTING\n";
+    }
+
+print "\n$0 complete.\n\n";
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub check_config {
+# Check formatting of config file
+    my $file = shift;       # Fully qualified name of config file
+    my $num = shift;        # Number of columns
+    my $type_flag = shift;  # Type of config file ( 1 for install cfg file, 0 for pre-post )
+    my $empty  = shift;     # Reference to empty array
+    my $type;               # 1 if installation config file
+    my @error = ();         # List of errors
+    my @raw = ();           # Temporary array
+
+    open( CFG, "<$file" ) or die "Couldnt open file: $file: $!\n";
+    while( <CFG> ) {  # Read entire file into array
+        chomp; 
+        push( @raw, $_ );
+    }
+    close( CFG );
+    print " Config file : $file\n";
+
+    if( $type_flag ) {
+        $type = &get_type( $file, \@raw );
+        print "        Type : $type\n";
+    }
+    
+    my $n = 0;
+    my $line_count = 0;
+    for( @raw ) { 
+        if( ! /^\s*#/ && $_ !~ /^\s*$/ ) {  # Skip comments and blank lines
+
+            my @cfg_line = $_ =~ /^\s*(\S+)\s*/; # match 1 entries
+
+            my $elements = $#cfg_line + 1;
+            if( $elements > $num ) {  # Make sure config entry doesnt have too many elements
+                print STDERR "ERROR: Config file has too many entries on line $line_count: $file\n";
+                print STDERR "Should have $num elements\n";
+                print STDERR "Line: $line_count\n";
+                print STDERR "    $_\n";
+                exit 2;
+            } elsif( $elements < $num ) {
+                print STDERR "ERROR: Config file has too few entries on line $line_count: $file\n";
+                print STDERR "Elements: $elements\n";
+                print STDERR "Should have $num elements\n";
+                print STDERR "    $_\n";
+                exit 2;
+            }
+            for my $i ( 0 .. $elements - 1 ) {  # Remove whitespace from each element
+                $cfg_line[$i] =~ s/^\s*"?([^\t\n\r\f"]*)"?\s*/$1/;
+            }
+            $$empty[$n] = [ @cfg_line ];  # Assign element list to array
+            $n++;
+            #for( @cfg_line ) { print "'$_':" }; print "\n"; #### DBUG ### 
+        }
+        $line_count++;
+    }
+
+}   # sub check_config
+
+
+sub get_type {
+# Extract target type from list
+    my $file = shift;
+    my $empty = shift;
+    my $type_num = 0;
+    my @types = map( /^\s*#\s*TYPE\s*:\s*(\w+)\s*$/, @$empty );
+    $type_num = scalar( @types );
+
+    if( $type_num > 1 ) {  # Too many type definitions
+        print STDERR "ERROR: Config file has too many target types: $file\n"; 
+        print STDERR "Define only one type per config file.\n"; 
+        exit 3;
+    } elsif( $type_num <= 0 ) {  # No type definitions
+        print STDERR "ERROR: Config file missing target type definition: $file\n";
+        print STDERR "Type (TMR, TIS, TEC or GW) must be defined using a comment line:\n";
+        print STDERR "   # TYPE : TMR\n";
+        exit 3;
+    }
+
+    my $type = $types[0];
+    if( $type !~ /^(TMR|TIS|TEC|GW)$/ ) {
+        print STDERR "ERROR: Config file has bad type definition: $file\n";
+        print STDERR "Type (TMR, TIS, TEC or GW) must be defined using a comment line:\n";
+        exit 3;
+    }
+    return( $type );
+}   # end sub get_type
+
+
+sub install {  ###  Install products  ###
+#  TODO: Break this up into a 2-D array traverser to check config file formatting
+#  and seperate subs to perform prereqs, install and postreqs
+
+    my $go = shift;
+    my $show = shift;
+    my $prod_array = shift;
+    my $len_prod_array = scalar( @$prod_array ) - 1;
+    my $count = 1;
+    my $num_space = 1;
+    my $count_10 = 10;
+    my $r_shift = 6;
+    my $cmd;
+    my $file_product = "CONTENTS.LST";
+    my $file_patch   = "PATCHES.LST";
+    my $failed_check = 0;
+    my $failed_inst  = 0;
+    
+    if( $go ) {
+        print "INSTALLING TIVOLI COMPONENTS\n\n";
+    } else {
+        print "Checking configuration file parameters\n\n";
+    }
+
+    my $total = $len_prod_array + 1;
+    #print "Number of components: $total\n\n";
+    for my $i ( 0 .. $len_prod_array ) {
+        my $file_string = $$prod_array[$i][0];
+        $file_string =~ s/^\.\///;
+        # parse file string into filename, directory and any suffix starting with .
+        my( $file, $path, $suffix ) = fileparse($file_string, qr/\.[^.]*/);
+        print ">>  FILE : $file\n>>  PATH : $path\n>>  SUFFIX : $suffix\n" if $dbug; #DBUG
+
+        my $fqfn = "$src_dir/$file_string";
+        my $desc;
+        my $inst_cmd = 0;
+
+        if( $count >= $count_10 ) {
+            $count_10 *= 10; 
+            $num_space++;
+        }
+
+        print "-", "$count/$total", "-" x ( 78 - $num_space - 1 ), "\n\n" if $show;
+        $count++;
+
+        my @prods;
+        if( -f $fqfn ) {
+
+            if( -f "$src_dir/$path/$file_product" ) {
+                open( CONTENTS, "<$src_dir/$path/$file_product" );
+                while( <CONTENTS> ) { 
+                    chomp;
+                    print ">> $_\n" if $dbug;
+                    if( /^${file}:(.*)$/ ) {
+                        $desc = $1;
+                        $inst_cmd = "winstall -y -c $src_dir/$path -i $file $reload $MN";
+                        last;
+                    }
+                }
+                close( CONTENTS );
+            }
+
+            if( -f "$src_dir/$path/$file_patch" ) {
+                open( PATCHES, "<$src_dir/$path/$file_patch" );
+                while( <PATCHES> ) { 
+                    chomp;
+                    print ">> $_\n" if $dbug;
+                    if( /^${file}:(.*)$/ ) { 
+                        $desc = $1;
+                        if( $inst_cmd ) {
+                            print "WARNING: IND file in both CONTENTS.LST and PATCHES.LST\n";
+                            #return 1;
+                        } else {
+                            $inst_cmd = "wpatch -y -c $src_dir/$path -i $file $reload $MN";
+                            last;
+                        }
+                    }
+                }
+                close( PATCHES );
+            }
+
+            unless( $inst_cmd ) {
+                print "ERROR: IND file $file not found in CONTENTS.LST or PATCHES.LST\n";
+                $failed_check++;
+                #return 1;
+            }
+
+        } else {
+            print STDERR "ERROR: IND file not found: $fqfn\n";
+            $failed_check++;
+            #return ( 1 );
+        }
+
+        print "DESC: $desc\n" if $show;
+        print "CMD : $inst_cmd\n" if $show;
+
+        if( $go ) {
+            open( INST, "$inst_cmd |" );
+            while( <INST> ) {
+                print " " x $r_shift, $_;
+            }
+            close( INST );
+            print "\n";
+    
+            if( $? ) {
+                print STDERR "ERROR: Failed: $inst_cmd\n";
+                $failed_inst++;
+                sleep 1;
+            }
+        }
+
+
+        print "\n" if $show;
+    }   # end for
+
+    print "-" x 80, "\n" if $show;
+
+    if( $go ) { return $failed_inst } else { return $failed_check };
+
+}   # end sub install
+
+
+sub chk_tiv {
+# Check that all Tivoli systems are go
+    my $MN = shift;
+    unless( vhx( "ps -eo comm|grep oserv", 3, 2 ) ) {
+        print STDERR "ERROR Tivoli oserv process not running.\n\n";
+        exit 4;
+    }
+
+    my $self = vhx( "objcall 0.0.0 self", 3, 1 );
+    my( $reg, $disp ) = split( /\./, $self );
+
+    if( $disp != 1 ) {
+        print STDERR "ERROR Must be run on TMR Server.\n\n";
+        exit 4;
+    }
+
+    chomp( my $fsregion = vhx( "wtmrname", 3, 1 ) );
+    $fsregion =~ s/^(\S+)\.\S*/$1/;
+
+    my $wping = vhx( "wping $MN", 3, 1 );
+    if( $wping =~ /alive/ ) {
+        $wping_status = "alive";
+    } else {
+        $wping_status = "dead";
+        print STDERR "FAILED: Can't wping $MN\n\n";
+        exit 4;
+    }
+    return( $fsregion, $disp, $reg, $wping_status );
+}   # end chk_tiv
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhl] [-a <args>] [-s <src directory>] -c <config file> <node>
+
+Desc:  Installs products/patches to USDA FS Tivoli infrastructure on 
+       managed node specified as <node>.
+
+       Wrapper script for Tivoli commands winstall and wpatch.
+
+       -a  args for overwrite ( "BIN=! LIB=! LCF=! MAN=! CAT=!" )
+           All dirs will be overwritten if only "!" is supplied
+       -c  configuration file containing list of product/patch config files
+       -s  source directory containing product installation files
+           /usr/local/Tivoli/src by default
+       -h  help
+       -f  force - no user prompt
+       -l  list products in config file - no install performed
+
+USAGE
+exit 0;
+} # End usage
+

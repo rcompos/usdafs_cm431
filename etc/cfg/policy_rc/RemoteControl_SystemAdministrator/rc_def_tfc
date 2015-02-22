@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+#  Default policy method for Pinnacle Trusted Files Commander integration 
+#
+#  The choices are:
+#
+#	"NO"	
+#	"YES:<filepattern>{;<filepattern>}"  (max 256 characters)
+#
+#  please use '/' as directory delimiter 
+# 
+
+echo "NO"
+
+exit 0

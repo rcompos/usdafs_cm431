@@ -1,0 +1,19 @@
+#!/bin/ksh
+#
+# Migrate endpoints from the TMR to their proper gateway
+
+unset CHILD_OF_OSERV
+
+. /etc/Tivoli/setup_env.sh
+
+ultes=/usr/local/Tivoli/etc/script
+
+Self=`objcall 0.0.0 self`
+disp=`echo $Self | awk -F\. '{print $2}'`
+if [[ $disp -ne 1 ]]; then
+    echo "Must be run on the TMR server"
+fi
+
+$ultes/realign
+
+echo "$0 complete"

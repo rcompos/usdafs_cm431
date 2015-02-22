@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+#  Default policy method for inactivity timeout
+#
+#  This method allowes you to set a value for inactivity timeout:
+#  that is how many minutes a user can hold a session in active state
+#  without generating keyboard or mouse events.
+#
+#  Possible values are:
+#
+#  	 <timeout value> (any integer value grater than or equal to 0.	
+#  			 The value 0 means no session timeout)
+#
+#  Use the "-locked" keyword at the end to make 
+#  the setting insensitive to user action:
+# 
+#  <timeout value>-locked
+#  (eg: echo "5-locked")
+
+
+#echo "0"
+echo "5-locked"
+
+exit 0

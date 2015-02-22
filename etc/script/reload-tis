@@ -1,0 +1,129 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272_rcs/reload-tis,v 1.1 2009/09/22 19:14:13 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Re-install existing Tivoli Inventory 
+#               Server (TIS) managed node products and patches.
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2009-09-22
+#
+# For Tivoli Inventory Server managed nodes only.
+#
+
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'a:c:dfhl', \%opt );
+if( $opt{ h } ) { usage() }
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $force    = $opt{ f } ? 1 : 0;
+my $list     = $opt{ l } ? "-l" : "";
+my $action   = $list     ? "LIST" : "INSTALL";
+my $reload   = $opt{ a } ? "-a $opt{ a }" : "";
+my $cfg_file = $opt{ c } ? $opt{ c } : 0;
+$main::xs    = 0; print $main::xs if $dbug;
+if( ! $ARGV[0] ) { usage( "No arguments supplied" ) }
+my $host = $ARGV[0];
+
+my $ult            = "/usr/local/Tivoli";
+my $ults           = "$ult/src";
+my $ulte           = "$ult/etc";
+my $ultes          = "$ulte/script";
+my $ultec          = "$ulte/cfg";
+my $cfg            = "$ultec/inst/tis.cfg";
+
+my $reg            = get_region();
+my $mn             = $host;
+
+my @mn_info = get_mn();
+my( $mn_label, $mn_oid, $obj_no ) = ( $mn_info[0], $mn_info[1], $mn_info[2] );
+unless( $obj_no =~ /\d+\.1\.0/ ) { usage ("Must be run from TMR server" ) }
+if( "$mn_label" eq "$mn" ) { usage( "Cannot specify TMR server managed node as target" ) }
+
+title( "DEBUG", 40, 5 ) if $dbug;
+
+unless( $cfg_file ) {  $cfg_file = $cfg; }
+
+unless( -f $cfg_file ) { print "ERROR: File not found: $cfg_file\n"; exit 1; }
+$cfg_file =~ /^(.*)\/\S+$/;
+my $cfg_dir = $1;
+unless( -d $cfg_dir ) { print "Dir not found: $cfg_dir\n"; exit 1; }
+print "  Config dir : $cfg_dir\n";
+
+my $type = 0;
+open( CFG, "<$cfg_file" ) or die "Couldnt open file: $!";
+while( <CFG> ) { if( /^\s*#\s*TYPE\s*:\s*(\S+)/ ) { $type = $1; last; } }
+close( CFG );
+unless( $type ) { print "Config file missing type definition!\n"; exit 2; }
+unless( $type =~ /TIS/ ) {
+    print "ERROR: Wrong config file type!\n";
+    print "$type\n";
+    exit 4;
+}
+
+vhx( "wlookup -r ManagedNode $mn", 3, 1  );
+
+title( "$action Tivoli products and patches: $mn", 10, 0 );
+confirm( $force ) unless $list;
+print "\n";
+
+my $start_time = time;
+print "    Start_Time : ", scalar localtime, "\n\n" unless $list;
+
+vhx( "$ultes/loadtiv -f $list $reload -c $cfg_file -s $ults $mn", 0, 1 ); 
+
+unless( $list ) {
+    my( $hour, $min, $sec ) = runtime( $start_time );
+    print  "\n";
+    print  "  Managed Node : $mn\n";
+    print  "        Region : $reg\n";
+    print  "      End_Time : ", scalar localtime, "\n";
+    printf "      Run_Time : %02d h %02d m %02d s\n",$hour, $min, $sec;
+    print "\n$0 complete.\n\n";
+
+    print "The managed node needs to be restarted\n";
+}
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhl] [-a <args>] [-c <config_file>] <managed_node>
+
+Desc:  Re-load/install Tivoli products/patches on the Tivoli
+       Inventory Server (TIS) managed node.
+       Specify any TIS managed node. The default 
+       config file will be used (tis.cfg) if no config file is 
+       specified.  Config file contains a list of product/patch 
+       definitions, one per line.
+
+       May be re-run if necessary.
+       Must be run from the TMR server.
+       The TMR server cannot be specified as a target.
+
+       -a  args for overwrite ( "BIN=! LIB=! LCF=! MAN=! CAT=!" )
+           All dirs will be overwritten if only "!" is supplied
+       -c  configuration file
+       -f  force, no prompt
+       -h  help
+       -l  list config file without performing install
+
+USAGE
+exit 0;
+}   # end sub usage
+

@@ -1,0 +1,173 @@
+#!/usr/bin/perl
+# $Header: /work/RCS/findscript,v 1.1 2005/04/06 03:25:46 rcompos Exp $
+#
+# Find scripts of type perl and/or shell
+#
+
+use diagnostics;
+use strict;
+use Getopt::Std;
+use Cwd;
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my( %opt );
+getopts( 'ab:deg:hkopsv', \%opt );
+if( $opt{ h } ) { usage() };
+        my $dbug = $opt{ d } ? 1 : 0;
+    my $dir_base = $opt{ b } ? $opt{ b } : 0;
+       my $error = $opt{ e } ? 1 : 0;
+ my $grep_string = $opt{ g } ? $opt{ g } : 0;
+    my $type_all = $opt{ a } ? 1 : 0;
+   my $type_perl = $opt{ p } ? 1 : 0;
+    my $type_ksh = $opt{ k } ? 1 : 0;
+     my $type_sh = $opt{ s } ? 1 : 0;
+  my $type_other = $opt{ o } ? 1 : 0;
+        my $list = $opt{ l } ? 1 : 0;
+      my $report = $opt{ r } ? 1 : 0;
+     my $verbose = $opt{ v } ? 1 : 0;
+
+if( ! $type_all && ! $type_perl && !$type_ksh && ! $type_sh && !$type_other ) { $report = 1 }
+
+
+my $limit_file = 10; # Debug parameter
+my $limit_line = 10;  # Debug parameter
+my $files_max  = 10000;  # Arbitrary sanity parameter
+
+my $dir_default = "/usr/local/Tivoli/etc/script";
+my $work_dir = getcwd();
+
+print "Work dir: $work_dir\n" if $dbug;
+
+if( $dir_base ) {
+    unless( -d $dir_base ) { print "Directory doesn't exist! $dir_base\n"; exit 1; }
+} else {
+    $dir_base = $dir_default;
+}
+
+my @all = `find $dir_base -type f`;
+if( $#all > $files_max ) { 
+    print "Base dir: $dir_base\n";
+    print "   Files: $#all\n";
+    print "   Whoa!: Too many files, try running on subdirectories\n";
+    exit 1;
+}
+
+my $num_perl   = 0;
+my $num_ksh    = 0;
+my $num_sh     = 0;
+my $num_other  = 0;
+my $num_total  = 0;
+
+my $filenum = 0;
+for my $file ( @all ) {
+    if( $filenum++ > $limit_file && $dbug ) { last }
+    chomp $file;
+    print "> $file\n" if $dbug;
+
+    open( FILE, "$file" ) or die "Couldn't read file: $file";
+    my $linenum = 0;
+    while( <FILE> ){
+
+        if( $linenum++ > $limit_line && $dbug ) { last }
+        print "$_\n" if $dbug;
+
+        next if /^\s*$/; # Skip blank lines
+
+        chomp( my $head = $_ );
+
+        my $match = 0;
+        if( /^\s*#!\S+\/perl/ ) {
+            $num_perl++;
+            if( $type_perl || $type_all ) {
+                $match = 1;
+            }
+        } elsif ( /^\s*#!\S+\/ksh/ ) {
+            $num_ksh++;
+            if( $type_ksh || $type_all ) {
+                $match = 1;
+            }
+        } elsif ( /^\s*#!\S+\/sh/ ) {
+            $num_sh++;
+            if( $type_sh || $type_all ) {
+                $match = 1;
+            }
+        } else {
+            $num_other++;
+            if( $type_other || $type_all ) {
+                $match = 1;
+            }
+        }
+
+
+        if( $match ) {
+            if( $grep_string ) {
+                my $grep_out = 0;
+                if( $error ) { 
+                    $grep_out = `grep -n '$grep_string' $file 2>/dev/null`;
+                } else {
+                    $grep_out = `grep -n '$grep_string' $file`;
+                }
+                if( $grep_out ) {
+                    chomp $grep_out;
+                    print "$file\n";
+                    print "$grep_out\n" if $verbose;
+                }
+            } else {
+                print "$file\n";
+                print "$head\n" if $verbose; # print header
+            }
+        }
+
+        last;
+    }
+    close( FILE );
+    print "\n" if $dbug;
+
+}
+
+$num_total  = $num_perl + $num_ksh + $num_sh + $num_other;
+
+if( $report ) { 
+    print "\n========================\n";
+    print " File type distribution\n";
+    print "  Base dir : $dir_base\n\n";
+    print "      perl : $num_perl\n";
+    print "       ksh : $num_ksh\n";
+    print "        sh : $num_sh\n";
+    print "     other : $num_other\n";
+    print " ----------------------\n";
+    print "     total : $num_total\n";
+    print "========================\n\n";
+}
+
+
+###  end  ###
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+Usage: $0 [-adhklps] [-b <base_dir>] [-g <string>]
+
+Desc:  Find file types from header line
+       Ex. #!/path/file
+       The default action is to report statistics
+
+       -a  List all files
+       -b  Base directory to search
+       -d  Debuggin mode
+       -g  String to grep for
+       -h  Help
+       -k  List ksh scripts
+       -l  List defaults
+       -p  List perl scripts
+       -r  Report statistics
+       -s  List sh scripts
+       -v  Verbose - list headers or grep'ed lines
+
+USAGE
+   exit 0;
+}
+

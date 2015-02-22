@@ -1,0 +1,232 @@
+#!/usr/bin/perl
+# $Header: /work/in/../cm431fp1rcs/inst-mn,v 1.6 2010/01/20 20:18:17 rcompos Exp $
+#
+# IBM USDA Forest Service CM431 TMR
+# Description : Install Tivoli Framework managed node.
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-08-04
+#
+
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+my %opt;
+getopts( 'cfhjlp:', \%opt );
+my $client_flag = $opt{ c } ? 1         : 0;
+$main::dbug     = $opt{ d } ? 1         : 0;
+my $force       = $opt{ f } ? 1         : 0;
+my $ssh         = $opt{ j } ? " -j"     : "";
+my $pw          = $opt{ p } ? $opt{ p } : 0;
+usage()        if $opt{ h }; 
+my $mn          = $ARGV[0] ? $ARGV[0]   : usage( "No arguments supplied" );
+my $dbug        = $main::dbug;
+$main::xs       = 0; print "$main::xs\n" if $dbug;
+my $list     = $opt{ l } ? 1 : 0;
+my $action      = $opt{ l } ? "LIST" : "INSTALL";
+my $_x_         = $opt{ l } ? 4      : 0;
+
+chomp( my $mnname = vhx( "hostname", 3, 1 ) ); 
+( my $mn_short = $mn ) =~ s/^([^.]+).*/$1/;
+
+my $gw          = $ARGV[1] ? $ARGV[1]   : "${mn_short}-gw";
+
+my( $cmd, $mn_oid, $disp );
+my $self = vhx( "objcall 0.0.0 self", 3, 2 );
+unless( $self =~ /^\d+\.1.\d+$/ ) { usage( "Must be run on TMR server!" ) }
+
+my $ult            = "/usr/local/Tivoli";
+my $ultv           = "$ult/var";
+my $ults           = "$ult/src";
+my $ulte           = "$ult/etc";
+my $ultes          = "$ulte/script";
+my $ultec          = "$ulte/cfg";
+my $dir_depot      = "$ult/depot";
+my $dir_tmp        = "$ultv/tmp";
+
+my $dir_fw         = "$ults/fwk431inst1of2";  # FW431 base dir
+
+my $reg            = get_region();
+my $policy_reg     = "$reg.framework.nodes.pr";
+my $gw_cfg         = "$ultec/inst/gw.cfg";
+my $file_mn        = "$dir_tmp/mn_list.cfg";
+
+title( "Install managed node: $mn", 10, 0 );
+print "\n***  Listing actions only - no changes will be made  ***\n" if $list;
+confirm( $force ) unless $list;
+print "\n";
+
+title( "DEBUG", 40, 5 ) if $dbug;
+
+print "\nTIVOLI MANAGED NODE/GATEWAY INSTALL\n\n";
+print "  Managed_Node : $mn\n";
+print " Gateway_Label : $gw\n"; print " Policy_Region : $policy_reg\n\n";
+$mn_oid = vhx( "wlookup -r ManagedNode $mn", 3, 2 );
+chomp $mn_oid;
+
+print "Checking network status\n";
+my $ping = 0;
+my $ping_max = 5;
+while( $ping <= $ping_max ){
+    print ".";
+    my $ping_out = vhx( "ping -c 1 $mn", 3 );
+    last unless( $? );
+    $ping++;
+}
+print "\n\n";
+if( $ping > $ping_max ) { print "Not pingable!\n\n"; exit 1 }
+
+my $create_mn = 1;
+my $create_gw = 1;
+if( $mn_oid =~ /^\d+\.(\d+)\.\d+/ ) { 
+    $disp = $1;
+    print "Managed node exists: $mn_oid\n";
+    print "Skipping managed node creation.\n";
+    print "\n";
+    $create_mn = 0;
+    for( vhx( "wlookup -ar Gateway", 3, 1 ) ) {
+        if( /^(\S+)\s+\d+\.$disp\.\d+/ ) {
+             $gw = $1;
+             print "Found gateway: $gw\n";
+             print "Skipping gateway creation.\n";
+             $create_gw = 0;
+             last;
+        } else {
+             usage( "Specify gateway label" ) unless $gw;
+        }
+    }
+}
+print "\n";
+
+$pw = get_pass( $pw ) if $create_mn; 
+my $start_time = time;
+
+if( $create_mn ) { 
+    my $cmd_args;
+    if( $client_flag ) {
+        $cmd_args = "-y -c $dir_fw -p $policy_reg BIN=/usr/local/Tivoli/bin! LIB=/usr/local/Tivoli/lib! DB=/usr/local/Tivoli/db MAN=/usr/local/Tivoli/man! APPD=/usr/lib/X11/app-defaults! CAT=/usr/local/Tivoli/msg_cat! \@AutoStart\@=1 \@CreatePaths\@=1";
+    } else {
+        $cmd_args = "-y -c $dir_fw -p $policy_reg BIN=/usr/local/Tivoli/bin LIB=/usr/local/Tivoli/lib DB=/usr/local/Tivoli/db MAN=/usr/local/Tivoli/man APPD=/usr/lib/X11/app-defaults CAT=/usr/local/Tivoli/msg_cat \@AutoStart\@=1 \@CreatePaths\@=1";
+    }
+
+    print "Installing managed node\n\n";
+    open( MNFILE, ">$file_mn" ) or die "Couldnt create file: $!";
+    print MNFILE "$mn,root,$pw\n";
+    close( MNFILE );
+
+    # vhx( "wclient -P $cmd_args $mn", 3, 1 );   # -P prompt pw
+    #vhx( "wclient -f$file_mn $cmd_args", $_x_, 1 );
+    vhx( "wclient $ssh -f$file_mn $cmd_args", $_x_, 1 );
+
+    unless( $list ) { sleepy( 5 ); print "\n"; }
+
+    $mn_oid = vhx( "wlookup -r ManagedNode $mn", 3 );
+    chomp $mn_oid;
+    ( $disp = $mn_oid ) =~ s/^\d+\.(\d+)\.\d+.*/$1/;
+    unless( $disp ) { print "\nERROR: Can't get dispatcher number!\n"; exit 1 }
+    print "\nCreated managed node: $disp\n";
+}
+
+
+if( $create_gw ) {
+    print "Create gateway on managed node: $mn\n";
+    vhx( "wcrtgate -h $mn -n $gw", $_x_, 1 );
+    #print "Update the update.cntl file on Gateway\n";
+    #gw_task(); #### needed?
+    #security_task();  #### needed?
+}
+
+print "\nLoading products and patches:\n";
+vhx( "$ultes/loadtiv -f -c $gw_cfg -s $ults $mn", $_x_, 0 );
+
+# Run dir creation task
+#vhx( "wruntask -t$reg.mk_var_dir.task -l $reg.tools.tl -h $mn" );
+
+unless( $list ) { sleepy( 2 ); print "\n"; }
+print "\nRestarting managed node daemon\n";
+vhx( "odadmin reexec $disp", $_x_, 1 );
+print "\n";
+
+unless( $list ) { sleepy( 10 ); print "\n"; }
+config_ssl();
+
+# Need to save /tmp/tivoli.cinstall to logdir
+
+my( $hour, $min, $sec ) = runtime( $start_time );
+print  "\n";
+print  "  Managed_Node : $mn\n";
+print  " Gateway_Label : $gw\n";
+print  "      End_Time : ", scalar localtime, "\n";
+printf "      Run_Time : %02d h %02d m %02d s\n",$hour, $min, $sec;
+print "\n$0 complete.\n\n";
+
+
+
+############################
+#        end corpus        #
+############################
+
+
+sub config_ssl {
+
+   # Set SSL stuff
+   print "Configure SSL\n";
+   vhx( "odadmin set_network_security SSL $disp", $_x_, 1 );
+   vhx( "odadmin set_ssl_ciphers \"05040A\" $disp", $_x_, 1 );
+
+}  # end sub config_ssl
+
+
+sub gw_task {
+    print "\nRunning gateway task\n";
+    vhx( "wruntask -t $reg.install.tsk -l $reg.install.tl -h $mn -E -m 120 -M serial -o 05", $_x_, 1 );
+}   # end sub gw_task
+
+
+sub security_task {
+    print "\nRunning security task\n";
+    vhx( "wruntask -t $reg.security-fix.tsk -l $reg.install.tl -h $mn-E -m 120 -M serial -o 05", $_x_, 1 );
+}   # end sub security_task
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-cefhjl] [-p <password>] <managed_node> [<gateway>]
+
+Desc:  Installs managed node and gateway on AIX5 or SLES9 
+       host.  Use -j option to install via SSH connection, 
+       otherwise rexec must be enabled on target.
+
+       Where <managed_node> is the managed node label,
+       <gateway> is the gateway label and <password>
+       is root password on target host. 
+
+       Password will be prompted for if not specified.
+
+       The managed node label should be set to FQDN of
+       target server.
+
+       The gateway label should be short hostname (or
+       some other identifier) with '-gw' appended.  
+
+       -c  Force client install.
+           Re-installs managed node software.
+           Overwrites all installation directories.
+       -f  Force - no prompt.
+       -h  Help.
+       -j  Use encrypted SSH connection
+       -l  List commands to be run without execution.
+       -p  Password on target host
+
+USAGE
+exit 0;
+} # End usage
+

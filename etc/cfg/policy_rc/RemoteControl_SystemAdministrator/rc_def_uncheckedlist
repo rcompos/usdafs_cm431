@@ -1,0 +1,26 @@
+#!/bin/sh 
+# 
+# This policy method specifies the contents of the targets list 
+# when the method rc_def_define is UncheckedList.
+# Possible values:
+# (<Endpoint_label>)[{<\n>
+# (<Endpoint_label>)}]
+# 
+# where:
+# <Endpoint_label> is the label of an endpoint.
+# <\n> is the new line character.
+#
+# Default value:
+# wgetallinst Endpoint
+# 
+# (For example:
+#    echo "label1"
+#    echo "label2")
+# 
+
+echo "svabqtgw001.abq.fs.fed.us"
+echo "svabqtgw002.abq.fs.fed.us"
+echo "svabqtis001.abq.fs.fed.us"
+echo "svabqtmr001.abq.fs.fed.us"
+
+exit 0

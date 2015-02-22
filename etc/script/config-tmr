@@ -1,0 +1,149 @@
+#!/usr/bin/perl
+# $Header: /work/b272dev/in/../b272rcs/config-tmr,v 1.2 2009/08/20 19:25:24 rcompos Exp $
+#
+# IBM USDA Forest Service CM423 TMR
+# Description : Configure CM423 TMR
+#      Author : Ron Compos, Consulting Science LLC
+#        Date : 2008-09-09
+#
+
+#use diagnostics;
+use strict;
+use Getopt::Std;
+use Cwd;
+
+unshift( @INC, "/usr/local/Tivoli/etc/script/lib" );
+require "tool.pl";
+require "tooltiv.pl";
+
+select( ( select( STDERR ), $| = 1 )[0] );
+select( ( select( STDOUT ), $| = 1 )[0] );
+
+########################
+
+my %opt;
+getopts( 'dfhl', \%opt );
+usage()     if $opt{ h };
+$main::dbug  = $opt{ d } ? 1 : 0;
+my $dbug     = $main::dbug;
+my $force    = $opt{ f } ? 1 : 0;
+my $list     = $opt{ l } ? 1 : 0;
+my $action   = $opt{ l } ? "LIST" : "INSTALL";
+my $_x_      = $opt{ l } ? 4      : 0;
+$main::xs    = 0;
+my $disp     = 1;
+my $reg            = get_region();
+
+title( "DEBUG", 40, 5 ) if $dbug;
+chomp( my $host = vhx( "hostname", 3, 1 ) );
+chomp( my $fqdn = vhx( "hostnew $host", 3, 1 ) );
+#$fqdn =~ s/^(\S+)\s.*$/$1/;
+
+my $ult       = "/usr/local/Tivoli";
+my $ultv      = "$ult/var";
+my $ults      = "$ult/src";
+my $ulte      = "$ult/etc";
+my $ultes     = "$ulte/script";
+my $ultec     = "$ulte/cfg";
+my $dir_depot = "$ult/depot";
+
+my $dir_tmp        = "$ultv/tmp";
+my $dir_log        = "$ultv/log";
+my $cfg_tmr        = "$ultec/inst/tmr.cfg";
+my $dir_db         = "$ult/db/${host}.db";
+my $file_ep_tmr    = "$dir_tmp/ep_tmr.cfg";
+my $file_env       = "/etc/Tivoli/setup_env.sh";
+   $reg            = get_region( $reg );
+my $gw             = "$host-gw";
+my $reg_name       = "$reg.pr";
+my $admin_flag     = 1;
+
+########################
+
+my $set_env = 1;
+if( -f $file_env ) { setup_tivoli_env(); $set_env = 0; }
+#setup_tivoli_env() if $set_env;
+#print "\n\nEnvironment:\n"; for ( sort keys %ENV ) { print "$_ : '$ENV{$_}'\n" }; print "\n\n";
+
+print "***  $action MODE  ***\n" if $list;
+title( "USDA Forest Service CM423 TMR Install\n\tConfigure TMR", 10, 0 );
+print "    Host : $host\n";
+print "  Region : $reg\n";
+confirm( $force ) unless $list;
+print "\n";
+
+my $start_time = time;
+print "    Start_Time : ", scalar localtime, "\n";
+
+$ENV{DOGUI} = "no";
+print "    reg : $reg\n\n";
+
+my @mn_info = get_mn();
+my( $mn, $mn_oid, $obj_no ) = ( $mn_info[0], $mn_info[1], $mn_info[2] );
+unless( $obj_no =~ /\d+\.1\.0/ ) { usage ("Must be run from TMR server" ) }
+
+#print "\nCreate TMR gateway:\n";
+#vhx( "wcrtgate -h $mn -n ${mn}-gw", $_x_, 0 );
+
+print "\nCreating policy regions and profile managers:\n";
+vhx( "$ultes/make-reg -f", $_x_, 0 );
+
+print "\nCreating maintenance task library:\n";
+vhx( "$ultes/create-job_maint -f", $_x_, 0 );
+
+print "\nDeleting RIM objects:\n";
+vhx( "wdel \@RIM:ccm", $_x_, 0 );
+vhx( "wdel \@RIM:trm", $_x_, 0 );
+
+print "\nMove TMR managed node to nodes policy region:\n";
+vhx( "wmv \@ManagedNode:$mn \@PolicyRegion:${reg}.framework.nodes.pr", $_x_, 0 );
+
+print "\nSubscribe TMR managed node to nodes profile manager <region>.framework.nodes.pm:\n";
+vhx( "wsub \@ProfileManager:$reg.framework.nodes.pm \@ManagedNode:$mn", $_x_, 0 );
+
+#print "\nSet endpoint validation policy. Scripts at /usr/local/Tivoli/etc/cfg/policy_ep:\n";
+#vhx( "$ultes/set-policy_ep -f", $_x_, 0 );
+
+print "\nSet endpoint manager to recapture orphaned endpoint information:\n";
+vhx( "wepmgr set epmgr_flags 1", $_x_, 0 );
+
+print "\nSet ownership and permisions for files and directories:\n";
+vhx( "$ultes/set-perms -f", $_x_, 0 );
+
+
+print "\n$0 complete.\n\n";
+
+############################
+#        end corpus        #
+############################
+
+
+sub usage {
+    print "$_\n" for( @_ );
+    print STDERR <<"USAGE";
+
+Usage: $0 [-fhl]
+
+Desc:  Configure Tivoli CM423 TMR server.
+
+       Run scripts to perform post-install configuration of 
+       TMR server and applications. 
+
+       -f  force
+       -h  help
+       -l  list
+
+USAGE
+exit 0;
+}   # end sub usage
+
+
+sub setup_tivoli_env {
+    my @Value = `. $file_env; env`;
+    chomp @Value;
+    for my $Element ( @Value ) {
+        my( $ElementKey, $ElementVal ) = split ( /=/, $Element );
+        $ENV{$ElementKey} = $ElementVal;
+    }
+}  # end sub setup_tivoli_env
+
